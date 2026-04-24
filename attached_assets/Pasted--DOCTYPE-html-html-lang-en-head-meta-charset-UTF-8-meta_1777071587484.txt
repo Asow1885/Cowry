@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cowry — Home Screen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --green: #1a2e22;
+    --green-deep: #0f1f17;
+    --green-mid: #2d4a37;
+    --green-soft: #b8d4c1;
+    --green-tint: #d8e8dc;
+    --green-pale: #ebf2ec;
+    --gold: #c9a04a;
+    --gold-light: #e4c070;
+    --gold-pale: #f4ead0;
+    --gold-deep: #8a6b2a;
+    --ink: #0a0907;
+    --ink-2: #2a2520;
+    --gray-50: #f5f5f3;
+    --gray-100: #ebebe8;
+    --gray-200: #d8d8d4;
+    --gray-400: #999994;
+    --gray-500: #6b6b66;
+    --line: rgba(10, 9, 7, 0.08);
+  }
+  html, body {
+    background: #ede5d3;
+    color: var(--ink);
+    font-family: 'Geist', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  body { padding: 48px 24px 80px; }
+
+.header {
+max-width: 420px;
+margin: 0 auto 32px;
+}
+.header-label {
+font-family: ‘Geist Mono’, monospace;
+font-size: 11px;
+letter-spacing: 0.14em;
+text-transform: uppercase;
+color: var(–gold-deep);
+margin-bottom: 12px;
+text-align: center;
+}
+.header-title {
+font-family: ‘Fraunces’, serif;
+font-variation-settings: ‘opsz’ 144, ‘wght’ 400;
+font-size: 38px;
+line-height: 1;
+letter-spacing: -0.03em;
+text-align: center;
+color: var(–ink);
+}
+.header-title em { font-style: italic; color: var(–gold-deep); }
+
+/* Phone wrapper */
+.phone-wrap {
+max-width: 420px;
+margin: 0 auto;
+background: white;
+border-radius: 36px;
+overflow: hidden;
+box-shadow: 0 30px 80px -20px rgba(10,9,7,0.25);
+position: relative;
+}
+
+/* Phone screen */
+.phone {
+background: white;
+aspect-ratio: 9 / 19.5;
+position: relative;
+overflow: hidden;
+color: var(–ink);
+}
+
+.notch {
+position: absolute;
+top: 12px; left: 50%;
+transform: translateX(-50%);
+width: 110px; height: 28px;
+background: #000;
+border-radius: 20px;
+z-index: 100;
+}
+
+.status {
+position: absolute;
+top: 18px;
+left: 28px; right: 28px;
+display: flex;
+justify-content: space-between;
+font-family: ‘Geist’, sans-serif;
+font-size: 14px;
+font-weight: 600;
+color: var(–ink);
+z-index: 50;
+}
+.status .icons {
+display: flex;
+gap: 5px;
+align-items: center;
+font-size: 12px;
+}
+
+.scroll {
+position: absolute;
+top: 56px;
+bottom: 88px;
+left: 0; right: 0;
+overflow-y: auto;
+padding: 0 24px;
+}
+
+/* ─── TOP BAR (avatar / earn pill / eye) ─── */
+.top-bar {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 24px 0 32px;
+}
+.avatar {
+width: 44px; height: 44px;
+border-radius: 50%;
+background: var(–gray-100);
+color: var(–ink);
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 14px;
+font-weight: 600;
+font-family: ‘Geist’, sans-serif;
+}
+.earn-pill {
+padding: 12px 24px;
+background: var(–green);
+color: var(–gold-light);
+border-radius: 100px;
+font-size: 14px;
+font-weight: 500;
+}
+.eye-btn {
+width: 44px; height: 44px;
+border-radius: 50%;
+background: white;
+border: 1px solid var(–line);
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 16px;
+color: var(–ink);
+}
+
+/* ─── BALANCE ─── */
+.balance-label {
+font-size: 16px;
+color: var(–gray-500);
+margin-bottom: 6px;
+}
+.balance-row {
+display: flex;
+align-items: baseline;
+gap: 10px;
+margin-bottom: 24px;
+}
+.balance-amt {
+font-family: ‘Fraunces’, serif;
+font-variation-settings: ‘opsz’ 144, ‘wght’ 500;
+font-size: 38px;
+line-height: 1;
+letter-spacing: -0.02em;
+color: var(–ink);
+}
+.balance-curr {
+font-family: ‘Fraunces’, serif;
+font-variation-settings: ‘opsz’ 72, ‘wght’ 400;
+font-size: 18px;
+color: var(–gray-500);
+}
+.balance-chart-icon {
+width: 26px;
+height: 26px;
+border-radius: 50%;
+background: var(–green-pale);
+color: var(–green);
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 13px;
+}
+
+/* ─── ACTION CHIPS ─── */
+.actions {
+display: flex;
+gap: 8px;
+margin-bottom: 24px;
+}
+.chip {
+flex: 1;
+padding: 12px 8px;
+background: var(–green-tint);
+border-radius: 100px;
+text-align: center;
+font-size: 14px;
+color: var(–ink);
+font-weight: 500;
+border: 1px solid transparent;
+}
+.chip.primary {
+background: var(–green);
+color: var(–gold-light);
+border-color: var(–green);
+}
+.chip.with-icon {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 6px;
+}
+.chip-icon {
+font-size: 12px;
+opacity: 0.85;
+}
+
+/* ─── SWIPEABLE CARD ─── */
+.card-wrap {
+margin-bottom: 12px;
+}
+.card {
+background: var(–gray-50);
+border-radius: 18px;
+overflow: hidden;
+position: relative;
+min-height: 380px;
+}
+
+/* The signature green “Your card” tab on top */
+.card-tab {
+background: var(–green-tint);
+padding: 16px 20px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+border-radius: 18px 18px 0 0;
+height: 76px;
+position: relative;
+}
+.card-tab::after {
+content: ‘’;
+position: absolute;
+bottom: -16px;
+left: 50%;
+transform: translateX(-50%);
+width: 80px; height: 16px;
+background: var(–green-tint);
+border-radius: 0 0 24px 24px;
+}
+.card-tab-title {
+display: flex;
+align-items: center;
+gap: 6px;
+font-family: ‘Fraunces’, serif;
+font-variation-settings: ‘opsz’ 36, ‘wght’ 500;
+font-size: 18px;
+color: var(–ink);
+}
+.card-tab-arrow {
+color: var(–ink);
+opacity: 0.7;
+font-size: 14px;
+}
+.card-logo {
+font-family: ‘Fraunces’, serif;
+font-variation-settings: ‘opsz’ 36, ‘wght’ 600;
+font-size: 16px;
+color: var(–green);
+letter-spacing: 0.06em;
+}
+
+.card-body {
+padding: 30px 24px 24px;
+background: var(–gray-50);
+}
+.card-h {
+font-family: ‘Fraunces’, serif;
+font-variation-settings: ‘opsz’ 144, ‘wght’ 500;
+font-size: 30px;
+margin-bottom: 4px;
+color: var(–ink);
+letter-spacing: -0.02em;
+}
+.card-amt {
+font-size: 16px;
+color: var(–gray-500);
+margin-bottom: 22px;
+}
+.card-arrow {
+position: absolute;
+top: 92px;
+right: 24px;
+color: var(–gray-400);
+font-size: 16px;
+}
+
+.currency-row {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 8px 0;
+}
+.currency-left {
+display: flex;
+align-items: center;
+gap: 12px;
+font-size: 16px;
+color: var(–ink);
+}
+.flag-circle {
+width: 28px;
+height: 28px;
+border-radius: 50%;
+overflow: hidden;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 16px;
+background: var(–gray-100);
+line-height: 1;
+}
+.currency-arrow {
+color: var(–gray-400);
+font-size: 14px;
+}
+
+.account-details-btn {
+margin-top: 16px;
+display: inline-flex;
+align-items: center;
+gap: 6px;
+padding: 10px 16px;
+background: var(–gray-100);
+border-radius: 100px;
+font-size: 13px;
+color: var(–ink);
+font-weight: 500;
+}
+
+/* Page dots */
+.page-dots {
+display: flex;
+justify-content: center;
+gap: 6px;
+margin: 14px 0 24px;
+}
+.dot {
+width: 6px; height: 6px;
+border-radius: 50%;
+background: var(–gray-200);
+}
+.dot.active { background: var(–green); }
+
+/* ─── TRANSACTIONS ─── */
+.tx-header {
+display: flex;
+justify-content: space-between;
+align-items: baseline;
+margin: 8px 0 18px;
+}
+.tx-title {
+font-family: ‘Fraunces’, serif;
+font-variation-settings: ‘opsz’ 144, ‘wght’ 500;
+font-size: 24px;
+color: var(–ink);
+letter-spacing: -0.02em;
+}
+.tx-see-all {
+font-size: 14px;
+color: var(–green);
+text-decoration: underline;
+font-weight: 500;
+}
+
+.tx-row {
+display: flex;
+align-items: center;
+gap: 14px;
+padding: 12px 0;
+}
+.tx-icon {
+width: 44px;
+height: 44px;
+border-radius: 50%;
+border: 1.5px solid var(–gray-200);
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 18px;
+color: var(–ink);
+flex-shrink: 0;
+}
+.tx-meta {
+flex: 1;
+min-width: 0;
+}
+.tx-name {
+font-size: 16px;
+color: var(–gray-400);
+font-weight: 500;
+margin-bottom: 2px;
+}
+.tx-detail {
+font-size: 13px;
+color: var(–gray-400);
+}
+.tx-right {
+text-align: right;
+}
+.tx-amt {
+font-size: 16px;
+color: var(–gray-400);
+font-weight: 500;
+line-height: 1.3;
+}
+.tx-currency {
+font-size: 13px;
+color: var(–gray-400);
+}
+
+/* ─── BOTTOM TAB BAR ─── */
+.tab-bar {
+position: absolute;
+bottom: 0;
+left: 0; right: 0;
+height: 88px;
+background: white;
+display: flex;
+justify-content: space-around;
+align-items: flex-start;
+padding-top: 12px;
+border-top: 1px solid var(–line);
+}
+.tab {
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 4px;
+color: var(–ink);
+font-size: 11px;
+flex: 1;
+}
+.tab.active .tab-icon-wrap {
+background: var(–green-pale);
+padding: 6px 16px;
+border-radius: 22px;
+}
+.tab-icon {
+font-size: 20px;
+margin-bottom: 4px;
+}
+.tab-label {
+font-size: 11px;
+font-weight: 500;
+color: var(–ink);
+}
+
+/* Bottom indicator */
+.home-indicator {
+position: absolute;
+bottom: 8px;
+left: 50%;
+transform: translateX(-50%);
+width: 134px;
+height: 5px;
+background: var(–ink);
+border-radius: 3px;
+}
+
+@media (max-width: 480px) {
+body { padding: 20px 16px; }
+.header-title { font-size: 28px; }
+.phone-wrap { border-radius: 28px; }
+}
+</style>
+
+</head>
+<body>
+
+<div class="header">
+  <div class="header-label">◆ Cowry · Home Screen</div>
+  <h1 class="header-title">The <em>room</em> Ashley walks into.</h1>
+</div>
+
+<div class="phone-wrap">
+  <div class="phone">
+
+```
+<div class="notch"></div>
+<div class="status">
+  <span>9:41</span>
+  <span class="icons">●●● ▲ ▮</span>
+</div>
+
+<div class="scroll">
+
+  <!-- TOP BAR: avatar, earn pill, eye -->
+  <div class="top-bar">
+    <div class="avatar">AS</div>
+    <div class="earn-pill">Earn $30</div>
+    <div class="eye-btn">👁</div>
+  </div>
+
+  <!-- BALANCE -->
+  <div class="balance-label">Total balance</div>
+  <div class="balance-row">
+    <div class="balance-amt">$1,240.00</div>
+    <div class="balance-curr">USD</div>
+    <div class="balance-chart-icon">📊</div>
+  </div>
+
+  <!-- ACTION CHIPS -->
+  <div class="actions">
+    <div class="chip primary">Send</div>
+    <div class="chip">Add money</div>
+    <div class="chip">Request</div>
+    <div class="chip with-icon">Scan <span class="chip-icon">⊞</span></div>
+  </div>
+
+  <!-- SWIPEABLE CARD -->
+  <div class="card-wrap">
+    <div class="card">
+
+      <div class="card-tab">
+        <div class="card-tab-title">Your card <span class="card-tab-arrow">›</span></div>
+        <div class="card-logo">COWRY</div>
+      </div>
+
+      <div class="card-body">
+        <div class="card-arrow">›</div>
+        <h2 class="card-h">Main account</h2>
+        <div class="card-amt">$1,240.00</div>
+
+        <div class="currency-row">
+          <div class="currency-left">
+            <div class="flag-circle">🇺🇸</div>
+            <span>$1,240.00</span>
+          </div>
+          <span class="currency-arrow">›</span>
+        </div>
+
+        <div class="currency-row">
+          <div class="currency-left">
+            <div class="flag-circle">🇬🇳</div>
+            <span>0 GNF</span>
+          </div>
+          <span class="currency-arrow">›</span>
+        </div>
+
+        <div class="currency-row">
+          <div class="currency-left">
+            <div class="flag-circle">🇪🇺</div>
+            <span>€0.00</span>
+          </div>
+          <span class="currency-arrow">›</span>
+        </div>
+
+        <div class="account-details-btn">
+          <span>🏛</span>
+          <span>Account details</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- PAGE DOTS -->
+    <div class="page-dots">
+      <div class="dot active"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+
+  <!-- TRANSACTIONS -->
+  <div class="tx-header">
+    <h2 class="tx-title">Transactions</h2>
+    <div class="tx-see-all">See all</div>
+  </div>
+
+  <div class="tx-row">
+    <div class="tx-icon">↑</div>
+    <div class="tx-meta">
+      <div class="tx-name">Mama Sow</div>
+      <div class="tx-detail">Sent · 2 days ago</div>
+    </div>
+    <div class="tx-right">
+      <div class="tx-amt">50 USD</div>
+      <div class="tx-currency">To GNF</div>
+    </div>
+  </div>
+
+  <div class="tx-row">
+    <div class="tx-icon">↓</div>
+    <div class="tx-meta">
+      <div class="tx-name">Chase Bank</div>
+      <div class="tx-detail">Added · Thursday</div>
+    </div>
+    <div class="tx-right">
+      <div class="tx-amt">+1,000 USD</div>
+      <div class="tx-currency"></div>
+    </div>
+  </div>
+
+  <div class="tx-row">
+    <div class="tx-icon">↑</div>
+    <div class="tx-meta">
+      <div class="tx-name">Brother</div>
+      <div class="tx-detail">Sent · 3 weeks ago</div>
+    </div>
+    <div class="tx-right">
+      <div class="tx-amt">80 USD</div>
+      <div class="tx-currency">To XOF</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- BOTTOM TAB BAR -->
+<div class="tab-bar">
+  <div class="tab active">
+    <div class="tab-icon-wrap">
+      <div class="tab-icon">⌂</div>
+    </div>
+    <div class="tab-label">Home</div>
+  </div>
+  <div class="tab">
+    <div class="tab-icon">▭</div>
+    <div class="tab-label">Cards</div>
+  </div>
+  <div class="tab">
+    <div class="tab-icon">○○</div>
+    <div class="tab-label">Recipients</div>
+  </div>
+  <div class="tab">
+    <div class="tab-icon">⇄</div>
+    <div class="tab-label">Payments</div>
+  </div>
+</div>
+
+<div class="home-indicator"></div>
+```
+
+  </div>
+</div>
+
+</body>
+</html>

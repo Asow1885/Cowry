@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cowry — Welcome Screen · LOCKED</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&family=Noto+Sans+Arabic:wght@400;500;600;700&family=Noto+Serif:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --green: #1a2e22;
+    --green-deep: #0f1f17;
+    --cream: #f5ebd6;
+    --gold: #c9a04a;
+    --gold-light: #e4c070;
+    --gold-deep: #8a6b2a;
+    --ink: #0a0907;
+    --line-gold: rgba(201, 160, 74, 0.3);
+  }
+  html, body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Geist', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  body { padding: 48px 24px 80px; }
+
+/* Header */
+.header {
+max-width: 1240px;
+margin: 0 auto 32px;
+padding-bottom: 20px;
+border-bottom: 1px solid rgba(10,9,7,0.12);
+}
+.header-label {
+font-family: ‘Geist Mono’, monospace;
+font-size: 11px;
+letter-spacing: 0.14em;
+text-transform: uppercase;
+color: var(–gold-deep);
+margin-bottom: 14px;
+}
+.header-title {
+font-family: ‘Fraunces’, serif;
+font-variation-settings: ‘opsz’ 144, ‘wght’ 400;
+font-size: 44px;
+line-height: 1;
+letter-spacing: -0.03em;
+margin-bottom: 14px;
+}
+.header-title em { font-style: italic; color: var(–gold-deep); }
+.header-body {
+font-size: 15px;
+line-height: 1.6;
+color: rgba(10,9,7,0.72);
+max-width: 70ch;
+}
+.header-body strong { color: var(–ink); font-weight: 500; }
+
+/* Brand foundation strip */
+.foundation {
+max-width: 1240px;
+margin: 0 auto 40px;
+padding: 22px 28px;
+background: var(–green);
+color: var(–cream);
+border-radius: 10px;
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 28px;
+}
+.f-label {
+font-family: ‘Geist Mono’, monospace;
+font-size: 9px;
+letter-spacing: 0.18em;
+color: var(–gold);
+text-transform: uppercase;
+margin-bottom: 6px;
+}
+.f-value {
+font-family: ‘Fraunces’, serif;
+font-variation-settings: ‘opsz’ 72, ‘wght’ 400;
+font-size: 17px;
+line-height: 1.25;
+color: var(–cream);
+}
+.f-value em { font-style: italic; color: var(–gold-light); }
+
+/* Phone grid */
+.flow {
+max-width: 1240px;
+margin: 0 auto;
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 18px;
+}
+.screen-card {
+background: white;
+border-radius: 12px;
+overflow: hidden;
+box-shadow: 0 8px 30px -10px rgba(10,9,7,0.2);
+}
+.card-label {
+padding: 12px 16px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+border-bottom: 1px solid rgba(10,9,7,0.08);
+}
+.card-name {
+font-family: ‘Fraunces’, serif;
+font-variation-settings: ‘opsz’ 36, ‘wght’ 500;
+font-size: 13px;
+}
+.card-lang {
+padding: 2px 7px;
+background: rgba(201, 160, 74, 0.15);
+border-radius: 10px;
+font-family: ‘Geist Mono’, monospace;
+font-size: 8px;
+letter-spacing: 0.1em;
+color: var(–gold-deep);
+}
+
+/* Phone */
+.phone {
+aspect-ratio: 9 / 19.5;
+background: var(–green);
+position: relative;
+overflow: hidden;
+color: var(–cream);
+}
+.status {
+position: absolute;
+top: 12px; left: 20px; right: 20px;
+display: flex;
+justify-content: space-between;
+font-family: ‘Geist Mono’, monospace;
+font-size: 10px;
+color: var(–cream);
+opacity: 0.8;
+z-index: 10;
+}
+.notch {
+position: absolute;
+top: 6px; left: 50%;
+transform: translateX(-50%);
+width: 60px; height: 14px;
+background: #000;
+border-radius: 20px;
+z-index: 15;
+}
+.content {
+position: absolute;
+top: 40px; bottom: 0;
+left: 0; right: 0;
+padding: 18px 22px 22px;
+display: flex;
+flex-direction: column;
+}
+.phone.rtl .content { direction: rtl; }
+
+.top-row {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 64px;
+}
+.mini-logo { display: flex; align-items: center; gap: 6px; }
+.mini-logo svg { width: 20px; height: 20px; }
+.mini-logo-text {
+font-family: ‘Fraunces’, serif;
+font-variation-settings: ‘opsz’ 36, ‘wght’ 600;
+font-size: 12px;
+letter-spacing: 0.08em;
+color: var(–cream);
+}
+.lang-toggle {
+padding: 4px 9px;
+background: rgba(201, 160, 74, 0.15);
+border: 1px solid var(–line-gold);
+border-radius: 10px;
+font-family: ‘Geist Mono’, monospace;
+font-size: 9px;
+letter-spacing: 0.1em;
+color: var(–gold-light);
+}
+
+/* HEADLINE */
+.screen-headline {
+font-family: ‘Fraunces’, serif;
+font-variation-settings: ‘opsz’ 144, ‘wght’ 380;
+font-size: 60px;
+line-height: 0.92;
+letter-spacing: -0.04em;
+margin-bottom: 22px;
+color: var(–cream);
+}
+.screen-headline em {
+font-style: italic;
+color: var(–gold-light);
+font-variation-settings: ‘opsz’ 144, ‘wght’ 320;
+}
+.phone.rtl .screen-headline {
+font-family: ‘Noto Serif’, ‘Fraunces’, serif;
+font-weight: 600;
+font-size: 48px;
+letter-spacing: 0;
+}
+
+/* SUBTITLE — three phrases stacked */
+.screen-sub {
+font-family: ‘Fraunces’, serif;
+font-variation-settings: ‘opsz’ 36, ‘wght’ 380;
+font-style: italic;
+font-size: 15px;
+line-height: 1.5;
+color: var(–gold);
+letter-spacing: 0;
+}
+.phone.rtl .screen-sub {
+font-family: ‘Noto Serif’, ‘Fraunces’, serif;
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+}
+
+/* Buttons */
+.btn-primary {
+margin-top: auto;
+padding: 12px;
+background: var(–gold);
+color: var(–green-deep);
+border-radius: 6px;
+text-align: center;
+font-weight: 600;
+font-size: 12px;
+}
+.btn-secondary {
+margin-top: 8px;
+padding: 8px;
+text-align: center;
+font-size: 10px;
+color: var(–gold);
+}
+.terms {
+margin-top: 10px;
+font-size: 8px;
+line-height: 1.4;
+color: rgba(245,235,214,0.5);
+text-align: center;
+}
+.terms a { color: var(–gold); }
+.phone.rtl .btn-primary,
+.phone.rtl .btn-secondary,
+.phone.rtl .terms,
+.phone.rtl .mini-logo-text {
+font-family: ‘Noto Sans Arabic’, ‘Geist’, sans-serif;
+}
+.phone.rtl .mini-logo-text { font-weight: 700; }
+
+.card-desc {
+padding: 14px 16px 18px;
+background: white;
+border-top: 1px solid rgba(10,9,7,0.06);
+}
+.card-desc-title {
+font-family: ‘Geist Mono’, monospace;
+font-size: 9px;
+letter-spacing: 0.14em;
+color: var(–gold-deep);
+text-transform: uppercase;
+margin-bottom: 6px;
+}
+.card-desc-body {
+font-size: 11.5px;
+line-height: 1.5;
+color: rgba(10,9,7,0.72);
+}
+.card-desc-body strong { color: var(–ink); font-weight: 500; }
+
+/* DESIGN TOKENS BLOCK FOR REPLIT */
+.tokens {
+max-width: 1240px;
+margin: 56px auto 0;
+padding: 32px 36px;
+background: var(–ink);
+color: var(–cream);
+border-radius: 12px;
+}
+.tokens-title {
+font-family: ‘Fraunces’, serif;
+font-variation-settings: ‘opsz’ 72, ‘wght’ 400;
+font-size: 26px;
+margin-bottom: 6px;
+color: var(–cream);
+}
+.tokens-title em { font-style: italic; color: var(–gold); }
+.tokens-sub {
+font-size: 13px;
+color: rgba(245,235,214,0.65);
+margin-bottom: 24px;
+}
+.tokens-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 24px;
+}
+.tokens-block {
+background: rgba(245,235,214,0.04);
+border: 1px solid rgba(201,160,74,0.18);
+border-radius: 8px;
+padding: 18px 22px;
+}
+.tokens-block-title {
+font-family: ‘Geist Mono’, monospace;
+font-size: 10px;
+letter-spacing: 0.16em;
+color: var(–gold-light);
+text-transform: uppercase;
+margin-bottom: 12px;
+}
+.tokens-block pre {
+font-family: ‘Geist Mono’, monospace;
+font-size: 11px;
+line-height: 1.65;
+color: rgba(245,235,214,0.85);
+white-space: pre-wrap;
+word-break: break-word;
+}
+.tokens-block .key { color: var(–gold-light); }
+.tokens-block .val { color: var(–cream); }
+
+/* Copy library */
+.copy-lib {
+max-width: 1240px;
+margin: 24px auto 0;
+padding: 32px 36px;
+background: white;
+border: 1px solid rgba(10,9,7,0.08);
+border-radius: 12px;
+}
+.copy-lib-title {
+font-family: ‘Fraunces’, serif;
+font-variation-settings: ‘opsz’ 72, ‘wght’ 400;
+font-size: 22px;
+margin-bottom: 4px;
+}
+.copy-lib-sub {
+font-size: 13px;
+color: rgba(10,9,7,0.6);
+margin-bottom: 22px;
+}
+.copy-row {
+display: grid;
+grid-template-columns: 80px 1fr 1fr;
+gap: 20px;
+padding: 14px 0;
+border-bottom: 1px solid rgba(10,9,7,0.07);
+align-items: baseline;
+}
+.copy-row:last-child { border-bottom: none; }
+.copy-lang {
+font-family: ‘Geist Mono’, monospace;
+font-size: 10px;
+letter-spacing: 0.14em;
+color: var(–gold-deep);
+text-transform: uppercase;
+}
+.copy-headline {
+font-family: ‘Fraunces’, serif;
+font-variation-settings: ‘opsz’ 72, ‘wght’ 500;
+font-size: 18px;
+color: var(–ink);
+}
+.copy-row.ar .copy-headline,
+.copy-row.ar .copy-sub {
+font-family: ‘Noto Serif’, ‘Fraunces’, serif;
+direction: rtl;
+text-align: right;
+}
+.copy-sub {
+font-style: italic;
+font-size: 14px;
+color: var(–gold-deep);
+}
+
+@media (max-width: 1100px) {
+.flow { grid-template-columns: repeat(2, 1fr); }
+.foundation, .tokens-grid { grid-template-columns: 1fr; }
+.copy-row { grid-template-columns: 1fr; gap: 4px; padding: 16px 0; }
+}
+@media (max-width: 600px) {
+body { padding: 24px 16px; }
+.flow { grid-template-columns: 1fr; }
+.header-title { font-size: 30px; }
+}
+</style>
+
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute;">
+  <defs>
+    <symbol id="crest" viewBox="0 0 32 32">
+      <ellipse cx="16" cy="8" rx="4" ry="5.5" fill="none" stroke="#c9a04a" stroke-width="1.1"/>
+      <line x1="16" y1="4.5" x2="16" y2="11.5" stroke="#c9a04a" stroke-width="0.7"/>
+      <ellipse cx="10" cy="22" rx="4" ry="5.5" fill="none" stroke="#c9a04a" stroke-width="1.1"/>
+      <line x1="10" y1="18.5" x2="10" y2="25.5" stroke="#c9a04a" stroke-width="0.7"/>
+      <ellipse cx="22" cy="22" rx="4" ry="5.5" fill="none" stroke="#c9a04a" stroke-width="1.1"/>
+      <line x1="22" y1="18.5" x2="22" y2="25.5" stroke="#c9a04a" stroke-width="0.7"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="header">
+  <div class="header-label">◆ Welcome Screen · Final Copy · For Replit</div>
+  <h1 class="header-title">Stay close. <em>Locked.</em></h1>
+  <p class="header-body">Final welcome screen copy across all four launch languages, with brand tokens and a copy library you can paste straight into your Replit project. Ready to ship.</p>
+</div>
+
+<!-- Brand foundation -->
+
+<div class="foundation">
+  <div>
+    <div class="f-label">◆ Tagline</div>
+    <div class="f-value">Ancient Wealth. <em>Modern Access.</em></div>
+  </div>
+  <div>
+    <div class="f-label">◆ Product thesis</div>
+    <div class="f-value"><em>Stay close.</em></div>
+  </div>
+  <div>
+    <div class="f-label">◆ Welcome copy</div>
+    <div class="f-value">Stay close. <em>Any ocean. Any distance. Any time.</em></div>
+  </div>
+</div>
+
+<!-- Phones in 4 languages -->
+
+<div class="flow">
+
+  <!-- EN -->
+
+  <div class="screen-card">
+    <div class="card-label"><span class="card-name">Welcome</span><span class="card-lang">EN</span></div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="status"><span>9:41</span><span>●●● ▲ ■</span></div>
+      <div class="content">
+        <div class="top-row">
+          <div class="mini-logo"><svg><use href="#crest"/></svg><div class="mini-logo-text">COWRY</div></div>
+          <div class="lang-toggle">EN ▾</div>
+        </div>
+        <h1 class="screen-headline">Stay <em>close.</em></h1>
+        <p class="screen-sub">Any ocean. Any distance. Any time.</p>
+        <div style="flex:1"></div>
+        <div class="btn-primary">Create my account</div>
+        <div class="btn-secondary">I already have an account →</div>
+        <div class="terms">By continuing you agree to our <a>Terms</a> and <a>Privacy Policy</a>.</div>
+      </div>
+    </div>
+    <div class="card-desc">
+      <div class="card-desc-title">◆ One line, three vows</div>
+      <div class="card-desc-body">Single line, three periods. Each phrase still lands like a stamp — the periods do the work, no line breaks needed. <strong>Reads as a contract being signed</strong> — not a marketing line.</div>
+    </div>
+  </div>
+
+  <!-- FR -->
+
+  <div class="screen-card">
+    <div class="card-label"><span class="card-name">Bienvenue</span><span class="card-lang">FR</span></div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="status"><span>9:41</span><span>●●● ▲ ■</span></div>
+      <div class="content">
+        <div class="top-row">
+          <div class="mini-logo"><svg><use href="#crest"/></svg><div class="mini-logo-text">COWRY</div></div>
+          <div class="lang-toggle">FR ▾</div>
+        </div>
+        <h1 class="screen-headline">Restez <em>proche.</em></h1>
+        <p class="screen-sub">Tout océan. Toute distance. Tout instant.</p>
+        <div style="flex:1"></div>
+        <div class="btn-primary">Créer mon compte</div>
+        <div class="btn-secondary">J'ai déjà un compte →</div>
+        <div class="terms">En continuant, vous acceptez nos <a>Conditions</a> et <a>Politique</a>.</div>
+      </div>
+    </div>
+    <div class="card-desc">
+      <div class="card-desc-title">◆ "Tout" — universal in French</div>
+      <div class="card-desc-body">"Tout" carries the same weight as "any." Three beats survive intact. Lands as a vow.</div>
+    </div>
+  </div>
+
+  <!-- AR -->
+
+  <div class="screen-card">
+    <div class="card-label"><span class="card-name">مرحباً</span><span class="card-lang">AR · RTL</span></div>
+    <div class="phone rtl">
+      <div class="notch"></div>
+      <div class="status"><span>9:41</span><span>●●● ▲ ■</span></div>
+      <div class="content">
+        <div class="top-row">
+          <div class="mini-logo"><svg><use href="#crest"/></svg><div class="mini-logo-text">COWRY</div></div>
+          <div class="lang-toggle">AR ▾</div>
+        </div>
+        <h1 class="screen-headline">ابقَ <em>قريباً.</em></h1>
+        <p class="screen-sub">أي محيط. أي مسافة. أي وقت.</p>
+        <div style="flex:1"></div>
+        <div class="btn-primary">إنشاء حسابي</div>
+        <div class="btn-secondary">← لدي حساب بالفعل</div>
+        <div class="terms">بالمتابعة، فإنك توافق على <a>الشروط</a> و<a>الخصوصية</a>.</div>
+      </div>
+    </div>
+    <div class="card-desc">
+      <div class="card-desc-title">◆ "أي" mirrors "any"</div>
+      <div class="card-desc-body">Full RTL layout. The word "أي" (any) carries identical force to its English counterpart. Three vows, mirrored right.</div>
+    </div>
+  </div>
+
+  <!-- PT -->
+
+  <div class="screen-card">
+    <div class="card-label"><span class="card-name">Bem-vindo</span><span class="card-lang">PT</span></div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="status"><span>9:41</span><span>●●● ▲ ■</span></div>
+      <div class="content">
+        <div class="top-row">
+          <div class="mini-logo"><svg><use href="#crest"/></svg><div class="mini-logo-text">COWRY</div></div>
+          <div class="lang-toggle">PT ▾</div>
+        </div>
+        <h1 class="screen-headline">Fique <em>perto.</em></h1>
+        <p class="screen-sub">Qualquer oceano. Qualquer distância. Qualquer hora.</p>
+        <div style="flex:1"></div>
+        <div class="btn-primary">Criar a minha conta</div>
+        <div class="btn-secondary">Já tenho uma conta →</div>
+        <div class="terms">Ao continuar, concorda com os nossos <a>Termos</a> e <a>Política</a>.</div>
+      </div>
+    </div>
+    <div class="card-desc">
+      <div class="card-desc-title">◆ "Qualquer" — definitive</div>
+      <div class="card-desc-body">"Qualquer" means "any" in the most assertive way. Same vow energy as English.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════ DESIGN TOKENS FOR REPLIT ═══════ -->
+
+<div class="tokens">
+  <div class="tokens-title">Design tokens for <em>Replit</em></div>
+  <div class="tokens-sub">Drop these into your CSS variables, Tailwind config, or theme file. Use them everywhere — never hardcode.</div>
+
+  <div class="tokens-grid">
+
+```
+<div class="tokens-block">
+  <div class="tokens-block-title">◆ Colors</div>
+```
+
+<pre><span class="key">--cowry-green:</span>       <span class="val">#1a2e22</span>  <span style="opacity:0.5;">/* primary bg */</span>
+<span class="key">--cowry-green-deep:</span>  <span class="val">#0f1f17</span>  <span style="opacity:0.5;">/* fields, recessed */</span>
+<span class="key">--cowry-green-light:</span> <span class="val">#25402f</span>  <span style="opacity:0.5;">/* selected state */</span>
+<span class="key">--cowry-cream:</span>       <span class="val">#f5ebd6</span>  <span style="opacity:0.5;">/* primary text */</span>
+<span class="key">--cowry-gold:</span>        <span class="val">#c9a04a</span>  <span style="opacity:0.5;">/* accent, CTAs */</span>
+<span class="key">--cowry-gold-light:</span>  <span class="val">#e4c070</span>  <span style="opacity:0.5;">/* highlight italics */</span>
+<span class="key">--cowry-gold-deep:</span>   <span class="val">#8a6b2a</span>  <span style="opacity:0.5;">/* on cream backgrounds */</span>
+<span class="key">--cowry-ink:</span>         <span class="val">#0a0907</span>  <span style="opacity:0.5;">/* dark text */</span></pre>
+
+```
+</div>
+
+<div class="tokens-block">
+  <div class="tokens-block-title">◆ Typography</div>
+```
+
+<pre><span class="key">--font-display:</span>  <span class="val">'Fraunces', serif</span>
+<span class="key">--font-body:</span>     <span class="val">'Geist', sans-serif</span>
+<span class="key">--font-mono:</span>     <span class="val">'Geist Mono', monospace</span>
+<span class="key">--font-arabic:</span>   <span class="val">'Noto Serif', 'Noto Sans Arabic'</span>
+
+<span style="opacity:0.5;">/* Headline weight: Fraunces 380, opsz 144 */</span>
+<span style="opacity:0.5;">/* Italic emphasis: Fraunces 320 italic */</span>
+<span style="opacity:0.5;">/* Body weight: Geist 400 */</span>
+<span style="opacity:0.5;">/* Mono labels: Geist Mono 500 */</span></pre>
+
+```
+</div>
+
+<div class="tokens-block">
+  <div class="tokens-block-title">◆ Spacing & radius</div>
+```
+
+<pre><span class="key">--radius-sm:</span>  <span class="val">6px</span>   <span style="opacity:0.5;">/* inputs, small chips */</span>
+<span class="key">--radius-md:</span>  <span class="val">10px</span>  <span style="opacity:0.5;">/* cards */</span>
+<span class="key">--radius-lg:</span>  <span class="val">12px</span>  <span style="opacity:0.5;">/* containers */</span>
+<span class="key">--radius-pill:</span> <span class="val">100px</span> <span style="opacity:0.5;">/* lang toggle, chips */</span>
+
+<span style="opacity:0.5;">/* Standard padding inside content: 18px 22px */</span>
+<span style="opacity:0.5;">/* Field gap: 12px / Section gap: 22-28px */</span></pre>
+
+```
+</div>
+
+<div class="tokens-block">
+  <div class="tokens-block-title">◆ Splash → welcome handoff</div>
+```
+
+<pre><span style="opacity:0.5;">/* Splash exits at: 4.6s */</span>
+<span style="opacity:0.5;">/* Welcome fades in at: 4.85s */</span>
+<span class="key">animation:</span> welcome-in <span class="val">0.4s ease-out 4.85s forwards;</span>
+
+<span style="opacity:0.5;">/* Headline + subtitle stagger: */</span>
+<span style="opacity:0.5;">/* - Headline: delay 0.0s after welcome-in */</span>
+<span style="opacity:0.5;">/* - Subtitle: delay 0.15s */</span>
+<span style="opacity:0.5;">/* - Buttons:  delay 0.35s */</span></pre>
+
+```
+</div>
+```
+
+  </div>
+</div>
+
+<!-- ═══════ COPY LIBRARY FOR i18n ═══════ -->
+
+<div class="copy-lib">
+  <div class="copy-lib-title">Copy library for i18n</div>
+  <div class="copy-lib-sub">Paste these into your locale JSON files: <code>locale/en.json</code>, <code>locale/fr.json</code>, etc.</div>
+
+  <div class="copy-row">
+    <div class="copy-lang">EN</div>
+    <div class="copy-headline">Stay <em style="font-style:italic; color: var(--gold-deep);">close.</em></div>
+    <div class="copy-sub">Any ocean. Any distance. Any time.</div>
+  </div>
+  <div class="copy-row">
+    <div class="copy-lang">FR</div>
+    <div class="copy-headline">Restez <em style="font-style:italic; color: var(--gold-deep);">proche.</em></div>
+    <div class="copy-sub">Tout océan. Toute distance. Tout instant.</div>
+  </div>
+  <div class="copy-row ar">
+    <div class="copy-lang">AR</div>
+    <div class="copy-headline">ابقَ <em style="font-style:italic; color: var(--gold-deep);">قريباً.</em></div>
+    <div class="copy-sub">أي محيط. أي مسافة. أي وقت.</div>
+  </div>
+  <div class="copy-row">
+    <div class="copy-lang">PT</div>
+    <div class="copy-headline">Fique <em style="font-style:italic; color: var(--gold-deep);">perto.</em></div>
+    <div class="copy-sub">Qualquer oceano. Qualquer distância. Qualquer hora.</div>
+  </div>
+</div>
+
+</body>
+</html>

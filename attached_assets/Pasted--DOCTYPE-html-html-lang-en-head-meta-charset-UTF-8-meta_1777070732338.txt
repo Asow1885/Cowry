@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cowry — Complete Signup Flow · LOCKED</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&family=Noto+Sans+Arabic:wght@400;500;600;700&family=Noto+Serif:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --green: #1a2e22;
+    --green-deep: #0f1f17;
+    --green-light: #25402f;
+    --cream: #f5ebd6;
+    --gold: #c9a04a;
+    --gold-light: #e4c070;
+    --gold-deep: #8a6b2a;
+    --ink: #0a0907;
+    --line-gold: rgba(201, 160, 74, 0.3);
+  }
+  html, body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Geist', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  body { padding: 48px 24px 80px; }
+
+.header {
+max-width: 1240px;
+margin: 0 auto 40px;
+padding-bottom: 20px;
+border-bottom: 1px solid rgba(10,9,7,0.12);
+}
+.header-label {
+font-family: ‘Geist Mono’, monospace;
+font-size: 11px;
+letter-spacing: 0.14em;
+text-transform: uppercase;
+color: var(–gold-deep);
+margin-bottom: 14px;
+}
+.header-title {
+font-family: ‘Fraunces’, serif;
+font-variation-settings: ‘opsz’ 144, ‘wght’ 400;
+font-size: 44px;
+line-height: 1;
+letter-spacing: -0.03em;
+margin-bottom: 16px;
+}
+.header-title em { font-style: italic; color: var(–gold-deep); }
+.header-body {
+font-size: 15px;
+line-height: 1.6;
+color: rgba(10,9,7,0.72);
+max-width: 72ch;
+}
+.header-body strong { color: var(–ink); font-weight: 500; }
+
+/* Section dividers */
+.section-divider {
+max-width: 1240px;
+margin: 56px auto 24px;
+padding-bottom: 14px;
+border-bottom: 1px solid rgba(10,9,7,0.12);
+}
+.section-label {
+font-family: ‘Geist Mono’, monospace;
+font-size: 11px;
+letter-spacing: 0.14em;
+color: var(–gold-deep);
+text-transform: uppercase;
+margin-bottom: 8px;
+}
+.section-title {
+font-family: ‘Fraunces’, serif;
+font-variation-settings: ‘opsz’ 72, ‘wght’ 400;
+font-size: 28px;
+letter-spacing: -0.02em;
+}
+.section-title em { font-style: italic; color: var(–gold-deep); }
+
+/* Phone grid */
+.flow {
+max-width: 1240px;
+margin: 0 auto;
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 18px;
+}
+.flow-3 {
+grid-template-columns: repeat(3, 1fr);
+max-width: 940px;
+}
+.screen-card {
+background: white;
+border-radius: 12px;
+overflow: hidden;
+box-shadow: 0 8px 30px -10px rgba(10,9,7,0.2);
+}
+.card-label {
+padding: 12px 16px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+border-bottom: 1px solid rgba(10,9,7,0.08);
+}
+.card-name {
+font-family: ‘Fraunces’, serif;
+font-variation-settings: ‘opsz’ 36, ‘wght’ 500;
+font-size: 13px;
+}
+.card-num {
+padding: 2px 7px;
+background: rgba(201, 160, 74, 0.15);
+border-radius: 10px;
+font-family: ‘Geist Mono’, monospace;
+font-size: 8px;
+letter-spacing: 0.1em;
+color: var(–gold-deep);
+}
+
+/* Phone */
+.phone {
+aspect-ratio: 9 / 19.5;
+background: var(–green);
+position: relative;
+overflow: hidden;
+color: var(–cream);
+}
+.status {
+position: absolute;
+top: 12px; left: 20px; right: 20px;
+display: flex;
+justify-content: space-between;
+font-family: ‘Geist Mono’, monospace;
+font-size: 10px;
+color: var(–cream);
+opacity: 0.8;
+z-index: 10;
+}
+.notch {
+position: absolute;
+top: 6px; left: 50%;
+transform: translateX(-50%);
+width: 60px; height: 14px;
+background: #000;
+border-radius: 20px;
+z-index: 15;
+}
+.content {
+position: absolute;
+top: 40px; bottom: 0;
+left: 0; right: 0;
+padding: 18px 22px 22px;
+display: flex;
+flex-direction: column;
+}
+
+/* Top row */
+.top-row {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 32px;
+}
+.top-row.welcome { margin-bottom: 64px; }
+.mini-logo { display: flex; align-items: center; gap: 6px; }
+.mini-logo svg { width: 20px; height: 20px; }
+.mini-logo-text {
+font-family: ‘Fraunces’, serif;
+font-variation-settings: ‘opsz’ 36, ‘wght’ 600;
+font-size: 12px;
+letter-spacing: 0.08em;
+color: var(–cream);
+}
+.lang-toggle {
+padding: 4px 9px;
+background: rgba(201, 160, 74, 0.15);
+border: 1px solid var(–line-gold);
+border-radius: 10px;
+font-family: ‘Geist Mono’, monospace;
+font-size: 9px;
+letter-spacing: 0.1em;
+color: var(–gold-light);
+}
+
+/* Step indicator */
+.step-dots {
+display: flex;
+gap: 5px;
+margin-bottom: 20px;
+}
+.step-dot {
+width: 22px;
+height: 2px;
+background: rgba(201,160,74,0.2);
+border-radius: 2px;
+}
+.step-dot.done { background: var(–gold); }
+.step-dot.active { background: var(–gold-light); }
+
+/* Headlines */
+.screen-headline-xl {
+font-family: ‘Fraunces’, serif;
+font-variation-settings: ‘opsz’ 144, ‘wght’ 380;
+font-size: 60px;
+line-height: 0.92;
+letter-spacing: -0.04em;
+margin-bottom: 22px;
+color: var(–cream);
+}
+.screen-headline-xl em {
+font-style: italic;
+color: var(–gold-light);
+font-variation-settings: ‘opsz’ 144, ‘wght’ 320;
+}
+
+.screen-headline-lg {
+font-family: ‘Fraunces’, serif;
+font-variation-settings: ‘opsz’ 144, ‘wght’ 380;
+font-size: 30px;
+line-height: 1.05;
+letter-spacing: -0.025em;
+margin-bottom: 12px;
+color: var(–cream);
+}
+.screen-headline-lg em {
+font-style: italic;
+color: var(–gold-light);
+font-variation-settings: ‘opsz’ 144, ‘wght’ 320;
+}
+
+/* Subtitle (italic gold) */
+.screen-sub {
+font-family: ‘Fraunces’, serif;
+font-variation-settings: ‘opsz’ 36, ‘wght’ 380;
+font-style: italic;
+font-size: 14px;
+line-height: 1.5;
+color: var(–gold);
+margin-bottom: 28px;
+}
+
+/* Smaller helper text */
+.helper {
+font-size: 11px;
+line-height: 1.5;
+color: rgba(245,235,214,0.6);
+margin-bottom: 22px;
+}
+
+/* Fields */
+.field { margin-bottom: 12px; }
+.field-label {
+font-family: ‘Geist Mono’, monospace;
+font-size: 8px;
+letter-spacing: 0.16em;
+color: var(–gold);
+text-transform: uppercase;
+margin-bottom: 5px;
+}
+.input {
+display: flex;
+align-items: center;
+padding: 11px 13px;
+background: var(–green-deep);
+border: 1px solid var(–line-gold);
+border-radius: 6px;
+gap: 8px;
+}
+.input.focused {
+border-color: var(–gold);
+background: var(–green-light);
+}
+.input-flag { font-size: 15px; }
+.input-code {
+font-family: ‘Geist Mono’, monospace;
+font-size: 11px;
+color: var(–cream);
+opacity: 0.85;
+}
+.input-text {
+font-size: 12px;
+color: var(–cream);
+flex: 1;
+}
+.input-text.placeholder { opacity: 0.5; }
+
+/* Buttons */
+.btn-primary {
+margin-top: auto;
+padding: 12px;
+background: var(–gold);
+color: var(–green-deep);
+border-radius: 6px;
+text-align: center;
+font-weight: 600;
+font-size: 12px;
+}
+.btn-primary.disabled {
+background: rgba(201,160,74,0.25);
+color: rgba(245,235,214,0.5);
+}
+.btn-secondary {
+margin-top: 8px;
+padding: 8px;
+text-align: center;
+font-size: 10px;
+color: var(–gold);
+}
+.terms {
+margin-top: 10px;
+font-size: 8px;
+line-height: 1.4;
+color: rgba(245,235,214,0.5);
+text-align: center;
+}
+.terms a { color: var(–gold); }
+
+/* SMS code */
+.code-row {
+display: flex;
+gap: 6px;
+justify-content: center;
+margin: 18px 0 14px;
+}
+.code-box {
+width: 38px;
+height: 46px;
+border: 1px solid var(–line-gold);
+background: var(–green-deep);
+border-radius: 6px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-family: ‘Fraunces’, serif;
+font-variation-settings: ‘opsz’ 72, ‘wght’ 500;
+font-size: 22px;
+color: var(–cream);
+}
+.code-box.active {
+border-color: var(–gold);
+background: var(–green-light);
+}
+.resend {
+text-align: center;
+font-size: 10px;
+color: var(–gold);
+letter-spacing: 0.06em;
+margin-bottom: 12px;
+}
+.resend.disabled {
+opacity: 0.5;
+}
+
+/* Country chips */
+.country-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 6px;
+margin-top: 8px;
+}
+.country-chip {
+display: flex;
+align-items: center;
+gap: 6px;
+padding: 8px 10px;
+background: var(–green-deep);
+border: 1px solid var(–line-gold);
+border-radius: 5px;
+font-size: 10px;
+}
+.country-chip.selected {
+border-color: var(–gold);
+background: var(–green-light);
+}
+.country-chip .flag { font-size: 12px; }
+.see-more {
+font-size: 10px;
+color: var(–gold);
+margin-top: 10px;
+letter-spacing: 0.04em;
+text-align: center;
+}
+
+/* Card description */
+.card-desc {
+padding: 14px 16px 18px;
+background: white;
+border-top: 1px solid rgba(10,9,7,0.06);
+}
+.card-desc-title {
+font-family: ‘Geist Mono’, monospace;
+font-size: 9px;
+letter-spacing: 0.14em;
+color: var(–gold-deep);
+text-transform: uppercase;
+margin-bottom: 6px;
+}
+.card-desc-body {
+font-size: 11.5px;
+line-height: 1.5;
+color: rgba(10,9,7,0.72);
+}
+.card-desc-body strong { color: var(–ink); font-weight: 500; }
+
+/* Copy library */
+.copy-lib {
+max-width: 1240px;
+margin: 56px auto 0;
+padding: 32px 36px;
+background: var(–ink);
+color: var(–cream);
+border-radius: 12px;
+}
+.copy-lib-title {
+font-family: ‘Fraunces’, serif;
+font-variation-settings: ‘opsz’ 72, ‘wght’ 400;
+font-size: 26px;
+margin-bottom: 6px;
+color: var(–cream);
+}
+.copy-lib-title em { font-style: italic; color: var(–gold); }
+.copy-lib-sub {
+font-size: 13px;
+color: rgba(245,235,214,0.65);
+margin-bottom: 28px;
+}
+.copy-section {
+margin-bottom: 28px;
+padding-bottom: 24px;
+border-bottom: 1px solid rgba(245,235,214,0.1);
+}
+.copy-section:last-child { border-bottom: none; }
+.copy-section-label {
+font-family: ‘Geist Mono’, monospace;
+font-size: 10px;
+letter-spacing: 0.14em;
+color: var(–gold-light);
+text-transform: uppercase;
+margin-bottom: 16px;
+}
+.copy-row {
+display: grid;
+grid-template-columns: 60px 1fr;
+gap: 16px;
+padding: 8px 0;
+align-items: baseline;
+border-bottom: 1px solid rgba(245,235,214,0.04);
+}
+.copy-row:last-child { border-bottom: none; }
+.copy-lang {
+font-family: ‘Geist Mono’, monospace;
+font-size: 10px;
+letter-spacing: 0.14em;
+color: var(–gold);
+text-transform: uppercase;
+}
+.copy-text {
+font-size: 13px;
+line-height: 1.5;
+color: var(–cream);
+}
+.copy-text.ar { direction: rtl; text-align: right; font-family: ‘Noto Sans Arabic’, sans-serif; }
+.copy-text strong { color: var(–gold-light); font-weight: 500; }
+.copy-text em { font-style: italic; color: var(–gold-light); }
+
+@media (max-width: 1100px) {
+.flow { grid-template-columns: repeat(2, 1fr); }
+.flow-3 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+body { padding: 24px 16px; }
+.flow, .flow-3 { grid-template-columns: 1fr; }
+.header-title { font-size: 30px; }
+.copy-row { grid-template-columns: 1fr; gap: 4px; }
+}
+</style>
+
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute;">
+  <defs>
+    <symbol id="crest" viewBox="0 0 32 32">
+      <ellipse cx="16" cy="8" rx="4" ry="5.5" fill="none" stroke="#c9a04a" stroke-width="1.1"/>
+      <line x1="16" y1="4.5" x2="16" y2="11.5" stroke="#c9a04a" stroke-width="0.7"/>
+      <ellipse cx="10" cy="22" rx="4" ry="5.5" fill="none" stroke="#c9a04a" stroke-width="1.1"/>
+      <line x1="10" y1="18.5" x2="10" y2="25.5" stroke="#c9a04a" stroke-width="0.7"/>
+      <ellipse cx="22" cy="22" rx="4" ry="5.5" fill="none" stroke="#c9a04a" stroke-width="1.1"/>
+      <line x1="22" y1="18.5" x2="22" y2="25.5" stroke="#c9a04a" stroke-width="0.7"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- HEADER -->
+
+<div class="header">
+  <div class="header-label">◆ Complete Signup Flow · LOCKED · For Replit</div>
+  <h1 class="header-title">Welcome → Phone → Code → <em>Profile.</em></h1>
+  <p class="header-body">Four screens. Roughly 60 seconds from tap to home. Each screen carries the same brand voice, the same typography, the same gold-on-green hierarchy. Step indicator at the top of every screen tells the user where they are in the flow.</p>
+</div>
+
+<!-- SECTION 1: ENGLISH FLOW -->
+
+<div class="section-divider">
+  <div class="section-label">◆ The full signup flow · English · 4 screens</div>
+  <h2 class="section-title">Same voice, <em>every screen.</em></h2>
+</div>
+
+<div class="flow">
+
+  <!-- SCREEN 1: WELCOME -->
+
+  <div class="screen-card">
+    <div class="card-label"><span class="card-name">Welcome</span><span class="card-num">01 / 04</span></div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="status"><span>9:41</span><span>●●● ▲ ■</span></div>
+      <div class="content">
+        <div class="top-row welcome">
+          <div class="mini-logo"><svg><use href="#crest"/></svg><div class="mini-logo-text">COWRY</div></div>
+          <div class="lang-toggle">EN ▾</div>
+        </div>
+        <h1 class="screen-headline-xl">Stay <em>close.</em></h1>
+        <p class="screen-sub">Any ocean. Any distance. Any time.</p>
+        <div style="flex:1"></div>
+        <div class="btn-primary">Create my account</div>
+        <div class="btn-secondary">I already have an account →</div>
+        <div class="terms">By continuing you agree to our <a>Terms</a> and <a>Privacy</a>.</div>
+      </div>
+    </div>
+    <div class="card-desc">
+      <div class="card-desc-title">◆ The brand thesis, centered</div>
+      <div class="card-desc-body">"Stay close." at 60px, italic "close" in gold. Subtitle one line, three vows. <strong>No transactional language anywhere.</strong></div>
+    </div>
+  </div>
+
+  <!-- SCREEN 2: PHONE -->
+
+  <div class="screen-card">
+    <div class="card-label"><span class="card-name">Phone number</span><span class="card-num">02 / 04</span></div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="status"><span>9:41</span><span>●●● ▲ ■</span></div>
+      <div class="content">
+        <div class="top-row">
+          <div class="mini-logo"><svg><use href="#crest"/></svg><div class="mini-logo-text">COWRY</div></div>
+          <div class="lang-toggle">EN ▾</div>
+        </div>
+        <div class="step-dots">
+          <div class="step-dot active"></div>
+          <div class="step-dot"></div>
+          <div class="step-dot"></div>
+          <div class="step-dot"></div>
+        </div>
+        <h1 class="screen-headline-lg">What's your<br><em>number?</em></h1>
+        <p class="helper">We'll text you a code. No password to remember — your phone is the key.</p>
+        <div class="field">
+          <div class="field-label">Mobile number</div>
+          <div class="input focused">
+            <span class="input-flag">🇺🇸</span>
+            <span class="input-code">+1</span>
+            <span class="input-text">(555) 012—3456</span>
+          </div>
+        </div>
+        <div style="flex:1"></div>
+        <div class="btn-primary">Send code →</div>
+        <div class="terms">Standard message rates apply.</div>
+      </div>
+    </div>
+    <div class="card-desc">
+      <div class="card-desc-title">◆ Phone-first, password-never</div>
+      <div class="card-desc-body">Country flag detected from device locale. <strong>One field, one button</strong> — friction goes to zero.</div>
+    </div>
+  </div>
+
+  <!-- SCREEN 3: SMS CODE -->
+
+  <div class="screen-card">
+    <div class="card-label"><span class="card-name">Verify</span><span class="card-num">03 / 04</span></div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="status"><span>9:41</span><span>●●● ▲ ■</span></div>
+      <div class="content">
+        <div class="top-row">
+          <div class="mini-logo"><svg><use href="#crest"/></svg><div class="mini-logo-text">COWRY</div></div>
+          <div class="lang-toggle">EN ▾</div>
+        </div>
+        <div class="step-dots">
+          <div class="step-dot done"></div>
+          <div class="step-dot active"></div>
+          <div class="step-dot"></div>
+          <div class="step-dot"></div>
+        </div>
+        <h1 class="screen-headline-lg">Check your<br><em>messages.</em></h1>
+        <p class="helper">We sent a 6-digit code to<br>+1 (555) 012—3456</p>
+        <div class="code-row">
+          <div class="code-box">4</div>
+          <div class="code-box">8</div>
+          <div class="code-box">2</div>
+          <div class="code-box active">1</div>
+          <div class="code-box"></div>
+          <div class="code-box"></div>
+        </div>
+        <div class="resend disabled">Resend code in 0:28</div>
+        <div style="flex:1"></div>
+        <div class="btn-primary disabled">Verify →</div>
+        <div class="btn-secondary">Change number</div>
+      </div>
+    </div>
+    <div class="card-desc">
+      <div class="card-desc-title">◆ Auto-fill on iOS</div>
+      <div class="card-desc-body">When the SMS arrives, iOS will auto-suggest the 6-digit code above the keyboard — <strong>one tap to fill all 6 boxes.</strong> Same for Android with SMS Retriever API.</div>
+    </div>
+  </div>
+
+  <!-- SCREEN 4: PROFILE -->
+
+  <div class="screen-card">
+    <div class="card-label"><span class="card-name">Your profile</span><span class="card-num">04 / 04</span></div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="status"><span>9:41</span><span>●●● ▲ ■</span></div>
+      <div class="content">
+        <div class="top-row">
+          <div class="mini-logo"><svg><use href="#crest"/></svg><div class="mini-logo-text">COWRY</div></div>
+          <div class="lang-toggle">EN ▾</div>
+        </div>
+        <div class="step-dots">
+          <div class="step-dot done"></div>
+          <div class="step-dot done"></div>
+          <div class="step-dot done"></div>
+          <div class="step-dot active"></div>
+        </div>
+        <h1 class="screen-headline-lg">Tell us a bit<br><em>about you.</em></h1>
+        <p class="helper">Two quick things so we can set up your Cowry.</p>
+        <div class="field">
+          <div class="field-label">Your name</div>
+          <div class="input">
+            <span class="input-text">Ashley Sow</span>
+          </div>
+        </div>
+        <div class="field">
+          <div class="field-label">Where are you from?</div>
+          <div class="country-grid">
+            <div class="country-chip selected"><span class="flag">🇬🇳</span> Guinea</div>
+            <div class="country-chip"><span class="flag">🇸🇳</span> Senegal</div>
+            <div class="country-chip"><span class="flag">🇲🇱</span> Mali</div>
+            <div class="country-chip"><span class="flag">🇨🇮</span> Côte d'Ivoire</div>
+          </div>
+          <div class="see-more">+ see all 195 countries</div>
+        </div>
+        <div style="flex:1"></div>
+        <div class="btn-primary">Finish setup →</div>
+      </div>
+    </div>
+    <div class="card-desc">
+      <div class="card-desc-title">◆ The brand thesis, asked aloud</div>
+      <div class="card-desc-body">"Where are you from?" is the question banks treat as a threat. <strong>Cowry treats it as identity</strong> — and pre-fills the home screen with the right currency and payout rail.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- SECTION 2: RETURNING USER -->
+
+<div class="section-divider">
+  <div class="section-label">◆ Returning user · 1 tap · under 2 seconds</div>
+  <h2 class="section-title">The <em>next</em> time.</h2>
+</div>
+
+<div class="flow flow-3">
+
+  <!-- FACE ID -->
+
+  <div class="screen-card">
+    <div class="card-label"><span class="card-name">Face ID</span><span class="card-num">Default</span></div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="status"><span>9:41</span><span>●●● ▲ ■</span></div>
+      <div class="content">
+        <div class="top-row" style="justify-content: center;">
+          <div class="mini-logo"><svg><use href="#crest"/></svg><div class="mini-logo-text">COWRY</div></div>
+        </div>
+        <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap: 22px;">
+          <div style="width: 100px; height: 100px; border: 2px solid var(--gold); border-radius: 18%; display: flex; align-items: center; justify-content: center; position: relative;">
+            <div style="position: absolute; inset: -8px; border: 1px solid var(--gold); border-radius: 22%; opacity: 0.3;"></div>
+            <div style="font-size: 42px; color: var(--gold); opacity: 0.9;">⬢</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-family: 'Fraunces', serif; font-variation-settings: 'opsz' 72, 'wght' 400; font-size: 22px; color: var(--cream); margin-bottom: 4px;">Welcome back, <em style="font-style: italic; color: var(--gold-light);">Ashley</em></div>
+            <div style="font-size: 11px; color: rgba(245,235,214,0.55);">Look at your phone to unlock.</div>
+          </div>
+        </div>
+        <div class="btn-secondary">Use PIN instead</div>
+      </div>
+    </div>
+    <div class="card-desc">
+      <div class="card-desc-title">◆ Calls them by name</div>
+      <div class="card-desc-body"><strong>Under 2 seconds</strong> from tap to home screen. The personal greeting (Italic gold "Ashley") makes every login feel earned.</div>
+    </div>
+  </div>
+
+  <!-- PIN -->
+
+  <div class="screen-card">
+    <div class="card-label"><span class="card-name">PIN</span><span class="card-num">Backup</span></div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="status"><span>9:41</span><span>●●● ▲ ■</span></div>
+      <div class="content">
+        <div class="top-row" style="justify-content: center;">
+          <div class="mini-logo"><svg><use href="#crest"/></svg><div class="mini-logo-text">COWRY</div></div>
+        </div>
+        <div style="text-align: center; margin-top: 8px;">
+          <div style="font-family: 'Fraunces', serif; font-variation-settings: 'opsz' 72, 'wght' 400; font-size: 18px; color: var(--cream); margin-bottom: 2px;">Enter your <em style="font-style: italic; color: var(--gold-light);">6-digit PIN</em></div>
+          <div style="font-size: 10px; color: rgba(245,235,214,0.55);">Welcome back, Ashley.</div>
+        </div>
+        <div style="display: flex; gap: 9px; justify-content: center; margin: 20px 0;">
+          <div style="width:9px;height:9px;border-radius:50%;background:var(--gold);"></div>
+          <div style="width:9px;height:9px;border-radius:50%;background:var(--gold);"></div>
+          <div style="width:9px;height:9px;border-radius:50%;background:var(--gold);"></div>
+          <div style="width:9px;height:9px;border-radius:50%;background:var(--gold);"></div>
+          <div style="width:9px;height:9px;border-radius:50%;border:1.5px solid var(--gold);"></div>
+          <div style="width:9px;height:9px;border-radius:50%;border:1.5px solid var(--gold);"></div>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; width: 86%; margin: 0 auto;">
+          <div style="padding: 11px 0; text-align: center; font-family: 'Fraunces', serif; font-size: 22px; color: var(--cream); border-radius: 50%; background: rgba(245,235,214,0.04);">1</div>
+          <div style="padding: 11px 0; text-align: center; font-family: 'Fraunces', serif; font-size: 22px; color: var(--cream); border-radius: 50%; background: rgba(245,235,214,0.04);">2<span style="display:block; font-family:'Geist'; font-size: 6px; letter-spacing:0.14em; color:rgba(245,235,214,0.5); margin-top:-3px;">ABC</span></div>
+          <div style="padding: 11px 0; text-align: center; font-family: 'Fraunces', serif; font-size: 22px; color: var(--cream); border-radius: 50%; background: rgba(245,235,214,0.04);">3<span style="display:block; font-family:'Geist'; font-size: 6px; letter-spacing:0.14em; color:rgba(245,235,214,0.5); margin-top:-3px;">DEF</span></div>
+          <div style="padding: 11px 0; text-align: center; font-family: 'Fraunces', serif; font-size: 22px; color: var(--cream); border-radius: 50%; background: rgba(245,235,214,0.04);">4<span style="display:block; font-family:'Geist'; font-size: 6px; letter-spacing:0.14em; color:rgba(245,235,214,0.5); margin-top:-3px;">GHI</span></div>
+          <div style="padding: 11px 0; text-align: center; font-family: 'Fraunces', serif; font-size: 22px; color: var(--cream); border-radius: 50%; background: rgba(245,235,214,0.04);">5<span style="display:block; font-family:'Geist'; font-size: 6px; letter-spacing:0.14em; color:rgba(245,235,214,0.5); margin-top:-3px;">JKL</span></div>
+          <div style="padding: 11px 0; text-align: center; font-family: 'Fraunces', serif; font-size: 22px; color: var(--cream); border-radius: 50%; background: rgba(245,235,214,0.04);">6<span style="display:block; font-family:'Geist'; font-size: 6px; letter-spacing:0.14em; color:rgba(245,235,214,0.5); margin-top:-3px;">MNO</span></div>
+          <div style="padding: 11px 0; text-align: center; font-family: 'Fraunces', serif; font-size: 22px; color: var(--cream); border-radius: 50%; background: rgba(245,235,214,0.04);">7<span style="display:block; font-family:'Geist'; font-size: 6px; letter-spacing:0.14em; color:rgba(245,235,214,0.5); margin-top:-3px;">PQRS</span></div>
+          <div style="padding: 11px 0; text-align: center; font-family: 'Fraunces', serif; font-size: 22px; color: var(--cream); border-radius: 50%; background: rgba(245,235,214,0.04);">8<span style="display:block; font-family:'Geist'; font-size: 6px; letter-spacing:0.14em; color:rgba(245,235,214,0.5); margin-top:-3px;">TUV</span></div>
+          <div style="padding: 11px 0; text-align: center; font-family: 'Fraunces', serif; font-size: 22px; color: var(--cream); border-radius: 50%; background: rgba(245,235,214,0.04);">9<span style="display:block; font-family:'Geist'; font-size: 6px; letter-spacing:0.14em; color:rgba(245,235,214,0.5); margin-top:-3px;">WXYZ</span></div>
+          <div></div>
+          <div style="padding: 11px 0; text-align: center; font-family: 'Fraunces', serif; font-size: 22px; color: var(--cream); border-radius: 50%; background: rgba(245,235,214,0.04);">0</div>
+          <div style="padding: 11px 0; text-align: center; font-size: 14px; color: var(--cream); border-radius: 50%; background: rgba(245,235,214,0.04);">⌫</div>
+        </div>
+        <div class="btn-secondary" style="margin-top: 8px;">Forgot PIN?</div>
+      </div>
+    </div>
+    <div class="card-desc">
+      <div class="card-desc-title">◆ 6 digits, banking-grade</div>
+      <div class="card-desc-body">Triggered when Face ID fails — mask, camera, lighting. Six digits not four — the same security tier as Chase, Wise, Revolut.</div>
+    </div>
+  </div>
+
+  <!-- HOME (after login) -->
+
+  <div class="screen-card">
+    <div class="card-label"><span class="card-name">Home</span><span class="card-num">→ Unlocked</span></div>
+    <div class="phone" style="background: var(--cream); color: var(--ink);">
+      <div class="notch"></div>
+      <div class="status" style="color: var(--ink); opacity: 0.6;"><span>9:41</span><span>●●● ▲ ■</span></div>
+      <div class="content">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px;">
+          <div style="font-family: 'Fraunces', serif; font-variation-settings: 'opsz' 72, 'wght' 500; font-size: 18px; color: var(--ink);">Hello, Ashley</div>
+          <div style="width: 30px; height: 30px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 11px; font-weight: 600;">AS</div>
+        </div>
+        <div style="font-family: 'Geist Mono', monospace; font-size: 8px; letter-spacing: 0.16em; color: var(--gold-deep); margin-bottom: 6px; text-transform: uppercase;">Your balance</div>
+        <div style="font-family: 'Fraunces', serif; font-variation-settings: 'opsz' 144, 'wght' 380; font-size: 32px; color: var(--ink); line-height: 1; margin-bottom: 4px;">$1,240.00</div>
+        <div style="font-size: 10px; color: rgba(10,9,7,0.5); margin-bottom: 28px;">≈ 10,721,840 GNF</div>
+        <div style="background: var(--green); color: var(--cream); padding: 14px; border-radius: 10px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-family: 'Fraunces', serif; font-size: 14px; margin-bottom: 2px;">Send to <em style="font-style: italic; color: var(--gold-light);">Mama</em></div>
+            <div style="font-size: 8px; color: rgba(245,235,214,0.6); letter-spacing: 0.1em;">🇬🇳 ORANGE MONEY · CONAKRY</div>
+          </div>
+          <div style="font-size: 16px; color: var(--gold);">→</div>
+        </div>
+        <div style="background: rgba(10,9,7,0.04); padding: 12px; border-radius: 10px; font-size: 10px; color: rgba(10,9,7,0.7);">
+          <span style="color: var(--gold-deep); font-weight: 500;">+ Add someone to stay close to</span>
+        </div>
+        <div style="flex:1"></div>
+        <div style="display: flex; gap: 6px; font-size: 9px; color: rgba(10,9,7,0.5); justify-content: space-around; border-top: 1px solid rgba(10,9,7,0.08); padding-top: 10px;">
+          <span style="color: var(--gold-deep); font-weight: 500;">Home</span>
+          <span>Activity</span>
+          <span>eSIM</span>
+          <span>You</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-desc">
+      <div class="card-desc-title">◆ The threshold moment</div>
+      <div class="card-desc-body">Dark vault unlocks to cream light. Note "Add someone to stay close to" — every micro-copy reinforces the brand thesis.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- COPY LIBRARY -->
+
+<div class="copy-lib">
+  <div class="copy-lib-title">Complete copy library — <em>for i18n</em></div>
+  <div class="copy-lib-sub">Every string from every screen, in all four languages. Drop into <code>locale/[lang].json</code> in your Replit project. Use <code>t('key.name')</code> in your code, never hardcode.</div>
+
+  <!-- WELCOME -->
+
+  <div class="copy-section">
+    <div class="copy-section-label">◆ Screen 01 — Welcome</div>
+    <div class="copy-row"><div class="copy-lang">Key</div><div class="copy-text" style="color:var(--gold-light); font-family:'Geist Mono'; font-size:11px;">welcome.headline</div></div>
+    <div class="copy-row"><div class="copy-lang">EN</div><div class="copy-text">Stay <em>close.</em></div></div>
+    <div class="copy-row"><div class="copy-lang">FR</div><div class="copy-text">Restez <em>proche.</em></div></div>
+    <div class="copy-row"><div class="copy-lang">AR</div><div class="copy-text ar">ابقَ <em>قريباً.</em></div></div>
+    <div class="copy-row"><div class="copy-lang">PT</div><div class="copy-text">Fique <em>perto.</em></div></div>
+    <div class="copy-row" style="margin-top:10px;"><div class="copy-lang">Key</div><div class="copy-text" style="color:var(--gold-light); font-family:'Geist Mono'; font-size:11px;">welcome.subtitle</div></div>
+    <div class="copy-row"><div class="copy-lang">EN</div><div class="copy-text">Any ocean. Any distance. Any time.</div></div>
+    <div class="copy-row"><div class="copy-lang">FR</div><div class="copy-text">Tout océan. Toute distance. Tout instant.</div></div>
+    <div class="copy-row"><div class="copy-lang">AR</div><div class="copy-text ar">أي محيط. أي مسافة. أي وقت.</div></div>
+    <div class="copy-row"><div class="copy-lang">PT</div><div class="copy-text">Qualquer oceano. Qualquer distância. Qualquer hora.</div></div>
+    <div class="copy-row" style="margin-top:10px;"><div class="copy-lang">Key</div><div class="copy-text" style="color:var(--gold-light); font-family:'Geist Mono'; font-size:11px;">welcome.cta_primary</div></div>
+    <div class="copy-row"><div class="copy-lang">EN</div><div class="copy-text">Create my account</div></div>
+    <div class="copy-row"><div class="copy-lang">FR</div><div class="copy-text">Créer mon compte</div></div>
+    <div class="copy-row"><div class="copy-lang">AR</div><div class="copy-text ar">إنشاء حسابي</div></div>
+    <div class="copy-row"><div class="copy-lang">PT</div><div class="copy-text">Criar a minha conta</div></div>
+    <div class="copy-row" style="margin-top:10px;"><div class="copy-lang">Key</div><div class="copy-text" style="color:var(--gold-light); font-family:'Geist Mono'; font-size:11px;">welcome.cta_secondary</div></div>
+    <div class="copy-row"><div class="copy-lang">EN</div><div class="copy-text">I already have an account →</div></div>
+    <div class="copy-row"><div class="copy-lang">FR</div><div class="copy-text">J'ai déjà un compte →</div></div>
+    <div class="copy-row"><div class="copy-lang">AR</div><div class="copy-text ar">← لدي حساب بالفعل</div></div>
+    <div class="copy-row"><div class="copy-lang">PT</div><div class="copy-text">Já tenho uma conta →</div></div>
+  </div>
+
+  <!-- PHONE -->
+
+  <div class="copy-section">
+    <div class="copy-section-label">◆ Screen 02 — Phone number</div>
+    <div class="copy-row"><div class="copy-lang">Key</div><div class="copy-text" style="color:var(--gold-light); font-family:'Geist Mono'; font-size:11px;">phone.headline</div></div>
+    <div class="copy-row"><div class="copy-lang">EN</div><div class="copy-text">What's your <em>number?</em></div></div>
+    <div class="copy-row"><div class="copy-lang">FR</div><div class="copy-text">Quel est votre <em>numéro?</em></div></div>
+    <div class="copy-row"><div class="copy-lang">AR</div><div class="copy-text ar">ما <em>رقمك؟</em></div></div>
+    <div class="copy-row"><div class="copy-lang">PT</div><div class="copy-text">Qual é o seu <em>número?</em></div></div>
+    <div class="copy-row" style="margin-top:10px;"><div class="copy-lang">Key</div><div class="copy-text" style="color:var(--gold-light); font-family:'Geist Mono'; font-size:11px;">phone.helper</div></div>
+    <div class="copy-row"><div class="copy-lang">EN</div><div class="copy-text">We'll text you a code. No password to remember — your phone is the key.</div></div>
+    <div class="copy-row"><div class="copy-lang">FR</div><div class="copy-text">Nous vous enverrons un code. Aucun mot de passe à retenir — votre téléphone est la clé.</div></div>
+    <div class="copy-row"><div class="copy-lang">AR</div><div class="copy-text ar">سنرسل لك رمزاً. لا حاجة لكلمة مرور — هاتفك هو المفتاح.</div></div>
+    <div class="copy-row"><div class="copy-lang">PT</div><div class="copy-text">Enviaremos um código por SMS. Sem palavra-passe — o seu telemóvel é a chave.</div></div>
+    <div class="copy-row" style="margin-top:10px;"><div class="copy-lang">Key</div><div class="copy-text" style="color:var(--gold-light); font-family:'Geist Mono'; font-size:11px;">phone.cta</div></div>
+    <div class="copy-row"><div class="copy-lang">EN</div><div class="copy-text">Send code →</div></div>
+    <div class="copy-row"><div class="copy-lang">FR</div><div class="copy-text">Envoyer le code →</div></div>
+    <div class="copy-row"><div class="copy-lang">AR</div><div class="copy-text ar">← إرسال الرمز</div></div>
+    <div class="copy-row"><div class="copy-lang">PT</div><div class="copy-text">Enviar código →</div></div>
+  </div>
+
+  <!-- VERIFY -->
+
+  <div class="copy-section">
+    <div class="copy-section-label">◆ Screen 03 — Verify code</div>
+    <div class="copy-row"><div class="copy-lang">Key</div><div class="copy-text" style="color:var(--gold-light); font-family:'Geist Mono'; font-size:11px;">verify.headline</div></div>
+    <div class="copy-row"><div class="copy-lang">EN</div><div class="copy-text">Check your <em>messages.</em></div></div>
+    <div class="copy-row"><div class="copy-lang">FR</div><div class="copy-text">Vérifiez vos <em>messages.</em></div></div>
+    <div class="copy-row"><div class="copy-lang">AR</div><div class="copy-text ar">تحقق من <em>رسائلك.</em></div></div>
+    <div class="copy-row"><div class="copy-lang">PT</div><div class="copy-text">Veja as suas <em>mensagens.</em></div></div>
+    <div class="copy-row" style="margin-top:10px;"><div class="copy-lang">Key</div><div class="copy-text" style="color:var(--gold-light); font-family:'Geist Mono'; font-size:11px;">verify.cta</div></div>
+    <div class="copy-row"><div class="copy-lang">EN</div><div class="copy-text">Verify →</div></div>
+    <div class="copy-row"><div class="copy-lang">FR</div><div class="copy-text">Vérifier →</div></div>
+    <div class="copy-row"><div class="copy-lang">AR</div><div class="copy-text ar">← تحقق</div></div>
+    <div class="copy-row"><div class="copy-lang">PT</div><div class="copy-text">Verificar →</div></div>
+  </div>
+
+  <!-- PROFILE -->
+
+  <div class="copy-section">
+    <div class="copy-section-label">◆ Screen 04 — Profile</div>
+    <div class="copy-row"><div class="copy-lang">Key</div><div class="copy-text" style="color:var(--gold-light); font-family:'Geist Mono'; font-size:11px;">profile.headline</div></div>
+    <div class="copy-row"><div class="copy-lang">EN</div><div class="copy-text">Tell us a bit <em>about you.</em></div></div>
+    <div class="copy-row"><div class="copy-lang">FR</div><div class="copy-text">Parlez-nous un peu <em>de vous.</em></div></div>
+    <div class="copy-row"><div class="copy-lang">AR</div><div class="copy-text ar">أخبرنا قليلاً <em>عن نفسك.</em></div></div>
+    <div class="copy-row"><div class="copy-lang">PT</div><div class="copy-text">Conte-nos um pouco <em>sobre si.</em></div></div>
+    <div class="copy-row" style="margin-top:10px;"><div class="copy-lang">Key</div><div class="copy-text" style="color:var(--gold-light); font-family:'Geist Mono'; font-size:11px;">profile.country_label</div></div>
+    <div class="copy-row"><div class="copy-lang">EN</div><div class="copy-text">Where are you from?</div></div>
+    <div class="copy-row"><div class="copy-lang">FR</div><div class="copy-text">D'où venez-vous?</div></div>
+    <div class="copy-row"><div class="copy-lang">AR</div><div class="copy-text ar">من أين أنت؟</div></div>
+    <div class="copy-row"><div class="copy-lang">PT</div><div class="copy-text">De onde é?</div></div>
+    <div class="copy-row" style="margin-top:10px;"><div class="copy-lang">Key</div><div class="copy-text" style="color:var(--gold-light); font-family:'Geist Mono'; font-size:11px;">profile.cta</div></div>
+    <div class="copy-row"><div class="copy-lang">EN</div><div class="copy-text">Finish setup →</div></div>
+    <div class="copy-row"><div class="copy-lang">FR</div><div class="copy-text">Terminer →</div></div>
+    <div class="copy-row"><div class="copy-lang">AR</div><div class="copy-text ar">← إنهاء</div></div>
+    <div class="copy-row"><div class="copy-lang">PT</div><div class="copy-text">Concluir →</div></div>
+  </div>
+
+</div>
+
+</body>
+</html>
