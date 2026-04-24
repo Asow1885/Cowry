@@ -1,0 +1,78 @@
+{
+  "welcome": {
+    "headlinePre": "Stay ",
+    "headlineEmphasis": "close.",
+    "subtitle": "Any ocean. Any distance. Any time.",
+    "cta_primary": "Create my account",
+    "cta_secondary": "I already have an account",
+    "terms": "By continuing you agree to our Terms and Privacy Policy."
+  },
+  "phone": {
+    "headlinePre": "What's your",
+    "headlineEmphasis": "number?",
+    "helper": "We'll text you a code. No password to remember — your phone is the key.",
+    "label": "Mobile number",
+    "cta": "Send code",
+    "terms": "Standard message rates apply."
+  },
+  "verify": {
+    "headlinePre": "Check your",
+    "headlineEmphasis": "messages.",
+    "helper_prefix": "We sent a 6-digit code to",
+    "resend_countdown": "Resend code in",
+    "resend_now": "Resend code",
+    "cta": "Verify",
+    "change_number": "Change number"
+  },
+  "profile": {
+    "headlinePre": "Tell us a bit",
+    "headlineEmphasis": "about you.",
+    "helper": "Two quick things so we can set up your Cowry.",
+    "name_label": "Your name",
+    "country_label": "Where are you from?",
+    "see_more": "+ see all 195 countries",
+    "cta": "Finish setup"
+  },
+  "returning": {
+    "welcome_pre": "Welcome back,",
+    "prompt": "Look at your phone to unlock.",
+    "use_pin": "Use PIN instead"
+  },
+  "pin": {
+    "headlinePre": "Enter your",
+    "headlineEmphasis": "6-digit PIN",
+    "subtext": "Welcome back",
+    "forgot": "Forgot PIN?"
+  },
+  "home": {
+    "greeting": "Hello,",
+    "balance_label": "Your balance",
+    "send_to": "Send to",
+    "add_someone": "Add someone to stay close to",
+    "equiv_prefix": "≈"
+  },
+  "activity": {
+    "title": "Activity",
+    "empty": "No transactions yet"
+  },
+  "esim": {
+    "title": "eSIM",
+    "subtitle": "Stay connected wherever you are"
+  },
+  "you": {
+    "title": "You"
+  },
+  "tabs": {
+    "home": "Home",
+    "activity": "Activity",
+    "esim": "eSIM",
+    "you": "You"
+  },
+  "lang": {
+    "en": "English",
+    "fr": "Français",
+    "ar": "العربية",
+    "pt": "Português"
+  },
+  "change_language": "Language"
+}

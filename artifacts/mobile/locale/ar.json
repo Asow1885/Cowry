@@ -1,0 +1,78 @@
+{
+  "welcome": {
+    "headlinePre": "ابقَ ",
+    "headlineEmphasis": "قريباً.",
+    "subtitle": "أي محيط. أي مسافة. أي وقت.",
+    "cta_primary": "إنشاء حسابي",
+    "cta_secondary": "لدي حساب بالفعل",
+    "terms": "بالمتابعة، فإنك توافق على الشروط وسياسة الخصوصية."
+  },
+  "phone": {
+    "headlinePre": "ما",
+    "headlineEmphasis": "رقمك؟",
+    "helper": "سنرسل لك رمزاً. لا حاجة لكلمة مرور — هاتفك هو المفتاح.",
+    "label": "رقم الهاتف",
+    "cta": "إرسال الرمز",
+    "terms": "تطبق رسوم الرسائل المعتادة."
+  },
+  "verify": {
+    "headlinePre": "تحقق من",
+    "headlineEmphasis": "رسائلك.",
+    "helper_prefix": "أرسلنا رمزاً من 6 أرقام إلى",
+    "resend_countdown": "إعادة الإرسال في",
+    "resend_now": "إعادة إرسال الرمز",
+    "cta": "تحقق",
+    "change_number": "تغيير الرقم"
+  },
+  "profile": {
+    "headlinePre": "أخبرنا قليلاً",
+    "headlineEmphasis": "عنك.",
+    "helper": "شيئان سريعان لإعداد كاوري الخاص بك.",
+    "name_label": "اسمك",
+    "country_label": "من أين أنت؟",
+    "see_more": "+ عرض جميع 195 دولة",
+    "cta": "إكمال الإعداد"
+  },
+  "returning": {
+    "welcome_pre": "مرحباً بعودتك،",
+    "prompt": "انظر إلى هاتفك لإلغاء القفل.",
+    "use_pin": "استخدام الرمز السري"
+  },
+  "pin": {
+    "headlinePre": "أدخل",
+    "headlineEmphasis": "الرمز السري المكون من 6 أرقام",
+    "subtext": "مرحباً بعودتك",
+    "forgot": "نسيت الرمز السري؟"
+  },
+  "home": {
+    "greeting": "مرحباً،",
+    "balance_label": "رصيدك",
+    "send_to": "إرسال إلى",
+    "add_someone": "أضف شخصاً للبقاء قريباً منه",
+    "equiv_prefix": "≈"
+  },
+  "activity": {
+    "title": "النشاط",
+    "empty": "لا توجد معاملات بعد"
+  },
+  "esim": {
+    "title": "شريحة eSIM",
+    "subtitle": "ابق متصلاً أينما كنت"
+  },
+  "you": {
+    "title": "أنت"
+  },
+  "tabs": {
+    "home": "الرئيسية",
+    "activity": "النشاط",
+    "esim": "eSIM",
+    "you": "أنت"
+  },
+  "lang": {
+    "en": "English",
+    "fr": "Français",
+    "ar": "العربية",
+    "pt": "Português"
+  },
+  "change_language": "اللغة"
+}

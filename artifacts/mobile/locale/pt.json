@@ -1,0 +1,78 @@
+{
+  "welcome": {
+    "headlinePre": "Fique ",
+    "headlineEmphasis": "perto.",
+    "subtitle": "Qualquer oceano. Qualquer distância. Qualquer hora.",
+    "cta_primary": "Criar a minha conta",
+    "cta_secondary": "Já tenho uma conta",
+    "terms": "Ao continuar, concorda com os nossos Termos e Política de privacidade."
+  },
+  "phone": {
+    "headlinePre": "Qual é o seu",
+    "headlineEmphasis": "número?",
+    "helper": "Enviaremos um código por SMS. Sem palavra-passe — o seu telemóvel é a chave.",
+    "label": "Número de telemóvel",
+    "cta": "Enviar código",
+    "terms": "Tarifas de mensagens normais aplicam-se."
+  },
+  "verify": {
+    "headlinePre": "Veja as suas",
+    "headlineEmphasis": "mensagens.",
+    "helper_prefix": "Enviámos um código de 6 dígitos para",
+    "resend_countdown": "Reenviar em",
+    "resend_now": "Reenviar código",
+    "cta": "Verificar",
+    "change_number": "Alterar número"
+  },
+  "profile": {
+    "headlinePre": "Conte-nos um pouco",
+    "headlineEmphasis": "sobre si.",
+    "helper": "Duas coisas rápidas para configurar o seu Cowry.",
+    "name_label": "O seu nome",
+    "country_label": "De onde é?",
+    "see_more": "+ ver todos os 195 países",
+    "cta": "Concluir configuração"
+  },
+  "returning": {
+    "welcome_pre": "Bem-vindo de volta,",
+    "prompt": "Olhe para o seu telemóvel para desbloquear.",
+    "use_pin": "Usar PIN"
+  },
+  "pin": {
+    "headlinePre": "Introduza o seu",
+    "headlineEmphasis": "PIN de 6 dígitos",
+    "subtext": "Bem-vindo de volta",
+    "forgot": "Esqueceu o PIN?"
+  },
+  "home": {
+    "greeting": "Olá,",
+    "balance_label": "O seu saldo",
+    "send_to": "Enviar para",
+    "add_someone": "Adicionar alguém para manter perto",
+    "equiv_prefix": "≈"
+  },
+  "activity": {
+    "title": "Atividade",
+    "empty": "Sem transações ainda"
+  },
+  "esim": {
+    "title": "eSIM",
+    "subtitle": "Mantenha-se ligado onde quer que esteja"
+  },
+  "you": {
+    "title": "Você"
+  },
+  "tabs": {
+    "home": "Início",
+    "activity": "Atividade",
+    "esim": "eSIM",
+    "you": "Você"
+  },
+  "lang": {
+    "en": "English",
+    "fr": "Français",
+    "ar": "العربية",
+    "pt": "Português"
+  },
+  "change_language": "Idioma"
+}

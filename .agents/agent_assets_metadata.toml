@@ -1,0 +1,8 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "w5RPbiKJ4RoNbwDce3lW0"
+uri = "file://artifacts/mobile/assets/images/icon.png"
+type = "image"
+title = "cowry app icon"
