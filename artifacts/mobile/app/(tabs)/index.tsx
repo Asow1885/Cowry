@@ -140,7 +140,7 @@ export default function HomeScreen() {
 
       <View style={styles.creamSection}>
         <Text style={[styles.sectionTitle, isRTL && styles.textRTL]}>
-          Live Rates
+          {t("home.live_rates")}
         </Text>
         <View style={styles.ratesGrid}>
           {RATES.map((r) => (
@@ -150,7 +150,7 @@ export default function HomeScreen() {
                 <Text style={styles.rateCode}>{r.code}</Text>
               </View>
               <Text style={styles.rateAmount}>{r.rate}</Text>
-              <Text style={styles.rateLabel}>per $1 USD</Text>
+              <Text style={styles.rateLabel}>{t("home.per_usd")}</Text>
             </View>
           ))}
         </View>
@@ -160,10 +160,8 @@ export default function HomeScreen() {
             <CowryCrest size={28} color="#c9a04a" />
           </View>
           <View style={styles.promoRight}>
-            <Text style={styles.promoTitle}>No fees today</Text>
-            <Text style={styles.promoSub}>
-              Zero transfer fees on your next send to West Africa
-            </Text>
+            <Text style={styles.promoTitle}>{t("home.promo_title")}</Text>
+            <Text style={styles.promoSub}>{t("home.promo_sub")}</Text>
           </View>
         </View>
       </View>
@@ -225,7 +223,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   balanceLabel: {
-    fontFamily: "Inter_400Regular",
+    fontFamily: "Geist_400Regular",
     fontSize: 11,
     letterSpacing: 1.5,
     color: "rgba(245, 235, 214, 0.55)",
@@ -239,7 +237,7 @@ const styles = StyleSheet.create({
     lineHeight: 56,
   },
   balanceHidden: {
-    fontFamily: "Inter_500Medium",
+    fontFamily: "Geist_500Medium",
     fontSize: 36,
     color: "rgba(245, 235, 214, 0.5)",
     lineHeight: 56,
@@ -252,7 +250,7 @@ const styles = StyleSheet.create({
   },
   sendSection: {},
   sendLabel: {
-    fontFamily: "Inter_500Medium",
+    fontFamily: "Geist_500Medium",
     fontSize: 10,
     letterSpacing: 1.5,
     color: "rgba(245, 235, 214, 0.55)",
@@ -287,13 +285,13 @@ const styles = StyleSheet.create({
   },
   recipientFlag: { fontSize: 20 },
   recipientName: {
-    fontFamily: "Inter_500Medium",
+    fontFamily: "Geist_500Medium",
     fontSize: 11,
     color: "#f5ebd6",
     textAlign: "center",
   },
   recipientLast: {
-    fontFamily: "Inter_400Regular",
+    fontFamily: "Geist_400Regular",
     fontSize: 10,
     color: "#c9a04a",
     textAlign: "center",
@@ -316,7 +314,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   addRecipientText: {
-    fontFamily: "Inter_400Regular",
+    fontFamily: "Geist_400Regular",
     fontSize: 10,
     color: "rgba(245, 235, 214, 0.45)",
     textAlign: "center",
@@ -352,7 +350,7 @@ const styles = StyleSheet.create({
   },
   rateFlag: { fontSize: 16 },
   rateCode: {
-    fontFamily: "Inter_500Medium",
+    fontFamily: "Geist_500Medium",
     fontSize: 11,
     color: "#6b6b66",
     letterSpacing: 0.5,
@@ -364,7 +362,7 @@ const styles = StyleSheet.create({
     letterSpacing: -0.5,
   },
   rateLabel: {
-    fontFamily: "Inter_400Regular",
+    fontFamily: "Geist_400Regular",
     fontSize: 10,
     color: "#6b6b66",
     marginTop: 1,
@@ -395,7 +393,7 @@ const styles = StyleSheet.create({
     letterSpacing: -0.3,
   },
   promoSub: {
-    fontFamily: "Inter_400Regular",
+    fontFamily: "Geist_400Regular",
     fontSize: 12,
     color: "rgba(245, 235, 214, 0.55)",
     lineHeight: 17,

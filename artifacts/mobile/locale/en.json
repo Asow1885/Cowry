@@ -29,6 +29,7 @@
     "headlineEmphasis": "about you.",
     "helper": "Two quick things so we can set up your Cowry.",
     "name_label": "Your name",
+    "name_placeholder": "Ashley Sow",
     "country_label": "Where are you from?",
     "see_more": "+ see all 195 countries",
     "cta": "Finish setup"
@@ -49,7 +50,11 @@
     "balance_label": "Your balance",
     "send_to": "Send to",
     "add_someone": "Add someone to stay close to",
-    "equiv_prefix": "≈"
+    "equiv_prefix": "≈",
+    "live_rates": "Live Rates",
+    "per_usd": "per $1 USD",
+    "promo_title": "No fees today",
+    "promo_sub": "Zero transfer fees on your next send to West Africa"
   },
   "activity": {
     "title": "Activity",
@@ -57,10 +62,16 @@
   },
   "esim": {
     "title": "eSIM",
-    "subtitle": "Stay connected wherever you are"
+    "subtitle": "Stay connected wherever you are",
+    "coming_soon": "Coming soon"
   },
   "you": {
-    "title": "You"
+    "title": "You",
+    "security": "Security",
+    "security_value": "PIN + Biometrics",
+    "notifications": "Notifications",
+    "notifications_value": "On",
+    "sign_out": "Sign out"
   },
   "tabs": {
     "home": "Home",
@@ -74,5 +85,9 @@
     "ar": "العربية",
     "pt": "Português"
   },
-  "change_language": "Language"
+  "change_language": "Language",
+  "not_found": {
+    "title": "Page not found",
+    "back": "Go back home"
+  }
 }

@@ -29,6 +29,7 @@
     "headlineEmphasis": "عنك.",
     "helper": "شيئان سريعان لإعداد كاوري الخاص بك.",
     "name_label": "اسمك",
+    "name_placeholder": "أشلي سو",
     "country_label": "من أين أنت؟",
     "see_more": "+ عرض جميع 195 دولة",
     "cta": "إكمال الإعداد"
@@ -49,7 +50,11 @@
     "balance_label": "رصيدك",
     "send_to": "إرسال إلى",
     "add_someone": "أضف شخصاً للبقاء قريباً منه",
-    "equiv_prefix": "≈"
+    "equiv_prefix": "≈",
+    "live_rates": "الأسعار المباشرة",
+    "per_usd": "مقابل $1 دولار",
+    "promo_title": "بدون رسوم اليوم",
+    "promo_sub": "تحويل بدون رسوم في إرسالك القادم إلى غرب أفريقيا"
   },
   "activity": {
     "title": "النشاط",
@@ -57,10 +62,16 @@
   },
   "esim": {
     "title": "شريحة eSIM",
-    "subtitle": "ابق متصلاً أينما كنت"
+    "subtitle": "ابق متصلاً أينما كنت",
+    "coming_soon": "قريباً"
   },
   "you": {
-    "title": "أنت"
+    "title": "أنت",
+    "security": "الأمان",
+    "security_value": "رمز سري + بيومترية",
+    "notifications": "الإشعارات",
+    "notifications_value": "مفعّلة",
+    "sign_out": "تسجيل الخروج"
   },
   "tabs": {
     "home": "الرئيسية",
@@ -74,5 +85,9 @@
     "ar": "العربية",
     "pt": "Português"
   },
-  "change_language": "اللغة"
+  "change_language": "اللغة",
+  "not_found": {
+    "title": "الصفحة غير موجودة",
+    "back": "العودة إلى الرئيسية"
+  }
 }

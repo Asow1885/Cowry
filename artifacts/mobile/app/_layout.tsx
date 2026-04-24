@@ -10,6 +10,15 @@ import {
   Fraunces_400Regular_Italic,
   Fraunces_600SemiBold,
 } from "@expo-google-fonts/fraunces";
+import {
+  Geist_400Regular,
+  Geist_500Medium,
+  Geist_600SemiBold,
+} from "@expo-google-fonts/geist";
+import {
+  NotoSansArabic_400Regular,
+  NotoSansArabic_700Bold,
+} from "@expo-google-fonts/noto-sans-arabic";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
@@ -31,6 +40,7 @@ function RootLayoutNav() {
       <Stack.Screen name="index" />
       <Stack.Screen name="(auth)" />
       <Stack.Screen name="(tabs)" />
+      <Stack.Screen name="+not-found" />
     </Stack>
   );
 }
@@ -44,6 +54,11 @@ export default function RootLayout() {
     Fraunces_400Regular,
     Fraunces_400Regular_Italic,
     Fraunces_600SemiBold,
+    Geist_400Regular,
+    Geist_500Medium,
+    Geist_600SemiBold,
+    NotoSansArabic_400Regular,
+    NotoSansArabic_700Bold,
   });
 
   useEffect(() => {

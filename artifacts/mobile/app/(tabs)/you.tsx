@@ -65,19 +65,19 @@ export default function YouScreen() {
           </View>
           <View style={styles.row}>
             <Feather name="shield" size={18} color="#8a6b2a" />
-            <Text style={styles.rowLabel}>Security</Text>
-            <Text style={styles.rowValue}>PIN + Biometrics</Text>
+            <Text style={styles.rowLabel}>{t("you.security")}</Text>
+            <Text style={styles.rowValue}>{t("you.security_value")}</Text>
           </View>
-          <View style={styles.row}>
+          <View style={[styles.row, { borderBottomWidth: 0 }]}>
             <Feather name="bell" size={18} color="#8a6b2a" />
-            <Text style={styles.rowLabel}>Notifications</Text>
-            <Text style={styles.rowValue}>On</Text>
+            <Text style={styles.rowLabel}>{t("you.notifications")}</Text>
+            <Text style={styles.rowValue}>{t("you.notifications_value")}</Text>
           </View>
         </View>
 
         <TouchableOpacity style={styles.signOutBtn} onPress={handleReset}>
           <Feather name="log-out" size={16} color="#8a6b2a" />
-          <Text style={styles.signOutText}>Sign out</Text>
+          <Text style={styles.signOutText}>{t("you.sign_out")}</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   avatarText: {
-    fontFamily: "Inter_600SemiBold",
+    fontFamily: "Geist_600SemiBold",
     fontSize: 22,
     color: "#c9a04a",
   },
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     letterSpacing: -0.5,
   },
   userPhone: {
-    fontFamily: "Inter_400Regular",
+    fontFamily: "Geist_400Regular",
     fontSize: 13,
     color: "#6b6b66",
   },
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
   },
   countryFlag: { fontSize: 14 },
   countryName: {
-    fontFamily: "Inter_500Medium",
+    fontFamily: "Geist_500Medium",
     fontSize: 12,
     color: "#8a6b2a",
   },
@@ -159,13 +159,13 @@ const styles = StyleSheet.create({
     borderBottomColor: "rgba(10, 9, 7, 0.06)",
   },
   rowLabel: {
-    fontFamily: "Inter_400Regular",
+    fontFamily: "Geist_400Regular",
     fontSize: 15,
     color: "#0a0907",
     flex: 1,
   },
   rowValue: {
-    fontFamily: "Inter_400Regular",
+    fontFamily: "Geist_400Regular",
     fontSize: 13,
     color: "#6b6b66",
   },
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
   },
   signOutText: {
-    fontFamily: "Inter_400Regular",
+    fontFamily: "Geist_400Regular",
     fontSize: 14,
     color: "#8a6b2a",
   },

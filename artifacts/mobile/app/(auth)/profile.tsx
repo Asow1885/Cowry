@@ -19,7 +19,7 @@ import { LangPicker } from "@/components/LangPicker";
 import { useApp, Language } from "@/context/AppContext";
 import { useTranslation } from "@/hooks/useTranslation";
 
-const COUNTRIES_PRIMARY = [
+const ALL_COUNTRIES = [
   { code: "GN", flag: "🇬🇳", name: "Guinea" },
   { code: "SN", flag: "🇸🇳", name: "Senegal" },
   { code: "ML", flag: "🇲🇱", name: "Mali" },
@@ -28,10 +28,6 @@ const COUNTRIES_PRIMARY = [
   { code: "GH", flag: "🇬🇭", name: "Ghana" },
   { code: "CM", flag: "🇨🇲", name: "Cameroon" },
   { code: "BF", flag: "🇧🇫", name: "Burkina Faso" },
-];
-
-const COUNTRIES_ALL = [
-  ...COUNTRIES_PRIMARY,
   { code: "MR", flag: "🇲🇷", name: "Mauritania" },
   { code: "TG", flag: "🇹🇬", name: "Togo" },
   { code: "BJ", flag: "🇧🇯", name: "Benin" },
@@ -40,7 +36,130 @@ const COUNTRIES_ALL = [
   { code: "LR", flag: "🇱🇷", name: "Liberia" },
   { code: "SL", flag: "🇸🇱", name: "Sierra Leone" },
   { code: "GM", flag: "🇬🇲", name: "Gambia" },
+  { code: "CV", flag: "🇨🇻", name: "Cape Verde" },
+  { code: "MA", flag: "🇲🇦", name: "Morocco" },
+  { code: "DZ", flag: "🇩🇿", name: "Algeria" },
+  { code: "TN", flag: "🇹🇳", name: "Tunisia" },
+  { code: "LY", flag: "🇱🇾", name: "Libya" },
+  { code: "EG", flag: "🇪🇬", name: "Egypt" },
+  { code: "SD", flag: "🇸🇩", name: "Sudan" },
+  { code: "ET", flag: "🇪🇹", name: "Ethiopia" },
+  { code: "KE", flag: "🇰🇪", name: "Kenya" },
+  { code: "TZ", flag: "🇹🇿", name: "Tanzania" },
+  { code: "UG", flag: "🇺🇬", name: "Uganda" },
+  { code: "RW", flag: "🇷🇼", name: "Rwanda" },
+  { code: "BI", flag: "🇧🇮", name: "Burundi" },
+  { code: "MZ", flag: "🇲🇿", name: "Mozambique" },
+  { code: "ZM", flag: "🇿🇲", name: "Zambia" },
+  { code: "ZW", flag: "🇿🇼", name: "Zimbabwe" },
+  { code: "MW", flag: "🇲🇼", name: "Malawi" },
+  { code: "BW", flag: "🇧🇼", name: "Botswana" },
+  { code: "NA", flag: "🇳🇦", name: "Namibia" },
+  { code: "ZA", flag: "🇿🇦", name: "South Africa" },
+  { code: "LS", flag: "🇱🇸", name: "Lesotho" },
+  { code: "SZ", flag: "🇸🇿", name: "Eswatini" },
+  { code: "AO", flag: "🇦🇴", name: "Angola" },
+  { code: "CD", flag: "🇨🇩", name: "DR Congo" },
+  { code: "CG", flag: "🇨🇬", name: "Congo" },
+  { code: "GA", flag: "🇬🇦", name: "Gabon" },
+  { code: "GQ", flag: "🇬🇶", name: "Equatorial Guinea" },
+  { code: "ST", flag: "🇸🇹", name: "São Tomé and Príncipe" },
+  { code: "CF", flag: "🇨🇫", name: "Central African Republic" },
+  { code: "TD", flag: "🇹🇩", name: "Chad" },
+  { code: "SS", flag: "🇸🇸", name: "South Sudan" },
+  { code: "ER", flag: "🇪🇷", name: "Eritrea" },
+  { code: "DJ", flag: "🇩🇯", name: "Djibouti" },
+  { code: "SO", flag: "🇸🇴", name: "Somalia" },
+  { code: "KM", flag: "🇰🇲", name: "Comoros" },
+  { code: "MG", flag: "🇲🇬", name: "Madagascar" },
+  { code: "SC", flag: "🇸🇨", name: "Seychelles" },
+  { code: "MU", flag: "🇲🇺", name: "Mauritius" },
+  { code: "US", flag: "🇺🇸", name: "United States" },
+  { code: "CA", flag: "🇨🇦", name: "Canada" },
+  { code: "GB", flag: "🇬🇧", name: "United Kingdom" },
+  { code: "FR", flag: "🇫🇷", name: "France" },
+  { code: "DE", flag: "🇩🇪", name: "Germany" },
+  { code: "IT", flag: "🇮🇹", name: "Italy" },
+  { code: "ES", flag: "🇪🇸", name: "Spain" },
+  { code: "PT", flag: "🇵🇹", name: "Portugal" },
+  { code: "NL", flag: "🇳🇱", name: "Netherlands" },
+  { code: "BE", flag: "🇧🇪", name: "Belgium" },
+  { code: "CH", flag: "🇨🇭", name: "Switzerland" },
+  { code: "AT", flag: "🇦🇹", name: "Austria" },
+  { code: "SE", flag: "🇸🇪", name: "Sweden" },
+  { code: "NO", flag: "🇳🇴", name: "Norway" },
+  { code: "DK", flag: "🇩🇰", name: "Denmark" },
+  { code: "FI", flag: "🇫🇮", name: "Finland" },
+  { code: "IE", flag: "🇮🇪", name: "Ireland" },
+  { code: "PL", flag: "🇵🇱", name: "Poland" },
+  { code: "CZ", flag: "🇨🇿", name: "Czech Republic" },
+  { code: "HU", flag: "🇭🇺", name: "Hungary" },
+  { code: "RO", flag: "🇷🇴", name: "Romania" },
+  { code: "BG", flag: "🇧🇬", name: "Bulgaria" },
+  { code: "GR", flag: "🇬🇷", name: "Greece" },
+  { code: "HR", flag: "🇭🇷", name: "Croatia" },
+  { code: "SK", flag: "🇸🇰", name: "Slovakia" },
+  { code: "SI", flag: "🇸🇮", name: "Slovenia" },
+  { code: "RS", flag: "🇷🇸", name: "Serbia" },
+  { code: "UA", flag: "🇺🇦", name: "Ukraine" },
+  { code: "RU", flag: "🇷🇺", name: "Russia" },
+  { code: "TR", flag: "🇹🇷", name: "Turkey" },
+  { code: "AU", flag: "🇦🇺", name: "Australia" },
+  { code: "NZ", flag: "🇳🇿", name: "New Zealand" },
+  { code: "JP", flag: "🇯🇵", name: "Japan" },
+  { code: "KR", flag: "🇰🇷", name: "South Korea" },
+  { code: "CN", flag: "🇨🇳", name: "China" },
+  { code: "IN", flag: "🇮🇳", name: "India" },
+  { code: "PK", flag: "🇵🇰", name: "Pakistan" },
+  { code: "BD", flag: "🇧🇩", name: "Bangladesh" },
+  { code: "LK", flag: "🇱🇰", name: "Sri Lanka" },
+  { code: "NP", flag: "🇳🇵", name: "Nepal" },
+  { code: "MM", flag: "🇲🇲", name: "Myanmar" },
+  { code: "TH", flag: "🇹🇭", name: "Thailand" },
+  { code: "VN", flag: "🇻🇳", name: "Vietnam" },
+  { code: "PH", flag: "🇵🇭", name: "Philippines" },
+  { code: "ID", flag: "🇮🇩", name: "Indonesia" },
+  { code: "MY", flag: "🇲🇾", name: "Malaysia" },
+  { code: "SG", flag: "🇸🇬", name: "Singapore" },
+  { code: "SA", flag: "🇸🇦", name: "Saudi Arabia" },
+  { code: "AE", flag: "🇦🇪", name: "UAE" },
+  { code: "QA", flag: "🇶🇦", name: "Qatar" },
+  { code: "KW", flag: "🇰🇼", name: "Kuwait" },
+  { code: "BH", flag: "🇧🇭", name: "Bahrain" },
+  { code: "OM", flag: "🇴🇲", name: "Oman" },
+  { code: "JO", flag: "🇯🇴", name: "Jordan" },
+  { code: "LB", flag: "🇱🇧", name: "Lebanon" },
+  { code: "IL", flag: "🇮🇱", name: "Israel" },
+  { code: "IQ", flag: "🇮🇶", name: "Iraq" },
+  { code: "IR", flag: "🇮🇷", name: "Iran" },
+  { code: "AF", flag: "🇦🇫", name: "Afghanistan" },
+  { code: "MX", flag: "🇲🇽", name: "Mexico" },
+  { code: "BR", flag: "🇧🇷", name: "Brazil" },
+  { code: "AR", flag: "🇦🇷", name: "Argentina" },
+  { code: "CO", flag: "🇨🇴", name: "Colombia" },
+  { code: "CL", flag: "🇨🇱", name: "Chile" },
+  { code: "PE", flag: "🇵🇪", name: "Peru" },
+  { code: "VE", flag: "🇻🇪", name: "Venezuela" },
+  { code: "EC", flag: "🇪🇨", name: "Ecuador" },
+  { code: "BO", flag: "🇧🇴", name: "Bolivia" },
+  { code: "PY", flag: "🇵🇾", name: "Paraguay" },
+  { code: "UY", flag: "🇺🇾", name: "Uruguay" },
+  { code: "GY", flag: "🇬🇾", name: "Guyana" },
+  { code: "SR", flag: "🇸🇷", name: "Suriname" },
+  { code: "GT", flag: "🇬🇹", name: "Guatemala" },
+  { code: "HN", flag: "🇭🇳", name: "Honduras" },
+  { code: "SV", flag: "🇸🇻", name: "El Salvador" },
+  { code: "NI", flag: "🇳🇮", name: "Nicaragua" },
+  { code: "CR", flag: "🇨🇷", name: "Costa Rica" },
+  { code: "PA", flag: "🇵🇦", name: "Panama" },
+  { code: "CU", flag: "🇨🇺", name: "Cuba" },
+  { code: "DO", flag: "🇩🇴", name: "Dominican Republic" },
+  { code: "HT", flag: "🇭🇹", name: "Haiti" },
+  { code: "JM", flag: "🇯🇲", name: "Jamaica" },
+  { code: "TT", flag: "🇹🇹", name: "Trinidad and Tobago" },
 ];
+
+const COUNTRIES_PRIMARY = ALL_COUNTRIES.slice(0, 8);
 
 function StepDots({ current }: { current: number }) {
   return (
@@ -80,16 +199,26 @@ export default function ProfileScreen() {
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
   const [showAll, setShowAll] = useState(false);
   const [langPickerVisible, setLangPickerVisible] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const topInset = Platform.OS === "web" ? 67 : insets.top;
   const bottomInset = Platform.OS === "web" ? 34 : insets.bottom;
 
-  const displayedCountries = showAll ? COUNTRIES_ALL : COUNTRIES_PRIMARY;
+  const displayedCountries = showAll
+    ? searchQuery.trim()
+      ? ALL_COUNTRIES.filter(
+          (c) =>
+            c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            c.code.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+      : ALL_COUNTRIES
+    : COUNTRIES_PRIMARY;
+
   const canFinish = name.trim().length > 0 && selectedCountry !== null;
 
   async function handleFinish() {
     if (!canFinish) return;
-    const country = COUNTRIES_ALL.find((c) => c.code === selectedCountry);
+    const country = ALL_COUNTRIES.find((c) => c.code === selectedCountry);
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     await setUser({
       name: name.trim(),
@@ -174,7 +303,7 @@ export default function ProfileScreen() {
                 style={[styles.textInput, isRTL && { textAlign: "right" }]}
                 value={name}
                 onChangeText={setName}
-                placeholder="Ashley Sow"
+                placeholder={t("profile.name_placeholder")}
                 placeholderTextColor="rgba(245, 235, 214, 0.3)"
                 returnKeyType="done"
                 autoCapitalize="words"
@@ -217,11 +346,26 @@ export default function ProfileScreen() {
               })}
             </View>
             {!showAll && (
-              <TouchableOpacity onPress={() => setShowAll(true)}>
+              <TouchableOpacity
+                onPress={() => setShowAll(true)}
+                style={{ marginTop: 10 }}
+              >
                 <Text style={[styles.seeMore, isRTL && styles.textRTL]}>
                   {t("profile.see_more")}
                 </Text>
               </TouchableOpacity>
+            )}
+            {showAll && (
+              <View style={styles.searchWrap}>
+                <TextInput
+                  style={[styles.searchInput, isRTL && { textAlign: "right" }]}
+                  value={searchQuery}
+                  onChangeText={setSearchQuery}
+                  placeholder="Search countries..."
+                  placeholderTextColor="rgba(245, 235, 214, 0.3)"
+                  returnKeyType="search"
+                />
+              </View>
             )}
           </View>
 
@@ -280,7 +424,7 @@ const styles = StyleSheet.create({
     borderColor: "rgba(201, 160, 74, 0.3)",
   },
   langToggleText: {
-    fontFamily: "Inter_500Medium",
+    fontFamily: "Geist_500Medium",
     fontSize: 10,
     letterSpacing: 1,
     color: "#e4c070",
@@ -298,7 +442,7 @@ const styles = StyleSheet.create({
     color: "#e4c070",
   },
   helper: {
-    fontFamily: "Inter_400Regular",
+    fontFamily: "Geist_400Regular",
     fontSize: 13,
     lineHeight: 19,
     color: "rgba(245, 235, 214, 0.55)",
@@ -307,7 +451,7 @@ const styles = StyleSheet.create({
   textRTL: { textAlign: "right", writingDirection: "rtl" },
   fieldWrap: { marginBottom: 20 },
   fieldLabel: {
-    fontFamily: "Inter_500Medium",
+    fontFamily: "Geist_500Medium",
     fontSize: 9,
     letterSpacing: 1.5,
     color: "#c9a04a",
@@ -323,7 +467,7 @@ const styles = StyleSheet.create({
     paddingVertical: 13,
   },
   textInput: {
-    fontFamily: "Inter_400Regular",
+    fontFamily: "Geist_400Regular",
     fontSize: 15,
     color: "#f5ebd6",
     padding: 0,
@@ -351,19 +495,33 @@ const styles = StyleSheet.create({
   },
   countryFlag: { fontSize: 15 },
   countryName: {
-    fontFamily: "Inter_400Regular",
+    fontFamily: "Geist_400Regular",
     fontSize: 12,
     color: "#f5ebd6",
     flex: 1,
   },
-  countryNameSelected: { color: "#e4c070", fontFamily: "Inter_500Medium" },
+  countryNameSelected: { color: "#e4c070", fontFamily: "Geist_500Medium" },
   seeMore: {
-    fontFamily: "Inter_400Regular",
+    fontFamily: "Geist_400Regular",
     fontSize: 12,
     color: "#c9a04a",
     textAlign: "center",
-    marginTop: 12,
     letterSpacing: 0.3,
+  },
+  searchWrap: {
+    marginTop: 10,
+    backgroundColor: "#0f1f17",
+    borderWidth: 1,
+    borderColor: "rgba(201, 160, 74, 0.2)",
+    borderRadius: 8,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+  },
+  searchInput: {
+    fontFamily: "Geist_400Regular",
+    fontSize: 14,
+    color: "#f5ebd6",
+    padding: 0,
   },
   btnPrimary: {
     backgroundColor: "#c9a04a",
@@ -373,7 +531,7 @@ const styles = StyleSheet.create({
   },
   btnDisabled: { backgroundColor: "rgba(201, 160, 74, 0.25)" },
   btnPrimaryText: {
-    fontFamily: "Inter_600SemiBold",
+    fontFamily: "Geist_600SemiBold",
     fontSize: 15,
     color: "#0f1f17",
   },

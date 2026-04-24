@@ -56,6 +56,9 @@
     "zod-validation-error": "^3.4.0"
   },
   "dependencies": {
-    "@expo-google-fonts/fraunces": "^0.4.1"
+    "@expo-google-fonts/fraunces": "^0.4.1",
+    "@expo-google-fonts/geist": "^0.4.1",
+    "@expo-google-fonts/noto-sans-arabic": "^0.4.3",
+    "expo-localization": "^17.0.8"
   }
 }

@@ -12,30 +12,33 @@ import { useTranslation } from "@/hooks/useTranslation";
 const MOCK_TRANSACTIONS = [
   {
     id: "1",
-    icon: "arrow-up-right",
+    icon: "arrow-up-right" as const,
     name: "Mama",
     detail: "Orange Money · Conakry",
     amount: "-$120.00",
     currency: "978,240 GNF",
     date: "Today",
+    isSend: true,
   },
   {
     id: "2",
-    icon: "arrow-down-left",
+    icon: "arrow-down-left" as const,
     name: "Received",
     detail: "Bank Transfer",
     amount: "+$500.00",
     currency: "USD",
     date: "Yesterday",
+    isSend: false,
   },
   {
     id: "3",
-    icon: "arrow-up-right",
+    icon: "arrow-up-right" as const,
     name: "Papa",
     detail: "Wave · Dakar",
     amount: "-$85.00",
     currency: "51,000 XOF",
     date: "Apr 20",
+    isSend: true,
   },
 ];
 
@@ -69,9 +72,9 @@ export default function ActivityScreen() {
             >
               <View style={styles.txIcon}>
                 <Feather
-                  name={tx.icon as "arrow-up-right" | "arrow-down-left"}
+                  name={tx.icon}
                   size={18}
-                  color={tx.icon === "arrow-up-right" ? "#c9a04a" : "#4ade80"}
+                  color={tx.isSend ? "#c9a04a" : "#4ade80"}
                 />
               </View>
               <View style={[styles.txMeta, isRTL && { alignItems: "flex-end" }]}>
@@ -82,7 +85,7 @@ export default function ActivityScreen() {
                 <Text
                   style={[
                     styles.txAmount,
-                    { color: tx.amount.startsWith("+") ? "#4ade80" : "#f5ebd6" },
+                    { color: tx.isSend ? "#f5ebd6" : "#4ade80" },
                   ]}
                 >
                   {tx.amount}
@@ -120,7 +123,7 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   emptyText: {
-    fontFamily: "Inter_400Regular",
+    fontFamily: "Geist_400Regular",
     fontSize: 15,
     color: "#6b6b66",
   },
@@ -144,24 +147,24 @@ const styles = StyleSheet.create({
   },
   txMeta: { flex: 1 },
   txName: {
-    fontFamily: "Inter_500Medium",
+    fontFamily: "Geist_500Medium",
     fontSize: 15,
     color: "#0a0907",
     marginBottom: 2,
   },
   txDetail: {
-    fontFamily: "Inter_400Regular",
+    fontFamily: "Geist_400Regular",
     fontSize: 12,
     color: "#6b6b66",
   },
   txRight: { alignItems: "flex-end" },
   txAmount: {
-    fontFamily: "Inter_600SemiBold",
+    fontFamily: "Geist_600SemiBold",
     fontSize: 15,
     marginBottom: 2,
   },
   txCurrency: {
-    fontFamily: "Inter_400Regular",
+    fontFamily: "Geist_400Regular",
     fontSize: 12,
     color: "#6b6b66",
   },

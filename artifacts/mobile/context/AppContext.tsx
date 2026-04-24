@@ -1,5 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { I18nManager, Platform } from "react-native";
+import * as Localization from "expo-localization";
 
 export type Language = "en" | "fr" | "ar" | "pt";
 
@@ -30,8 +32,32 @@ const STORAGE_KEYS = {
   ONBOARDED: "@cowry/onboarded",
 };
 
+function detectDeviceLanguage(): Language {
+  try {
+    const locales = Localization.getLocales();
+    const tag = locales[0]?.languageTag ?? "en";
+    const code = tag.split("-")[0].toLowerCase();
+    if (code === "fr") return "fr";
+    if (code === "ar") return "ar";
+    if (code === "pt") return "pt";
+    return "en";
+  } catch {
+    return "en";
+  }
+}
+
+function applyRTL(lang: Language) {
+  if (Platform.OS === "web") return;
+  const shouldBeRTL = lang === "ar";
+  if (I18nManager.isRTL !== shouldBeRTL) {
+    I18nManager.forceRTL(shouldBeRTL);
+  }
+}
+
 export function AppProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguageState] = useState<Language>("en");
+  const [language, setLanguageState] = useState<Language>(() =>
+    detectDeviceLanguage()
+  );
   const [user, setUserState] = useState<UserProfile | null>(null);
   const [isOnboarded, setIsOnboarded] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -44,7 +70,12 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
           AsyncStorage.getItem(STORAGE_KEYS.USER),
           AsyncStorage.getItem(STORAGE_KEYS.ONBOARDED),
         ]);
-        if (savedLang) setLanguageState(savedLang as Language);
+        if (savedLang) {
+          setLanguageState(savedLang as Language);
+          applyRTL(savedLang as Language);
+        } else {
+          applyRTL(language);
+        }
         if (savedUser) setUserState(JSON.parse(savedUser));
         if (savedOnboarded === "true") setIsOnboarded(true);
       } catch {
@@ -57,6 +88,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
   async function setLanguage(lang: Language) {
     setLanguageState(lang);
+    applyRTL(lang);
     await AsyncStorage.setItem(STORAGE_KEYS.LANGUAGE, lang);
   }
 

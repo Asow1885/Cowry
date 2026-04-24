@@ -61,6 +61,7 @@ export default function VerifyScreen() {
   const [countdown, setCountdown] = useState(RESEND_SECONDS);
   const [langPickerVisible, setLangPickerVisible] = useState(false);
   const inputRefs = useRef<(TextInput | null)[]>([]);
+  const hasNavigated = useRef(false);
 
   const topInset = Platform.OS === "web" ? 67 : insets.top;
   const bottomInset = Platform.OS === "web" ? 34 : insets.bottom;
@@ -80,11 +81,20 @@ export default function VerifyScreen() {
     const newCode = [...code];
     newCode[index] = digit;
     setCode(newCode);
+
     if (digit && index < CODE_LENGTH - 1) {
       inputRefs.current[index + 1]?.focus();
     }
-    if (newCode.every((d) => d !== "") && digit) {
+
+    if (newCode.every((d) => d !== "") && !hasNavigated.current) {
+      hasNavigated.current = true;
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      setTimeout(() => {
+        router.push({
+          pathname: "/(auth)/profile",
+          params: { phone },
+        });
+      }, 200);
     }
   }
 
@@ -97,7 +107,8 @@ export default function VerifyScreen() {
   const isFilled = code.every((d) => d !== "");
 
   function handleVerify() {
-    if (!isFilled) return;
+    if (!isFilled || hasNavigated.current) return;
+    hasNavigated.current = true;
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     router.push({
       pathname: "/(auth)/profile",
@@ -109,6 +120,7 @@ export default function VerifyScreen() {
     if (countdown > 0) return;
     setCode(Array(CODE_LENGTH).fill(""));
     setCountdown(RESEND_SECONDS);
+    hasNavigated.current = false;
     inputRefs.current[0]?.focus();
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   }
@@ -179,7 +191,6 @@ export default function VerifyScreen() {
               style={[
                 styles.codeBox,
                 digit !== "" && styles.codeBoxFilled,
-                inputRefs.current[i] && digit === "" && i === code.findIndex((d) => d === "") && styles.codeBoxActive,
               ]}
             >
               <TextInput
@@ -277,7 +288,7 @@ const styles = StyleSheet.create({
     borderColor: "rgba(201, 160, 74, 0.3)",
   },
   langToggleText: {
-    fontFamily: "Inter_500Medium",
+    fontFamily: "Geist_500Medium",
     fontSize: 10,
     letterSpacing: 1,
     color: "#e4c070",
@@ -295,14 +306,14 @@ const styles = StyleSheet.create({
     color: "#e4c070",
   },
   helper: {
-    fontFamily: "Inter_400Regular",
+    fontFamily: "Geist_400Regular",
     fontSize: 13,
     lineHeight: 19,
     color: "rgba(245, 235, 214, 0.55)",
     marginBottom: 28,
   },
   helperPhone: {
-    fontFamily: "Inter_500Medium",
+    fontFamily: "Geist_500Medium",
     color: "#f5ebd6",
   },
   textRTL: { textAlign: "right", writingDirection: "rtl" },
@@ -326,9 +337,6 @@ const styles = StyleSheet.create({
     borderColor: "#c9a04a",
     backgroundColor: "#25402f",
   },
-  codeBoxActive: {
-    borderColor: "#e4c070",
-  },
   codeInput: {
     fontFamily: "Fraunces_400Regular",
     fontSize: 24,
@@ -338,7 +346,7 @@ const styles = StyleSheet.create({
     padding: 0,
   },
   resend: {
-    fontFamily: "Inter_400Regular",
+    fontFamily: "Geist_400Regular",
     fontSize: 12,
     color: "#c9a04a",
     textAlign: "center",
@@ -354,13 +362,13 @@ const styles = StyleSheet.create({
   },
   btnDisabled: { backgroundColor: "rgba(201, 160, 74, 0.25)" },
   btnPrimaryText: {
-    fontFamily: "Inter_600SemiBold",
+    fontFamily: "Geist_600SemiBold",
     fontSize: 15,
     color: "#0f1f17",
   },
   btnSecondary: { paddingVertical: 12, alignItems: "center" },
   btnSecondaryText: {
-    fontFamily: "Inter_400Regular",
+    fontFamily: "Geist_400Regular",
     fontSize: 13,
     color: "#c9a04a",
   },

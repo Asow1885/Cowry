@@ -26,7 +26,7 @@ export default function EsimScreen() {
           <Feather name="wifi" size={36} color="#c9a04a" />
         </View>
         <Text style={styles.subtitle}>{t("esim.subtitle")}</Text>
-        <Text style={styles.comingSoon}>Coming soon</Text>
+        <Text style={styles.comingSoon}>{t("esim.coming_soon")}</Text>
       </View>
     </View>
   );
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     letterSpacing: -0.3,
   },
   comingSoon: {
-    fontFamily: "Inter_400Regular",
+    fontFamily: "Geist_400Regular",
     fontSize: 13,
     color: "#6b6b66",
     textAlign: "center",

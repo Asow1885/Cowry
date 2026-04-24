@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Language } from "@/context/AppContext";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface LangPickerProps {
   visible: boolean;
@@ -31,6 +32,7 @@ export function LangPicker({
   onClose,
 }: LangPickerProps) {
   const insets = useSafeAreaInsets();
+  const { t } = useTranslation();
 
   return (
     <Modal
@@ -47,7 +49,7 @@ export function LangPicker({
           ]}
         >
           <View style={styles.handle} />
-          <Text style={styles.title}>Language</Text>
+          <Text style={styles.title}>{t("change_language")}</Text>
           {LANGUAGES.map((lang) => {
             const isSelected = lang.code === currentLang;
             return (
@@ -136,13 +138,13 @@ const styles = StyleSheet.create({
     color: "#e4c070",
   },
   langArabic: {
-    fontFamily: "System",
+    fontFamily: "NotoSansArabic_400Regular",
     textAlign: "right",
   },
   langSub: {
     fontSize: 12,
     color: "rgba(245, 235, 214, 0.5)",
-    fontFamily: "Inter_400Regular",
+    fontFamily: "Geist_400Regular",
   },
   checkDot: {
     width: 8,

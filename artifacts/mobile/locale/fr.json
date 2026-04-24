@@ -29,6 +29,7 @@
     "headlineEmphasis": "qui vous êtes.",
     "helper": "Deux informations rapides pour configurer votre Cowry.",
     "name_label": "Votre nom",
+    "name_placeholder": "Ashley Sow",
     "country_label": "D'où venez-vous?",
     "see_more": "+ voir les 195 pays",
     "cta": "Terminer la configuration"
@@ -49,7 +50,11 @@
     "balance_label": "Votre solde",
     "send_to": "Envoyer à",
     "add_someone": "Ajouter quelqu'un à garder proche",
-    "equiv_prefix": "≈"
+    "equiv_prefix": "≈",
+    "live_rates": "Taux en direct",
+    "per_usd": "par $1 USD",
+    "promo_title": "Pas de frais aujourd'hui",
+    "promo_sub": "Zéro frais de transfert sur votre prochain envoi vers l'Afrique de l'Ouest"
   },
   "activity": {
     "title": "Activité",
@@ -57,10 +62,16 @@
   },
   "esim": {
     "title": "eSIM",
-    "subtitle": "Restez connecté où que vous soyez"
+    "subtitle": "Restez connecté où que vous soyez",
+    "coming_soon": "Bientôt disponible"
   },
   "you": {
-    "title": "Vous"
+    "title": "Vous",
+    "security": "Sécurité",
+    "security_value": "PIN + Biométrie",
+    "notifications": "Notifications",
+    "notifications_value": "Activées",
+    "sign_out": "Se déconnecter"
   },
   "tabs": {
     "home": "Accueil",
@@ -74,5 +85,9 @@
     "ar": "العربية",
     "pt": "Português"
   },
-  "change_language": "Langue"
+  "change_language": "Langue",
+  "not_found": {
+    "title": "Page introuvable",
+    "back": "Retour à l'accueil"
+  }
 }
