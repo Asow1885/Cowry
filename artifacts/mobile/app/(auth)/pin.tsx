@@ -56,7 +56,7 @@ export default function PinScreen() {
       if (newPin.length === PIN_LENGTH) {
         setTimeout(() => {
           Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-          router.replace("/(tabs)/");
+          router.replace("/(tabs)");
         }, 200);
       }
     }

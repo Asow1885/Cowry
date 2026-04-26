@@ -228,7 +228,7 @@ export default function ProfileScreen() {
       countryFlag: country?.flag ?? "",
     });
     await completeOnboarding();
-    router.replace("/(tabs)/");
+    router.replace("/(tabs)");
   }
 
   async function handleSelectLang(lang: Language) {

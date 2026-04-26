@@ -23,7 +23,7 @@ export default function ReturningScreen() {
 
   function handleBiometric() {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    router.replace("/(tabs)/");
+    router.replace("/(tabs)");
   }
 
   function handlePin() {
