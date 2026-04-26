@@ -17,7 +17,7 @@ import { useTranslation } from "@/hooks/useTranslation";
 
 export default function WelcomeScreen() {
   const { language, setLanguage } = useApp();
-  const { t, isRTL } = useTranslation();
+  const { t, isRTL, fonts } = useTranslation();
   const insets = useSafeAreaInsets();
   const [langPickerVisible, setLangPickerVisible] = useState(false);
 
@@ -64,7 +64,7 @@ export default function WelcomeScreen() {
             style={styles.langToggle}
             onPress={() => setLangPickerVisible(true)}
           >
-            <Text style={styles.langToggleText}>
+            <Text style={[styles.langToggleText, { fontFamily: fonts.bodyMed }]}>
               {language.toUpperCase()} ▾
             </Text>
           </Pressable>
@@ -91,7 +91,9 @@ export default function WelcomeScreen() {
             onPress={handleCreateAccount}
             activeOpacity={0.85}
           >
-            <Text style={styles.btnPrimaryText}>{t("welcome.cta_primary")}</Text>
+            <Text style={[styles.btnPrimaryText, { fontFamily: fonts.bodySemi }]}>
+              {t("welcome.cta_primary")}
+            </Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -99,13 +101,13 @@ export default function WelcomeScreen() {
             onPress={handleSignIn}
             activeOpacity={0.7}
           >
-            <Text style={styles.btnSecondaryText}>
+            <Text style={[styles.btnSecondaryText, { fontFamily: fonts.body }]}>
               {t("welcome.cta_secondary")}
               {!isRTL ? " →" : " ←"}
             </Text>
           </TouchableOpacity>
 
-          <Text style={[styles.terms, isRTL && styles.textRTL]}>
+          <Text style={[styles.terms, { fontFamily: fonts.body }, isRTL && styles.textRTL]}>
             {t("welcome.terms")}
           </Text>
         </View>
@@ -155,7 +157,6 @@ const styles = StyleSheet.create({
     borderColor: "rgba(201, 160, 74, 0.3)",
   },
   langToggleText: {
-    fontFamily: "Inter_500Medium",
     fontSize: 10,
     letterSpacing: 1,
     color: "#e4c070",
@@ -199,7 +200,6 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   btnPrimaryText: {
-    fontFamily: "Inter_600SemiBold",
     fontSize: 15,
     color: "#0f1f17",
   },
@@ -208,12 +208,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   btnSecondaryText: {
-    fontFamily: "Inter_400Regular",
     fontSize: 13,
     color: "#c9a04a",
   },
   terms: {
-    fontFamily: "Inter_400Regular",
     fontSize: 10,
     lineHeight: 15,
     color: "rgba(245, 235, 214, 0.4)",

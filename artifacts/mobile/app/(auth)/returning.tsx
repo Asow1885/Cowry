@@ -15,7 +15,7 @@ import { useTranslation } from "@/hooks/useTranslation";
 
 export default function ReturningScreen() {
   const { user } = useApp();
-  const { t, isRTL } = useTranslation();
+  const { t, isRTL, fonts } = useTranslation();
   const insets = useSafeAreaInsets();
 
   const topInset = Platform.OS === "web" ? 67 : insets.top;
@@ -60,14 +60,16 @@ export default function ReturningScreen() {
               {t("returning.welcome_pre")}{" "}
               <Text style={styles.greetingName}>{firstName}</Text>
             </Text>
-            <Text style={[styles.prompt, isRTL && styles.textRTL]}>
+            <Text style={[styles.prompt, { fontFamily: fonts.body }, isRTL && styles.textRTL]}>
               {t("returning.prompt")}
             </Text>
           </View>
         </View>
 
         <TouchableOpacity onPress={handlePin} style={styles.pinBtn}>
-          <Text style={styles.pinBtnText}>{t("returning.use_pin")}</Text>
+          <Text style={[styles.pinBtnText, { fontFamily: fonts.body }]}>
+            {t("returning.use_pin")}
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -126,7 +128,6 @@ const styles = StyleSheet.create({
     color: "#e4c070",
   },
   prompt: {
-    fontFamily: "Inter_400Regular",
     fontSize: 13,
     color: "rgba(245, 235, 214, 0.5)",
     textAlign: "center",
@@ -134,7 +135,6 @@ const styles = StyleSheet.create({
   textRTL: { textAlign: "right", writingDirection: "rtl" },
   pinBtn: { paddingVertical: 12 },
   pinBtnText: {
-    fontFamily: "Inter_400Regular",
     fontSize: 14,
     color: "#c9a04a",
     textAlign: "center",

@@ -1,4 +1,7 @@
 {
+  "splash": {
+    "tagline": "Riqueza Ancestral. Acesso Moderno."
+  },
   "welcome": {
     "headlinePre": "Fique ",
     "headlineEmphasis": "perto.",
@@ -31,6 +34,7 @@
     "name_label": "O seu nome",
     "name_placeholder": "Ashley Sow",
     "country_label": "De onde é?",
+    "search_placeholder": "Pesquisar países...",
     "see_more": "+ ver todos os 195 países",
     "cta": "Concluir configuração"
   },
@@ -58,7 +62,10 @@
   },
   "activity": {
     "title": "Atividade",
-    "empty": "Sem transações ainda"
+    "empty": "Sem transações ainda",
+    "tx_today": "Hoje",
+    "tx_yesterday": "Ontem",
+    "tx_received": "Recebido"
   },
   "esim": {
     "title": "eSIM",

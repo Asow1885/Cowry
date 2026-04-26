@@ -1,4 +1,7 @@
 {
+  "splash": {
+    "tagline": "ثروة عريقة. وصول حديث."
+  },
   "welcome": {
     "headlinePre": "ابقَ ",
     "headlineEmphasis": "قريباً.",
@@ -31,6 +34,7 @@
     "name_label": "اسمك",
     "name_placeholder": "أشلي سو",
     "country_label": "من أين أنت؟",
+    "search_placeholder": "ابحث عن دولة...",
     "see_more": "+ عرض جميع 195 دولة",
     "cta": "إكمال الإعداد"
   },
@@ -58,7 +62,10 @@
   },
   "activity": {
     "title": "النشاط",
-    "empty": "لا توجد معاملات بعد"
+    "empty": "لا توجد معاملات بعد",
+    "tx_today": "اليوم",
+    "tx_yesterday": "أمس",
+    "tx_received": "مُستلم"
   },
   "esim": {
     "title": "شريحة eSIM",

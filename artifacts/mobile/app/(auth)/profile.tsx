@@ -361,7 +361,7 @@ export default function ProfileScreen() {
                   style={[styles.searchInput, isRTL && { textAlign: "right" }]}
                   value={searchQuery}
                   onChangeText={setSearchQuery}
-                  placeholder="Search countries..."
+                  placeholder={t("profile.search_placeholder")}
                   placeholderTextColor="rgba(245, 235, 214, 0.3)"
                   returnKeyType="search"
                 />

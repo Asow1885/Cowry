@@ -13,6 +13,7 @@ import {
 import { router } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as Haptics from "expo-haptics";
+import * as Localization from "expo-localization";
 import { Ionicons } from "@expo/vector-icons";
 import { CowryCrest } from "@/components/CowryCrest";
 import { LangPicker } from "@/components/LangPicker";
@@ -20,24 +21,39 @@ import { useApp, Language } from "@/context/AppContext";
 import { useTranslation } from "@/hooks/useTranslation";
 
 const COUNTRY_CODES = [
-  { flag: "🇺🇸", code: "+1", name: "United States" },
-  { flag: "🇫🇷", code: "+33", name: "France" },
-  { flag: "🇬🇧", code: "+44", name: "United Kingdom" },
-  { flag: "🇬🇳", code: "+224", name: "Guinea" },
-  { flag: "🇸🇳", code: "+221", name: "Senegal" },
-  { flag: "🇲🇱", code: "+223", name: "Mali" },
-  { flag: "🇳🇬", code: "+234", name: "Nigeria" },
-  { flag: "🇬🇭", code: "+233", name: "Ghana" },
-  { flag: "🇨🇮", code: "+225", name: "Côte d'Ivoire" },
-  { flag: "🇨🇲", code: "+237", name: "Cameroon" },
-  { flag: "🇲🇦", code: "+212", name: "Morocco" },
-  { flag: "🇵🇹", code: "+351", name: "Portugal" },
+  { flag: "🇺🇸", code: "+1", name: "United States", region: "US" },
+  { flag: "🇫🇷", code: "+33", name: "France", region: "FR" },
+  { flag: "🇬🇧", code: "+44", name: "United Kingdom", region: "GB" },
+  { flag: "🇬🇳", code: "+224", name: "Guinea", region: "GN" },
+  { flag: "🇸🇳", code: "+221", name: "Senegal", region: "SN" },
+  { flag: "🇲🇱", code: "+223", name: "Mali", region: "ML" },
+  { flag: "🇳🇬", code: "+234", name: "Nigeria", region: "NG" },
+  { flag: "🇬🇭", code: "+233", name: "Ghana", region: "GH" },
+  { flag: "🇨🇮", code: "+225", name: "Côte d'Ivoire", region: "CI" },
+  { flag: "🇨🇲", code: "+237", name: "Cameroon", region: "CM" },
+  { flag: "🇲🇦", code: "+212", name: "Morocco", region: "MA" },
+  { flag: "🇵🇹", code: "+351", name: "Portugal", region: "PT" },
+  { flag: "🇧🇷", code: "+55", name: "Brazil", region: "BR" },
+  { flag: "🇩🇿", code: "+213", name: "Algeria", region: "DZ" },
+  { flag: "🇹🇳", code: "+216", name: "Tunisia", region: "TN" },
+  { flag: "🇪🇬", code: "+20", name: "Egypt", region: "EG" },
+  { flag: "🇨🇦", code: "+1", name: "Canada", region: "CA" },
+  { flag: "🇧🇪", code: "+32", name: "Belgium", region: "BE" },
+  { flag: "🇪🇸", code: "+34", name: "Spain", region: "ES" },
+  { flag: "🇮🇹", code: "+39", name: "Italy", region: "IT" },
 ];
 
-function getDefaultCountry(lang: Language) {
-  if (lang === "fr") return COUNTRY_CODES[1];
-  if (lang === "ar") return COUNTRY_CODES[10];
-  if (lang === "pt") return COUNTRY_CODES[11];
+function getDefaultCountry() {
+  try {
+    const locales = Localization.getLocales();
+    const regionCode = locales[0]?.regionCode ?? "";
+    if (regionCode) {
+      const match = COUNTRY_CODES.find((c) => c.region === regionCode.toUpperCase());
+      if (match) return match;
+    }
+  } catch {
+    // ignore
+  }
   return COUNTRY_CODES[0];
 }
 
@@ -72,9 +88,9 @@ const stepStyles = StyleSheet.create({
 
 export default function PhoneScreen() {
   const { language, setLanguage } = useApp();
-  const { t, isRTL } = useTranslation();
+  const { t, isRTL, fonts } = useTranslation();
   const insets = useSafeAreaInsets();
-  const [countryCode, setCountryCode] = useState(getDefaultCountry(language));
+  const [countryCode, setCountryCode] = useState(getDefaultCountry);
   const [phone, setPhone] = useState("");
   const [langPickerVisible, setLangPickerVisible] = useState(false);
   const [showCountryPicker, setShowCountryPicker] = useState(false);
@@ -84,7 +100,6 @@ export default function PhoneScreen() {
 
   async function handleSelectLang(lang: Language) {
     await setLanguage(lang);
-    setCountryCode(getDefaultCountry(lang));
     setLangPickerVisible(false);
   }
 
@@ -136,7 +151,7 @@ export default function PhoneScreen() {
               style={styles.langToggle}
               onPress={() => setLangPickerVisible(true)}
             >
-              <Text style={styles.langToggleText}>
+              <Text style={[styles.langToggleText, { fontFamily: fonts.bodyMed }]}>
                 {language.toUpperCase()} ▾
               </Text>
             </Pressable>
@@ -154,12 +169,12 @@ export default function PhoneScreen() {
             </Text>
           </Text>
 
-          <Text style={[styles.helper, isRTL && styles.textRTL]}>
+          <Text style={[styles.helper, { fontFamily: fonts.body }, isRTL && styles.textRTL]}>
             {t("phone.helper")}
           </Text>
 
           <View style={styles.fieldWrap}>
-            <Text style={[styles.fieldLabel, isRTL && styles.textRTL]}>
+            <Text style={[styles.fieldLabel, { fontFamily: fonts.bodyMed }, isRTL && styles.textRTL]}>
               {t("phone.label")}
             </Text>
             <View
@@ -173,12 +188,12 @@ export default function PhoneScreen() {
                 onPress={() => setShowCountryPicker(!showCountryPicker)}
               >
                 <Text style={styles.flag}>{countryCode.flag}</Text>
-                <Text style={styles.dialCode}>{countryCode.code}</Text>
+                <Text style={[styles.dialCode, { fontFamily: fonts.bodyMed }]}>{countryCode.code}</Text>
                 <Text style={styles.dialChevron}>▾</Text>
               </TouchableOpacity>
               <View style={styles.divider} />
               <TextInput
-                style={[styles.phoneInput, isRTL && { textAlign: "right" }]}
+                style={[styles.phoneInput, { fontFamily: fonts.body }, isRTL && { textAlign: "right" }]}
                 value={phone}
                 onChangeText={setPhone}
                 placeholder="000 000 0000"
@@ -211,8 +226,8 @@ export default function PhoneScreen() {
                   }}
                 >
                   <Text style={styles.flag}>{c.flag}</Text>
-                  <Text style={styles.countryName}>{c.name}</Text>
-                  <Text style={styles.countryDialCode}>{c.code}</Text>
+                  <Text style={[styles.countryName, { fontFamily: fonts.body }]}>{c.name}</Text>
+                  <Text style={[styles.countryDialCode, { fontFamily: fonts.bodyMed }]}>{c.code}</Text>
                 </TouchableOpacity>
               ))}
             </ScrollView>
@@ -229,12 +244,12 @@ export default function PhoneScreen() {
             activeOpacity={0.85}
             disabled={!phone.trim()}
           >
-            <Text style={styles.btnPrimaryText}>
+            <Text style={[styles.btnPrimaryText, { fontFamily: fonts.bodySemi }]}>
               {t("phone.cta")} {!isRTL ? "→" : "←"}
             </Text>
           </TouchableOpacity>
 
-          <Text style={[styles.terms, isRTL && styles.textRTL]}>
+          <Text style={[styles.terms, { fontFamily: fonts.body }, isRTL && styles.textRTL]}>
             {t("phone.terms")}
           </Text>
         </ScrollView>
@@ -280,7 +295,6 @@ const styles = StyleSheet.create({
     borderColor: "rgba(201, 160, 74, 0.3)",
   },
   langToggleText: {
-    fontFamily: "Inter_500Medium",
     fontSize: 10,
     letterSpacing: 1,
     color: "#e4c070",
@@ -298,7 +312,6 @@ const styles = StyleSheet.create({
     color: "#e4c070",
   },
   helper: {
-    fontFamily: "Inter_400Regular",
     fontSize: 13,
     lineHeight: 19,
     color: "rgba(245, 235, 214, 0.55)",
@@ -307,7 +320,6 @@ const styles = StyleSheet.create({
   textRTL: { textAlign: "right", writingDirection: "rtl" },
   fieldWrap: { marginBottom: 16 },
   fieldLabel: {
-    fontFamily: "Inter_500Medium",
     fontSize: 9,
     letterSpacing: 1.5,
     color: "#c9a04a",
@@ -331,7 +343,6 @@ const styles = StyleSheet.create({
   },
   flag: { fontSize: 18 },
   dialCode: {
-    fontFamily: "Inter_500Medium",
     fontSize: 13,
     color: "#f5ebd6",
     opacity: 0.85,
@@ -340,7 +351,6 @@ const styles = StyleSheet.create({
   divider: { width: 1, height: 20, backgroundColor: "rgba(201,160,74,0.2)" },
   phoneInput: {
     flex: 1,
-    fontFamily: "Inter_400Regular",
     fontSize: 15,
     color: "#f5ebd6",
     padding: 0,
@@ -365,12 +375,10 @@ const styles = StyleSheet.create({
   countryItemSelected: { backgroundColor: "#25402f" },
   countryName: {
     flex: 1,
-    fontFamily: "Inter_400Regular",
     fontSize: 13,
     color: "#f5ebd6",
   },
   countryDialCode: {
-    fontFamily: "Inter_500Medium",
     fontSize: 12,
     color: "#c9a04a",
   },
@@ -383,12 +391,10 @@ const styles = StyleSheet.create({
   },
   btnPrimaryDisabled: { backgroundColor: "rgba(201, 160, 74, 0.25)" },
   btnPrimaryText: {
-    fontFamily: "Inter_600SemiBold",
     fontSize: 15,
     color: "#0f1f17",
   },
   terms: {
-    fontFamily: "Inter_400Regular",
     fontSize: 10,
     color: "rgba(245, 235, 214, 0.35)",
     textAlign: "center",

@@ -64,7 +64,7 @@ function ClassicTabLayout() {
             />
           ),
         tabBarLabelStyle: {
-          fontFamily: "Inter_400Regular",
+          fontFamily: "Geist_400Regular",
           fontSize: 10,
           letterSpacing: 0.3,
         },

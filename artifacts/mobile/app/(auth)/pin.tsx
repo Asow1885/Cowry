@@ -35,7 +35,7 @@ const NUMPAD_LABELS: Record<string, string> = {
 
 export default function PinScreen() {
   const { user } = useApp();
-  const { t, isRTL } = useTranslation();
+  const { t, isRTL, fonts } = useTranslation();
   const insets = useSafeAreaInsets();
   const [pin, setPin] = useState<string[]>([]);
 
@@ -84,7 +84,7 @@ export default function PinScreen() {
               {t("pin.headlineEmphasis")}
             </Text>
           </Text>
-          <Text style={[styles.subtext, isRTL && styles.textRTL]}>
+          <Text style={[styles.subtext, { fontFamily: fonts.body }, isRTL && styles.textRTL]}>
             {t("pin.subtext")}, {firstName}.
           </Text>
         </View>
@@ -113,13 +113,13 @@ export default function PinScreen() {
                     <View style={styles.numKeyInner}>
                       <Text style={styles.numKeyText}>{key}</Text>
                       {NUMPAD_LABELS[key] && (
-                        <Text style={styles.numKeyLabel}>
+                        <Text style={[styles.numKeyLabel, { fontFamily: fonts.body }]}>
                           {NUMPAD_LABELS[key]}
                         </Text>
                       )}
                     </View>
                   ) : key === "⌫" ? (
-                    <Text style={styles.backspace}>{key}</Text>
+                    <Text style={[styles.backspace, { fontFamily: fonts.body }]}>{key}</Text>
                   ) : null}
                 </TouchableOpacity>
               ))}
@@ -128,7 +128,9 @@ export default function PinScreen() {
         </View>
 
         <TouchableOpacity onPress={() => router.back()} style={styles.forgotBtn}>
-          <Text style={styles.forgotText}>{t("pin.forgot")}</Text>
+          <Text style={[styles.forgotText, { fontFamily: fonts.body }]}>
+            {t("pin.forgot")}
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -174,7 +176,6 @@ const styles = StyleSheet.create({
     fontSize: 22,
   },
   subtext: {
-    fontFamily: "Inter_400Regular",
     fontSize: 12,
     color: "rgba(245, 235, 214, 0.5)",
     textAlign: "center",
@@ -224,20 +225,17 @@ const styles = StyleSheet.create({
     lineHeight: 30,
   },
   numKeyLabel: {
-    fontFamily: "Inter_400Regular",
     fontSize: 7,
     letterSpacing: 1,
     color: "rgba(245, 235, 214, 0.45)",
     marginTop: -2,
   },
   backspace: {
-    fontFamily: "Inter_400Regular",
     fontSize: 20,
     color: "#f5ebd6",
   },
   forgotBtn: { marginTop: 20, paddingVertical: 12 },
   forgotText: {
-    fontFamily: "Inter_400Regular",
     fontSize: 13,
     color: "#c9a04a",
     textAlign: "center",

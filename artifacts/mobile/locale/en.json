@@ -1,4 +1,7 @@
 {
+  "splash": {
+    "tagline": "Ancient Wealth. Modern Access."
+  },
   "welcome": {
     "headlinePre": "Stay ",
     "headlineEmphasis": "close.",
@@ -31,6 +34,7 @@
     "name_label": "Your name",
     "name_placeholder": "Ashley Sow",
     "country_label": "Where are you from?",
+    "search_placeholder": "Search countries...",
     "see_more": "+ see all 195 countries",
     "cta": "Finish setup"
   },
@@ -58,7 +62,10 @@
   },
   "activity": {
     "title": "Activity",
-    "empty": "No transactions yet"
+    "empty": "No transactions yet",
+    "tx_today": "Today",
+    "tx_yesterday": "Yesterday",
+    "tx_received": "Received"
   },
   "esim": {
     "title": "eSIM",

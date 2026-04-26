@@ -26,12 +26,17 @@ export function useTranslation() {
   const { language } = useApp();
   const locale = locales[language] ?? en;
   const isRTL = language === "ar";
-  const bodyFont = language === "ar" ? "NotoSansArabic_400Regular" : "Geist_400Regular";
-  const bodyFontMedium = language === "ar" ? "NotoSansArabic_700Bold" : "Geist_500Medium";
+  const isArabic = language === "ar";
+
+  const fonts = {
+    body: isArabic ? "NotoSansArabic_400Regular" : "Geist_400Regular",
+    bodyMed: isArabic ? "NotoSansArabic_700Bold" : "Geist_500Medium",
+    bodySemi: isArabic ? "NotoSansArabic_700Bold" : "Geist_600SemiBold",
+  } as const;
 
   function t(key: string): string {
     return getNestedValue(locale as unknown as Record<string, unknown>, key);
   }
 
-  return { t, isRTL, language, bodyFont, bodyFontMedium };
+  return { t, isRTL, language, fonts };
 }

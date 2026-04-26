@@ -9,41 +9,50 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
 import { useTranslation } from "@/hooks/useTranslation";
 
-const MOCK_TRANSACTIONS = [
+type MockTx = {
+  id: string;
+  icon: "arrow-up-right" | "arrow-down-left";
+  nameKey?: string;
+  name?: string;
+  detail: string;
+  amount: string;
+  dateKey?: string;
+  dateRaw?: string;
+  isSend: boolean;
+};
+
+const MOCK_TRANSACTIONS: MockTx[] = [
   {
     id: "1",
-    icon: "arrow-up-right" as const,
+    icon: "arrow-up-right",
     name: "Mama",
     detail: "Orange Money · Conakry",
     amount: "-$120.00",
-    currency: "978,240 GNF",
-    date: "Today",
+    dateKey: "activity.tx_today",
     isSend: true,
   },
   {
     id: "2",
-    icon: "arrow-down-left" as const,
-    name: "Received",
+    icon: "arrow-down-left",
+    nameKey: "activity.tx_received",
     detail: "Bank Transfer",
     amount: "+$500.00",
-    currency: "USD",
-    date: "Yesterday",
+    dateKey: "activity.tx_yesterday",
     isSend: false,
   },
   {
     id: "3",
-    icon: "arrow-up-right" as const,
+    icon: "arrow-up-right",
     name: "Papa",
     detail: "Wave · Dakar",
     amount: "-$85.00",
-    currency: "51,000 XOF",
-    date: "Apr 20",
+    dateRaw: "Apr 20",
     isSend: true,
   },
 ];
 
 export default function ActivityScreen() {
-  const { t, isRTL } = useTranslation();
+  const { t, isRTL, fonts } = useTranslation();
   const insets = useSafeAreaInsets();
   const topInset = Platform.OS === "web" ? 67 : insets.top;
 
@@ -78,19 +87,23 @@ export default function ActivityScreen() {
                 />
               </View>
               <View style={[styles.txMeta, isRTL && { alignItems: "flex-end" }]}>
-                <Text style={styles.txName}>{tx.name}</Text>
-                <Text style={styles.txDetail}>{tx.detail}</Text>
+                <Text style={[styles.txName, { fontFamily: fonts.bodyMed }]}>
+                  {tx.nameKey ? t(tx.nameKey) : (tx.name ?? "")}
+                </Text>
+                <Text style={[styles.txDetail, { fontFamily: fonts.body }]}>{tx.detail}</Text>
               </View>
               <View style={[styles.txRight, isRTL && { alignItems: "flex-start" }]}>
                 <Text
                   style={[
                     styles.txAmount,
-                    { color: tx.isSend ? "#f5ebd6" : "#4ade80" },
+                    { fontFamily: fonts.bodySemi, color: tx.isSend ? "#f5ebd6" : "#4ade80" },
                   ]}
                 >
                   {tx.amount}
                 </Text>
-                <Text style={styles.txCurrency}>{tx.currency}</Text>
+                <Text style={[styles.txCurrency, { fontFamily: fonts.body }]}>
+                  {tx.dateKey ? t(tx.dateKey) : (tx.dateRaw ?? "")}
+                </Text>
               </View>
             </View>
           ))}
