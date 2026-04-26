@@ -59,7 +59,7 @@ export default function ActivityScreen() {
   return (
     <View style={[styles.container]}>
       <View style={[styles.header, { paddingTop: topInset + 16 }]}>
-        <Text style={[styles.title, isRTL && styles.textRTL]}>
+        <Text style={[styles.title, { fontFamily: fonts.headline }, isRTL && styles.textRTL]}>
           {t("activity.title")}
         </Text>
       </View>

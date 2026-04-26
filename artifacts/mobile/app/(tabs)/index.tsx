@@ -29,7 +29,7 @@ const RATES = [
 
 export default function HomeScreen() {
   const { user } = useApp();
-  const { t, isRTL } = useTranslation();
+  const { t, isRTL, fonts } = useTranslation();
   const insets = useSafeAreaInsets();
   const [balanceVisible, setBalanceVisible] = useState(true);
 
@@ -65,7 +65,7 @@ export default function HomeScreen() {
         </View>
 
         <View style={styles.greetingWrap}>
-          <Text style={[styles.greeting, isRTL && styles.textRTL]}>
+          <Text style={[styles.greeting, { fontFamily: fonts.headline }, isRTL && styles.textRTL]}>
             {t("home.greeting")} {firstName}.
           </Text>
         </View>
@@ -139,7 +139,7 @@ export default function HomeScreen() {
       </View>
 
       <View style={styles.creamSection}>
-        <Text style={[styles.sectionTitle, isRTL && styles.textRTL]}>
+        <Text style={[styles.sectionTitle, { fontFamily: fonts.headline }, isRTL && styles.textRTL]}>
           {t("home.live_rates")}
         </Text>
         <View style={styles.ratesGrid}>

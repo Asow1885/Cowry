@@ -43,6 +43,16 @@ const COUNTRY_CODES = [
   { flag: "🇮🇹", code: "+39", name: "Italy", region: "IT" },
 ];
 
+function getCountryDisplayName(regionCode: string, language: string): string {
+  try {
+    const displayNames = new Intl.DisplayNames([language], { type: "region" });
+    return displayNames.of(regionCode) ?? regionCode;
+  } catch {
+    const fallback = COUNTRY_CODES.find((c) => c.region === regionCode);
+    return fallback?.name ?? regionCode;
+  }
+}
+
 function getDefaultCountry() {
   try {
     const locales = Localization.getLocales();
@@ -163,8 +173,8 @@ export default function PhoneScreen() {
             style={[styles.headline, isRTL && styles.textRTL]}
             numberOfLines={2}
           >
-            <Text style={styles.headlinePre}>{t("phone.headlinePre")}{"\n"}</Text>
-            <Text style={styles.headlineEmphasis}>
+            <Text style={[styles.headlinePre, { fontFamily: fonts.headline }]}>{t("phone.headlinePre")}{"\n"}</Text>
+            <Text style={[styles.headlineEmphasis, { fontFamily: fonts.headlineEmphasis }]}>
               {t("phone.headlineEmphasis")}
             </Text>
           </Text>
@@ -226,7 +236,7 @@ export default function PhoneScreen() {
                   }}
                 >
                   <Text style={styles.flag}>{c.flag}</Text>
-                  <Text style={[styles.countryName, { fontFamily: fonts.body }]}>{c.name}</Text>
+                  <Text style={[styles.countryName, { fontFamily: fonts.body }]}>{getCountryDisplayName(c.region, language)}</Text>
                   <Text style={[styles.countryDialCode, { fontFamily: fonts.bodyMed }]}>{c.code}</Text>
                 </TouchableOpacity>
               ))}

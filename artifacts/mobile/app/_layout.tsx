@@ -19,6 +19,10 @@ import {
   NotoSansArabic_400Regular,
   NotoSansArabic_700Bold,
 } from "@expo-google-fonts/noto-sans-arabic";
+import {
+  NotoNaskhArabic_400Regular,
+  NotoNaskhArabic_700Bold,
+} from "@expo-google-fonts/noto-naskh-arabic";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
@@ -59,6 +63,8 @@ export default function RootLayout() {
     Geist_600SemiBold,
     NotoSansArabic_400Regular,
     NotoSansArabic_700Bold,
+    NotoNaskhArabic_400Regular,
+    NotoNaskhArabic_700Bold,
   });
 
   useEffect(() => {

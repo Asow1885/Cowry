@@ -29,6 +29,9 @@ export function useTranslation() {
   const isArabic = language === "ar";
 
   const fonts = {
+    headline: isArabic ? "NotoNaskhArabic_400Regular" : "Fraunces_400Regular",
+    headlineEmphasis: isArabic ? "NotoNaskhArabic_700Bold" : "Fraunces_400Regular_Italic",
+    headlineSemi: isArabic ? "NotoNaskhArabic_700Bold" : "Fraunces_600SemiBold",
     body: isArabic ? "NotoSansArabic_400Regular" : "Geist_400Regular",
     bodyMed: isArabic ? "NotoSansArabic_700Bold" : "Geist_500Medium",
     bodySemi: isArabic ? "NotoSansArabic_700Bold" : "Geist_600SemiBold",

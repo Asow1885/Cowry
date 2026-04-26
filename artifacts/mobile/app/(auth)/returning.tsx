@@ -56,9 +56,9 @@ export default function ReturningScreen() {
           </TouchableOpacity>
 
           <View style={styles.greetingWrap}>
-            <Text style={[styles.greeting, isRTL && styles.textRTL]}>
+            <Text style={[styles.greeting, { fontFamily: fonts.headline }, isRTL && styles.textRTL]}>
               {t("returning.welcome_pre")}{" "}
-              <Text style={styles.greetingName}>{firstName}</Text>
+              <Text style={[styles.greetingName, { fontFamily: fonts.headlineEmphasis }]}>{firstName}</Text>
             </Text>
             <Text style={[styles.prompt, { fontFamily: fonts.body }, isRTL && styles.textRTL]}>
               {t("returning.prompt")}

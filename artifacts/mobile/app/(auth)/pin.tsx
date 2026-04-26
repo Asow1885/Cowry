@@ -79,8 +79,8 @@ export default function PinScreen() {
 
         <View style={styles.headingWrap}>
           <Text style={[styles.headline, isRTL && styles.textRTL]}>
-            <Text style={styles.headlinePre}>{t("pin.headlinePre")} </Text>
-            <Text style={styles.headlineEmphasis}>
+            <Text style={[styles.headlinePre, { fontFamily: fonts.headline }]}>{t("pin.headlinePre")} </Text>
+            <Text style={[styles.headlineEmphasis, { fontFamily: fonts.headlineEmphasis }]}>
               {t("pin.headlineEmphasis")}
             </Text>
           </Text>

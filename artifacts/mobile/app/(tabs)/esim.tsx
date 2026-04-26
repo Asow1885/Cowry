@@ -10,14 +10,14 @@ import { Feather } from "@expo/vector-icons";
 import { useTranslation } from "@/hooks/useTranslation";
 
 export default function EsimScreen() {
-  const { t, isRTL } = useTranslation();
+  const { t, isRTL, fonts } = useTranslation();
   const insets = useSafeAreaInsets();
   const topInset = Platform.OS === "web" ? 67 : insets.top;
 
   return (
     <View style={styles.container}>
       <View style={[styles.header, { paddingTop: topInset + 16 }]}>
-        <Text style={[styles.title, isRTL && styles.textRTL]}>
+        <Text style={[styles.title, { fontFamily: fonts.headline }, isRTL && styles.textRTL]}>
           {t("esim.title")}
         </Text>
       </View>
@@ -25,7 +25,7 @@ export default function EsimScreen() {
         <View style={styles.iconWrap}>
           <Feather name="wifi" size={36} color="#c9a04a" />
         </View>
-        <Text style={styles.subtitle}>{t("esim.subtitle")}</Text>
+        <Text style={[styles.subtitle, { fontFamily: fonts.headlineEmphasis }]}>{t("esim.subtitle")}</Text>
         <Text style={styles.comingSoon}>{t("esim.coming_soon")}</Text>
       </View>
     </View>

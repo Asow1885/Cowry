@@ -161,6 +161,16 @@ const ALL_COUNTRIES = [
 
 const COUNTRIES_PRIMARY = ALL_COUNTRIES.slice(0, 8);
 
+function getCountryDisplayName(regionCode: string, language: string): string {
+  try {
+    const displayNames = new Intl.DisplayNames([language], { type: "region" });
+    return displayNames.of(regionCode) ?? regionCode;
+  } catch {
+    const fallback = ALL_COUNTRIES.find((c) => c.code === regionCode);
+    return fallback?.name ?? regionCode;
+  }
+}
+
 function StepDots({ current }: { current: number }) {
   return (
     <View style={stepStyles.row}>
@@ -192,8 +202,8 @@ const stepStyles = StyleSheet.create({
 
 export default function ProfileScreen() {
   const { phone = "" } = useLocalSearchParams<{ phone: string }>();
-  const { language, setLanguage, setUser, completeOnboarding } = useApp();
-  const { t, isRTL } = useTranslation();
+  const { setLanguage, setUser, completeOnboarding } = useApp();
+  const { t, isRTL, language, fonts } = useTranslation();
   const insets = useSafeAreaInsets();
   const [name, setName] = useState("");
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
@@ -281,16 +291,16 @@ export default function ProfileScreen() {
             </Pressable>
           </View>
 
-          <StepDots current={3} />
+          <StepDots current={2} />
 
           <Text style={[styles.headline, isRTL && styles.textRTL]}>
-            <Text style={styles.headlinePre}>{t("profile.headlinePre")}{"\n"}</Text>
-            <Text style={styles.headlineEmphasis}>
+            <Text style={[styles.headlinePre, { fontFamily: fonts.headline }]}>{t("profile.headlinePre")}{"\n"}</Text>
+            <Text style={[styles.headlineEmphasis, { fontFamily: fonts.headlineEmphasis }]}>
               {t("profile.headlineEmphasis")}
             </Text>
           </Text>
 
-          <Text style={[styles.helper, isRTL && styles.textRTL]}>
+          <Text style={[styles.helper, { fontFamily: fonts.body }, isRTL && styles.textRTL]}>
             {t("profile.helper")}
           </Text>
 
@@ -335,11 +345,12 @@ export default function ProfileScreen() {
                     <Text
                       style={[
                         styles.countryName,
+                        { fontFamily: fonts.body },
                         isSelected && styles.countryNameSelected,
                       ]}
                       numberOfLines={1}
                     >
-                      {c.name}
+                      {getCountryDisplayName(c.code, language)}
                     </Text>
                   </TouchableOpacity>
                 );

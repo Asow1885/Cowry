@@ -55,7 +55,7 @@ export default function VerifyScreen() {
     flag: string;
   }>();
   const { language, setLanguage } = useApp();
-  const { t, isRTL } = useTranslation();
+  const { t, isRTL, fonts } = useTranslation();
   const insets = useSafeAreaInsets();
   const [code, setCode] = useState<string[]>(Array(CODE_LENGTH).fill(""));
   const [countdown, setCountdown] = useState(RESEND_SECONDS);
@@ -171,8 +171,8 @@ export default function VerifyScreen() {
         <StepDots current={1} />
 
         <Text style={[styles.headline, isRTL && styles.textRTL]}>
-          <Text style={styles.headlinePre}>{t("verify.headlinePre")}{"\n"}</Text>
-          <Text style={styles.headlineEmphasis}>
+          <Text style={[styles.headlinePre, { fontFamily: fonts.headline }]}>{t("verify.headlinePre")}{"\n"}</Text>
+          <Text style={[styles.headlineEmphasis, { fontFamily: fonts.headlineEmphasis }]}>
             {t("verify.headlineEmphasis")}
           </Text>
         </Text>

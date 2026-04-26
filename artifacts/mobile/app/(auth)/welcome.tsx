@@ -75,8 +75,8 @@ export default function WelcomeScreen() {
             style={[styles.headline, isRTL && styles.textRTL]}
             numberOfLines={2}
           >
-            <Text style={styles.headlinePre}>{t("welcome.headlinePre")}</Text>
-            <Text style={styles.headlineEmphasis}>
+            <Text style={[styles.headlinePre, { fontFamily: fonts.headline }]}>{t("welcome.headlinePre")}</Text>
+            <Text style={[styles.headlineEmphasis, { fontFamily: fonts.headlineEmphasis }]}>
               {t("welcome.headlineEmphasis")}
             </Text>
           </Text>

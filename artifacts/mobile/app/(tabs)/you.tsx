@@ -15,7 +15,7 @@ import { router } from "expo-router";
 
 export default function YouScreen() {
   const { user, language, resetOnboarding } = useApp();
-  const { t, isRTL } = useTranslation();
+  const { t, isRTL, fonts } = useTranslation();
   const insets = useSafeAreaInsets();
   const topInset = Platform.OS === "web" ? 67 : insets.top;
 
@@ -37,7 +37,7 @@ export default function YouScreen() {
   return (
     <View style={styles.container}>
       <View style={[styles.header, { paddingTop: topInset + 16 }]}>
-        <Text style={[styles.title, isRTL && styles.textRTL]}>
+        <Text style={[styles.title, { fontFamily: fonts.headline }, isRTL && styles.textRTL]}>
           {t("you.title")}
         </Text>
       </View>
@@ -47,7 +47,7 @@ export default function YouScreen() {
           <View style={styles.avatar}>
             <Text style={styles.avatarText}>{initials}</Text>
           </View>
-          <Text style={styles.userName}>{user?.name ?? "Ashley Sow"}</Text>
+          <Text style={[styles.userName, { fontFamily: fonts.headline }]}>{user?.name ?? "Ashley Sow"}</Text>
           <Text style={styles.userPhone}>{user?.phone ?? ""}</Text>
           {user?.country && (
             <View style={styles.countryBadge}>
