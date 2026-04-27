@@ -3,19 +3,25 @@ import { isLiquidGlassAvailable } from "expo-glass-effect";
 import { Tabs } from "expo-router";
 import { Icon, Label, NativeTabs } from "expo-router/unstable-native-tabs";
 import { SymbolView } from "expo-symbols";
+import type { SFSymbol } from "expo-symbols";
 import { Feather } from "@expo/vector-icons";
+import type { ComponentProps } from "react";
 import React from "react";
 import { Platform, StyleSheet, View } from "react-native";
 import { useTranslation } from "@/hooks/useTranslation";
 
+type FeatherName = ComponentProps<typeof Feather>["name"];
+
 function TabIcon({
   featherName,
   sfName,
+  sfNameFill,
   focused,
   isIOS,
 }: {
-  featherName: string;
-  sfName: string;
+  featherName: FeatherName;
+  sfName: SFSymbol;
+  sfNameFill: SFSymbol;
   focused: boolean;
   isIOS: boolean;
 }) {
@@ -24,12 +30,12 @@ function TabIcon({
     <View style={focused ? styles.iconPill : styles.iconWrap}>
       {isIOS ? (
         <SymbolView
-          name={focused ? `${sfName}.fill` : sfName}
+          name={focused ? sfNameFill : sfName}
           tintColor={iconColor}
           size={20}
         />
       ) : (
-        <Feather name={featherName as any} size={20} color={iconColor} />
+        <Feather name={featherName} size={20} color={iconColor} />
       )}
     </View>
   );
@@ -105,7 +111,7 @@ function ClassicTabLayout() {
         options={{
           title: t("tabs.home"),
           tabBarIcon: ({ focused }) => (
-            <TabIcon featherName="home" sfName="house" focused={focused} isIOS={isIOS} />
+            <TabIcon featherName="home" sfName="house" sfNameFill="house.fill" focused={focused} isIOS={isIOS} />
           ),
         }}
       />
@@ -114,7 +120,7 @@ function ClassicTabLayout() {
         options={{
           title: t("tabs.cards"),
           tabBarIcon: ({ focused }) => (
-            <TabIcon featherName="credit-card" sfName="creditcard" focused={focused} isIOS={isIOS} />
+            <TabIcon featherName="credit-card" sfName="creditcard" sfNameFill="creditcard.fill" focused={focused} isIOS={isIOS} />
           ),
         }}
       />
@@ -123,7 +129,7 @@ function ClassicTabLayout() {
         options={{
           title: t("tabs.recipients"),
           tabBarIcon: ({ focused }) => (
-            <TabIcon featherName="users" sfName="person.2" focused={focused} isIOS={isIOS} />
+            <TabIcon featherName="users" sfName="person.2" sfNameFill="person.2.fill" focused={focused} isIOS={isIOS} />
           ),
         }}
       />
@@ -132,7 +138,7 @@ function ClassicTabLayout() {
         options={{
           title: t("tabs.payments"),
           tabBarIcon: ({ focused }) => (
-            <TabIcon featherName="repeat" sfName="arrow.left.arrow.right" focused={focused} isIOS={isIOS} />
+            <TabIcon featherName="repeat" sfName="arrow.left.arrow.right" sfNameFill="arrow.left.arrow.right.circle.fill" focused={focused} isIOS={isIOS} />
           ),
         }}
       />

@@ -15,6 +15,7 @@
     "headlineEmphasis": "number?",
     "helper": "We'll text you a code. No password to remember — your phone is the key.",
     "label": "Mobile number",
+    "number_placeholder": "000 000 0000",
     "cta": "Send code",
     "terms": "Standard message rates apply."
   },
@@ -76,6 +77,9 @@
     "pt": "Português"
   },
   "change_language": "Language",
+  "brand": {
+    "name": "COWRY"
+  },
   "not_found": {
     "title": "Page not found",
     "back": "Go back home"

@@ -62,7 +62,7 @@ export default function PinScreen() {
     }
   }
 
-  const firstName = user?.name?.split(" ")[0] ?? "Ashley";
+  const firstName = user?.name?.split(" ")[0] ?? "";
 
   return (
     <View style={styles.container}>
@@ -74,7 +74,7 @@ export default function PinScreen() {
       >
         <View style={styles.logoRow}>
           <CowryCrest size={22} color="#c9a04a" />
-          <Text style={styles.logoText}>COWRY</Text>
+          <Text style={styles.logoText}>{t("brand.name")}</Text>
         </View>
 
         <View style={styles.headingWrap}>

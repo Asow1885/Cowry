@@ -155,7 +155,7 @@ export default function PhoneScreen() {
             </TouchableOpacity>
             <View style={styles.logoRow}>
               <CowryCrest size={22} color="#c9a04a" />
-              <Text style={styles.logoText}>COWRY</Text>
+              <Text style={styles.logoText}>{t("brand.name")}</Text>
             </View>
             <Pressable
               style={styles.langToggle}
@@ -206,7 +206,7 @@ export default function PhoneScreen() {
                 style={[styles.phoneInput, { fontFamily: fonts.body }, isRTL && { textAlign: "right" }]}
                 value={phone}
                 onChangeText={setPhone}
-                placeholder="000 000 0000"
+                placeholder={t("phone.number_placeholder")}
                 placeholderTextColor="rgba(245, 235, 214, 0.35)"
                 keyboardType="phone-pad"
                 returnKeyType="done"

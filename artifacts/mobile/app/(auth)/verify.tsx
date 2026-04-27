@@ -156,7 +156,7 @@ export default function VerifyScreen() {
           </TouchableOpacity>
           <View style={styles.logoRow}>
             <CowryCrest size={22} color="#c9a04a" />
-            <Text style={styles.logoText}>COWRY</Text>
+            <Text style={styles.logoText}>{t("brand.name")}</Text>
           </View>
           <Pressable
             style={styles.langToggle}

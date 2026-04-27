@@ -16,6 +16,7 @@
     "helper": "Nous vous enverrons un code. Aucun mot de passe à retenir — votre téléphone est la clé.",
     "label": "Numéro de mobile",
     "cta": "Envoyer le code",
+    "number_placeholder": "000 000 0000",
     "terms": "Des tarifs standards s'appliquent."
   },
   "verify": {
@@ -76,6 +77,9 @@
     "pt": "Português"
   },
   "change_language": "Langue",
+  "brand": {
+    "name": "COWRY"
+  },
   "not_found": {
     "title": "Page introuvable",
     "back": "Retour à l'accueil"

@@ -16,6 +16,7 @@
     "helper": "Enviaremos um código por SMS. Sem palavra-passe — o seu telemóvel é a chave.",
     "label": "Número de telemóvel",
     "cta": "Enviar código",
+    "number_placeholder": "000 000 0000",
     "terms": "Tarifas de mensagens normais aplicam-se."
   },
   "verify": {
@@ -76,6 +77,9 @@
     "pt": "Português"
   },
   "change_language": "Idioma",
+  "brand": {
+    "name": "COWRY"
+  },
   "not_found": {
     "title": "Página não encontrada",
     "back": "Voltar ao início"

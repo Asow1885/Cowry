@@ -112,7 +112,7 @@ export default function HomeScreen() {
               <Text style={[styles.cardTabTitleText, { fontFamily: fonts.headline }]}>{t("home.your_card")}</Text>
               <Text style={styles.cardTabArrow}>{isRTL ? "‹" : "›"}</Text>
             </View>
-            <Text style={styles.cardLogo}>COWRY</Text>
+            <Text style={styles.cardLogo}>{t("brand.name")}</Text>
           </View>
           {/* Drip effect */}
           <View style={styles.cardTabDrip} />
