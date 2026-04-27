@@ -61,13 +61,21 @@
     "main_account": "الحساب الرئيسي",
     "account_details": "تفاصيل الحساب",
     "transactions": "المعاملات",
-    "see_all": "عرض الكل"
+    "see_all": "عرض الكل",
+    "quick_send": "إرسال سريع",
+    "send_to": "إرسال إلى",
+    "tx_sent": "تم الإرسال",
+    "tx_added": "تمت الإضافة",
+    "tx_to": "إلى",
+    "tx_2d": "منذ يومين",
+    "tx_thu": "الخميس",
+    "tx_3w": "منذ 3 أسابيع"
   },
   "tabs": {
     "home": "الرئيسية",
-    "cards": "البطاقات",
-    "recipients": "المستلمون",
-    "payments": "المدفوعات"
+    "activity": "النشاط",
+    "esim": "شريحة eSIM",
+    "you": "أنا"
   },
   "coming_soon": "قريباً",
   "lang": {

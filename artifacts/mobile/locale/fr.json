@@ -61,13 +61,21 @@
     "main_account": "Compte principal",
     "account_details": "Détails du compte",
     "transactions": "Transactions",
-    "see_all": "Voir tout"
+    "see_all": "Voir tout",
+    "quick_send": "Envoi rapide",
+    "send_to": "Envoyer à",
+    "tx_sent": "Envoyé",
+    "tx_added": "Ajouté",
+    "tx_to": "Vers",
+    "tx_2d": "il y a 2 jours",
+    "tx_thu": "Jeudi",
+    "tx_3w": "il y a 3 semaines"
   },
   "tabs": {
     "home": "Accueil",
-    "cards": "Cartes",
-    "recipients": "Destinataires",
-    "payments": "Paiements"
+    "activity": "Activité",
+    "esim": "eSIM",
+    "you": "Moi"
   },
   "coming_soon": "Bientôt disponible",
   "lang": {

@@ -49,17 +49,17 @@ function NativeTabLayout() {
         <Icon sf={{ default: "house", selected: "house.fill" }} />
         <Label>{t("tabs.home")}</Label>
       </NativeTabs.Trigger>
-      <NativeTabs.Trigger name="cards">
-        <Icon sf={{ default: "creditcard", selected: "creditcard.fill" }} />
-        <Label>{t("tabs.cards")}</Label>
+      <NativeTabs.Trigger name="activity">
+        <Icon sf={{ default: "clock", selected: "clock.fill" }} />
+        <Label>{t("tabs.activity")}</Label>
       </NativeTabs.Trigger>
-      <NativeTabs.Trigger name="recipients">
-        <Icon sf={{ default: "person.2", selected: "person.2.fill" }} />
-        <Label>{t("tabs.recipients")}</Label>
+      <NativeTabs.Trigger name="esim">
+        <Icon sf={{ default: "simcard", selected: "simcard.fill" }} />
+        <Label>{t("tabs.esim")}</Label>
       </NativeTabs.Trigger>
-      <NativeTabs.Trigger name="payments">
-        <Icon sf={{ default: "arrow.left.arrow.right", selected: "arrow.left.arrow.right.circle.fill" }} />
-        <Label>{t("tabs.payments")}</Label>
+      <NativeTabs.Trigger name="you">
+        <Icon sf={{ default: "person", selected: "person.fill" }} />
+        <Label>{t("tabs.you")}</Label>
       </NativeTabs.Trigger>
     </NativeTabs>
   );
@@ -116,29 +116,29 @@ function ClassicTabLayout() {
         }}
       />
       <Tabs.Screen
-        name="cards"
+        name="activity"
         options={{
-          title: t("tabs.cards"),
+          title: t("tabs.activity"),
           tabBarIcon: ({ focused }) => (
-            <TabIcon featherName="credit-card" sfName="creditcard" sfNameFill="creditcard.fill" focused={focused} isIOS={isIOS} />
+            <TabIcon featherName="clock" sfName="clock" sfNameFill="clock.fill" focused={focused} isIOS={isIOS} />
           ),
         }}
       />
       <Tabs.Screen
-        name="recipients"
+        name="esim"
         options={{
-          title: t("tabs.recipients"),
+          title: t("tabs.esim"),
           tabBarIcon: ({ focused }) => (
-            <TabIcon featherName="users" sfName="person.2" sfNameFill="person.2.fill" focused={focused} isIOS={isIOS} />
+            <TabIcon featherName="wifi" sfName="simcard" sfNameFill="simcard.fill" focused={focused} isIOS={isIOS} />
           ),
         }}
       />
       <Tabs.Screen
-        name="payments"
+        name="you"
         options={{
-          title: t("tabs.payments"),
+          title: t("tabs.you"),
           tabBarIcon: ({ focused }) => (
-            <TabIcon featherName="repeat" sfName="arrow.left.arrow.right" sfNameFill="arrow.left.arrow.right.circle.fill" focused={focused} isIOS={isIOS} />
+            <TabIcon featherName="user" sfName="person" sfNameFill="person.fill" focused={focused} isIOS={isIOS} />
           ),
         }}
       />

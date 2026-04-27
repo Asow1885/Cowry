@@ -21,10 +21,10 @@ const CURRENCIES = [
 
 const PAGE_DOTS = [true, false, false, false];
 
-const TRANSACTIONS = [
-  { dir: "up" as const, name: "Mama Sow", detail: "Sent · 2 days ago", amt: "50 USD", currency: "To GNF" },
-  { dir: "down" as const, name: "Chase Bank", detail: "Added · Thursday", amt: "+1,000 USD", currency: "" },
-  { dir: "up" as const, name: "Brother", detail: "Sent · 3 weeks ago", amt: "80 USD", currency: "To XOF" },
+const QUICK_RECIPIENTS = [
+  { initial: "M", firstName: "Mama", fullName: "Mama Sow" },
+  { initial: "O", firstName: "Ousmane", fullName: "Ousmane Diallo" },
+  { initial: "F", firstName: "Fatou", fullName: "Fatou Barry" },
 ];
 
 export default function HomeScreen() {
@@ -37,6 +37,30 @@ export default function HomeScreen() {
   const initials = user?.name
     ? user.name.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase()
     : "AS";
+
+  const transactions = [
+    {
+      dir: "up" as const,
+      name: "Mama Sow",
+      detail: `${t("home.tx_sent")} · ${t("home.tx_2d")}`,
+      amt: "50 USD",
+      currency: `${t("home.tx_to")} GNF`,
+    },
+    {
+      dir: "down" as const,
+      name: "Chase Bank",
+      detail: `${t("home.tx_added")} · ${t("home.tx_thu")}`,
+      amt: "+1,000 USD",
+      currency: "",
+    },
+    {
+      dir: "up" as const,
+      name: "Brother",
+      detail: `${t("home.tx_sent")} · ${t("home.tx_3w")}`,
+      amt: "80 USD",
+      currency: `${t("home.tx_to")} XOF`,
+    },
+  ];
 
   function toggleBalance() {
     Haptics.selectionAsync();
@@ -103,6 +127,48 @@ export default function HomeScreen() {
         </View>
       </View>
 
+      {/* QUICK SEND — Send to Mama */}
+      <View style={{ paddingHorizontal: 24, marginBottom: 8 }}>
+        <View style={[styles.txHeader, isRTL && styles.rowReverse]}>
+          <Text style={[styles.sectionTitle, { fontFamily: fonts.headlineSemi }]}>{t("home.quick_send")}</Text>
+          <Text style={[styles.txSeeAll, { fontFamily: fonts.bodyMed }]}>{t("home.see_all")}</Text>
+        </View>
+      </View>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={{ marginBottom: 24 }}
+        contentContainerStyle={{ paddingHorizontal: 24, gap: 16 }}
+      >
+        {QUICK_RECIPIENTS.map((r, i) => (
+          <TouchableOpacity
+            key={i}
+            style={styles.recipientItem}
+            activeOpacity={0.8}
+            onPress={() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)}
+          >
+            <View style={styles.recipientAvatar}>
+              <Text style={styles.recipientInitial}>{r.initial}</Text>
+            </View>
+            <Text style={[styles.recipientName, { fontFamily: fonts.body }]} numberOfLines={1}>
+              {t("home.send_to")} {r.firstName}
+            </Text>
+          </TouchableOpacity>
+        ))}
+        <TouchableOpacity
+          style={styles.recipientItem}
+          activeOpacity={0.8}
+          onPress={() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)}
+        >
+          <View style={[styles.recipientAvatar, styles.recipientAvatarAdd]}>
+            <Feather name="plus" size={20} color="#1a2e22" />
+          </View>
+          <Text style={[styles.recipientName, { fontFamily: fonts.body }]} numberOfLines={1}>
+            {t("home.add_money")}
+          </Text>
+        </TouchableOpacity>
+      </ScrollView>
+
       {/* CARD WIDGET */}
       <View style={{ paddingHorizontal: 12, marginBottom: 0 }}>
         <View style={styles.card}>
@@ -159,7 +225,7 @@ export default function HomeScreen() {
           <Text style={[styles.txSeeAll, { fontFamily: fonts.bodyMed }]}>{t("home.see_all")}</Text>
         </View>
 
-        {TRANSACTIONS.map((tx, i) => (
+        {transactions.map((tx, i) => (
           <View key={i} style={[styles.txRow, isRTL && styles.rowReverse]}>
             <View style={styles.txIcon}>
               <Feather name={tx.dir === "up" ? "arrow-up" : "arrow-down"} size={18} color="#0a0907" />
@@ -182,7 +248,7 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "white" },
+  container: { flex: 1, backgroundColor: "#f5ebd6" },
   rowReverse: { flexDirection: "row-reverse" },
   textRTL: { textAlign: "right" },
 
@@ -197,7 +263,7 @@ const styles = StyleSheet.create({
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: "#ebebe8",
+    backgroundColor: "rgba(10,9,7,0.1)",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -221,7 +287,7 @@ const styles = StyleSheet.create({
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: "white",
+    backgroundColor: "rgba(10,9,7,0.07)",
     borderWidth: 1,
     borderColor: "rgba(10,9,7,0.08)",
     alignItems: "center",
@@ -256,7 +322,7 @@ const styles = StyleSheet.create({
     width: 26,
     height: 26,
     borderRadius: 13,
-    backgroundColor: "#ebf2ec",
+    backgroundColor: "#d8e8dc",
     alignItems: "center",
     justifyContent: "center",
     marginLeft: 4,
@@ -265,13 +331,13 @@ const styles = StyleSheet.create({
   actions: {
     flexDirection: "row",
     gap: 8,
-    marginBottom: 16,
+    marginBottom: 24,
   },
   chip: {
     flex: 1,
     paddingVertical: 12,
     paddingHorizontal: 8,
-    backgroundColor: "#d8e8dc",
+    backgroundColor: "rgba(26,46,34,0.12)",
     borderRadius: 100,
     alignItems: "center",
     justifyContent: "center",
@@ -292,6 +358,41 @@ const styles = StyleSheet.create({
     fontFamily: "Geist_500Medium",
     fontSize: 14,
     color: "#e4c070",
+  },
+
+  sectionTitle: {
+    fontFamily: "Fraunces_600SemiBold",
+    fontSize: 20,
+    color: "#0a0907",
+    letterSpacing: -0.4,
+  },
+
+  recipientItem: {
+    alignItems: "center",
+    gap: 8,
+    width: 72,
+  },
+  recipientAvatar: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: "#1a2e22",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  recipientAvatarAdd: {
+    backgroundColor: "rgba(26,46,34,0.12)",
+  },
+  recipientInitial: {
+    fontFamily: "Geist_600SemiBold",
+    fontSize: 20,
+    color: "#c9a04a",
+  },
+  recipientName: {
+    fontFamily: "Geist_400Regular",
+    fontSize: 11,
+    color: "#4a4a45",
+    textAlign: "center",
   },
 
   card: {
@@ -464,32 +565,33 @@ const styles = StyleSheet.create({
     height: 44,
     borderRadius: 22,
     borderWidth: 1.5,
-    borderColor: "#d8d8d4",
+    borderColor: "rgba(10,9,7,0.12)",
     alignItems: "center",
     justifyContent: "center",
     flexShrink: 0,
+    backgroundColor: "rgba(255,255,255,0.5)",
   },
   txMeta: { flex: 1, minWidth: 0 },
   txName: {
     fontFamily: "Geist_500Medium",
     fontSize: 16,
-    color: "#999994",
+    color: "#0a0907",
     marginBottom: 2,
   },
   txDetail: {
     fontFamily: "Geist_400Regular",
     fontSize: 13,
-    color: "#999994",
+    color: "#6b6b66",
   },
   txRight: { alignItems: "flex-end" },
   txAmt: {
     fontFamily: "Geist_500Medium",
     fontSize: 16,
-    color: "#999994",
+    color: "#0a0907",
   },
   txCurrency: {
     fontFamily: "Geist_400Regular",
     fontSize: 13,
-    color: "#999994",
+    color: "#6b6b66",
   },
 });

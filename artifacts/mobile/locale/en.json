@@ -61,13 +61,21 @@
     "main_account": "Main account",
     "account_details": "Account details",
     "transactions": "Transactions",
-    "see_all": "See all"
+    "see_all": "See all",
+    "quick_send": "Quick send",
+    "send_to": "Send to",
+    "tx_sent": "Sent",
+    "tx_added": "Added",
+    "tx_to": "To",
+    "tx_2d": "2 days ago",
+    "tx_thu": "Thursday",
+    "tx_3w": "3 weeks ago"
   },
   "tabs": {
     "home": "Home",
-    "cards": "Cards",
-    "recipients": "Recipients",
-    "payments": "Payments"
+    "activity": "Activity",
+    "esim": "eSIM",
+    "you": "You"
   },
   "coming_soon": "Coming soon",
   "lang": {
