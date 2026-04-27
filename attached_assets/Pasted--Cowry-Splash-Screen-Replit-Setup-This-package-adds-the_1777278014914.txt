@@ -1,0 +1,84 @@
+# Cowry Splash Screen — Replit Setup
+
+This package adds the Cowry splash screen animation to your React app on Replit.
+
+## What's included
+
+- `SplashScreen.jsx` — the React component
+- `App.jsx` — example of how to wire it into your app
+- `cowry-splash-long-square.mp4` — the splash animation (1080×1080, 5.1s)
+
+## Setup in 4 steps
+
+### 1. Add the video file
+
+In your Replit project, find the `public/` folder.
+
+Upload `cowry-splash-long-square.mp4` into `public/` and **rename it to `cowry-splash.mp4`**.
+
+The path inside Replit should look like: `public/cowry-splash.mp4`
+
+If your project doesn't have a `public/` folder, just upload it to the root and change the `src` in `SplashScreen.jsx` from `/cowry-splash.mp4` to `./cowry-splash.mp4`.
+
+### 2. Add the SplashScreen component
+
+In your Replit project, navigate to `src/components/` (create the folder if it doesn't exist).
+
+Upload `SplashScreen.jsx` into `src/components/`.
+
+### 3. Wire it into your App
+
+Open your `App.jsx` (or `App.tsx`, whatever your root file is) and use the example in this `App.jsx` file as a reference.
+
+The key parts:
+
+```jsx
+import { useState } from 'react';
+import SplashScreen from './components/SplashScreen';
+
+export default function App() {
+  const [showSplash, setShowSplash] = useState(true);
+
+  return (
+    <>
+      {showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />}
+      {!showSplash && <YourMainApp />}
+    </>
+  );
+}
+```
+
+Replace `<YourMainApp />` with whatever your real app is — Welcome screen, Home, etc.
+
+### 4. Run it
+
+Hit **Run** in Replit. The splash should play immediately on page load. After 5.1 seconds it fades out and your main app appears.
+
+Tap anywhere during the splash to skip it.
+
+## Behavior notes
+
+- The video plays muted and inline (so iOS Safari allows autoplay).
+- If autoplay is blocked, the splash skips itself and goes straight to your main app — no broken state.
+- A 5.5-second fallback timer ensures the splash always completes even if the video's "ended" event misfires on some devices.
+- Tapping the splash skips it.
+
+## Customization
+
+**To change the splash duration**, swap in `cowry-splash-long.mp4` (vertical, also 5.1s) or trim the MP4 in any video editor.
+
+**To change the background color** during the fade, edit this line in `SplashScreen.jsx`:
+
+```jsx
+backgroundColor: '#1a2e22', // Cowry green
+```
+
+**To remove the skip-on-tap behavior**, delete the `onClick={handleSkip}` prop and the `handleSkip` function.
+
+## Replit Agent prompt (if you want to skip manual setup)
+
+If you'd rather have Replit's AI agent set this up for you, paste this into the agent:
+
+> Add a splash screen to my React app. I have a video file at `public/cowry-splash.mp4` that should play full-screen on app open. After it ends (5.1 seconds), fade out and show the main app. Allow tap-to-skip. Use the SplashScreen.jsx file I uploaded to src/components/.
+
+Done.
