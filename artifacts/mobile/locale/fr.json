@@ -50,42 +50,25 @@
     "forgot": "Code PIN oublié?"
   },
   "home": {
-    "greeting": "Bonjour,",
-    "balance_label": "Votre solde",
-    "send_to": "Envoyer à",
-    "add_someone": "Ajouter quelqu'un à garder proche",
-    "equiv_prefix": "≈",
-    "live_rates": "Taux en direct",
-    "per_usd": "par $1 USD",
-    "promo_title": "Pas de frais aujourd'hui",
-    "promo_sub": "Zéro frais de transfert sur votre prochain envoi vers l'Afrique de l'Ouest"
-  },
-  "activity": {
-    "title": "Activité",
-    "empty": "Aucune transaction",
-    "tx_today": "Aujourd'hui",
-    "tx_yesterday": "Hier",
-    "tx_received": "Reçu"
-  },
-  "esim": {
-    "title": "eSIM",
-    "subtitle": "Restez connecté où que vous soyez",
-    "coming_soon": "Bientôt disponible"
-  },
-  "you": {
-    "title": "Vous",
-    "security": "Sécurité",
-    "security_value": "PIN + Biométrie",
-    "notifications": "Notifications",
-    "notifications_value": "Activées",
-    "sign_out": "Se déconnecter"
+    "total_balance": "Solde total",
+    "earn_cta": "Gagner 30 $",
+    "send": "Envoyer",
+    "add_money": "Ajouter",
+    "request": "Demander",
+    "scan": "Scanner",
+    "your_card": "Votre carte",
+    "main_account": "Compte principal",
+    "account_details": "Détails du compte",
+    "transactions": "Transactions",
+    "see_all": "Voir tout"
   },
   "tabs": {
     "home": "Accueil",
-    "activity": "Activité",
-    "esim": "eSIM",
-    "you": "Vous"
+    "cards": "Cartes",
+    "recipients": "Destinataires",
+    "payments": "Paiements"
   },
+  "coming_soon": "Bientôt disponible",
   "lang": {
     "en": "English",
     "fr": "Français",

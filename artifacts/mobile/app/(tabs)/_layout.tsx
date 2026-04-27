@@ -5,8 +5,35 @@ import { Icon, Label, NativeTabs } from "expo-router/unstable-native-tabs";
 import { SymbolView } from "expo-symbols";
 import { Feather } from "@expo/vector-icons";
 import React from "react";
-import { Platform, StyleSheet, View, Text } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
 import { useTranslation } from "@/hooks/useTranslation";
+
+function TabIcon({
+  featherName,
+  sfName,
+  focused,
+  isIOS,
+}: {
+  featherName: string;
+  sfName: string;
+  focused: boolean;
+  isIOS: boolean;
+}) {
+  const iconColor = focused ? "#1a2e22" : "rgba(10,9,7,0.35)";
+  return (
+    <View style={focused ? styles.iconPill : styles.iconWrap}>
+      {isIOS ? (
+        <SymbolView
+          name={focused ? `${sfName}.fill` : sfName}
+          tintColor={iconColor}
+          size={20}
+        />
+      ) : (
+        <Feather name={featherName as any} size={20} color={iconColor} />
+      )}
+    </View>
+  );
+}
 
 function NativeTabLayout() {
   const { t } = useTranslation();
@@ -16,17 +43,17 @@ function NativeTabLayout() {
         <Icon sf={{ default: "house", selected: "house.fill" }} />
         <Label>{t("tabs.home")}</Label>
       </NativeTabs.Trigger>
-      <NativeTabs.Trigger name="activity">
+      <NativeTabs.Trigger name="cards">
+        <Icon sf={{ default: "creditcard", selected: "creditcard.fill" }} />
+        <Label>{t("tabs.cards")}</Label>
+      </NativeTabs.Trigger>
+      <NativeTabs.Trigger name="recipients">
+        <Icon sf={{ default: "person.2", selected: "person.2.fill" }} />
+        <Label>{t("tabs.recipients")}</Label>
+      </NativeTabs.Trigger>
+      <NativeTabs.Trigger name="payments">
         <Icon sf={{ default: "arrow.left.arrow.right", selected: "arrow.left.arrow.right.circle.fill" }} />
-        <Label>{t("tabs.activity")}</Label>
-      </NativeTabs.Trigger>
-      <NativeTabs.Trigger name="esim">
-        <Icon sf={{ default: "simcard", selected: "simcard.fill" }} />
-        <Label>{t("tabs.esim")}</Label>
-      </NativeTabs.Trigger>
-      <NativeTabs.Trigger name="you">
-        <Icon sf={{ default: "person", selected: "person.fill" }} />
-        <Label>{t("tabs.you")}</Label>
+        <Label>{t("tabs.payments")}</Label>
       </NativeTabs.Trigger>
     </NativeTabs>
   );
@@ -40,16 +67,16 @@ function ClassicTabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: "#c9a04a",
-        tabBarInactiveTintColor: "rgba(26, 46, 34, 0.4)",
+        tabBarActiveTintColor: "#0a0907",
+        tabBarInactiveTintColor: "rgba(10,9,7,0.35)",
         headerShown: false,
         tabBarStyle: {
           position: "absolute",
-          backgroundColor: isIOS ? "transparent" : "#f5ebd6",
+          backgroundColor: isIOS ? "transparent" : "white",
           borderTopWidth: 1,
-          borderTopColor: "rgba(10, 9, 7, 0.08)",
+          borderTopColor: "rgba(10,9,7,0.08)",
           elevation: 0,
-          ...(isWeb ? { height: 84 } : {}),
+          height: isWeb ? 84 : 88,
         },
         tabBarBackground: () =>
           isIOS ? (
@@ -60,13 +87,16 @@ function ClassicTabLayout() {
             />
           ) : (
             <View
-              style={[StyleSheet.absoluteFill, { backgroundColor: "#f5ebd6" }]}
+              style={[StyleSheet.absoluteFill, { backgroundColor: "white" }]}
             />
           ),
         tabBarLabelStyle: {
-          fontFamily: "Geist_400Regular",
-          fontSize: 10,
-          letterSpacing: 0.3,
+          fontFamily: "Geist_500Medium",
+          fontSize: 11,
+          letterSpacing: 0.1,
+        },
+        tabBarItemStyle: {
+          paddingTop: 4,
         },
       }}
     >
@@ -74,48 +104,36 @@ function ClassicTabLayout() {
         name="index"
         options={{
           title: t("tabs.home"),
-          tabBarIcon: ({ color }) =>
-            isIOS ? (
-              <SymbolView name="house" tintColor={color} size={22} />
-            ) : (
-              <Feather name="home" size={22} color={color} />
-            ),
+          tabBarIcon: ({ focused }) => (
+            <TabIcon featherName="home" sfName="house" focused={focused} isIOS={isIOS} />
+          ),
         }}
       />
       <Tabs.Screen
-        name="activity"
+        name="cards"
         options={{
-          title: t("tabs.activity"),
-          tabBarIcon: ({ color }) =>
-            isIOS ? (
-              <SymbolView name="arrow.left.arrow.right" tintColor={color} size={22} />
-            ) : (
-              <Feather name="activity" size={22} color={color} />
-            ),
+          title: t("tabs.cards"),
+          tabBarIcon: ({ focused }) => (
+            <TabIcon featherName="credit-card" sfName="creditcard" focused={focused} isIOS={isIOS} />
+          ),
         }}
       />
       <Tabs.Screen
-        name="esim"
+        name="recipients"
         options={{
-          title: t("tabs.esim"),
-          tabBarIcon: ({ color }) =>
-            isIOS ? (
-              <SymbolView name="simcard" tintColor={color} size={22} />
-            ) : (
-              <Feather name="wifi" size={22} color={color} />
-            ),
+          title: t("tabs.recipients"),
+          tabBarIcon: ({ focused }) => (
+            <TabIcon featherName="users" sfName="person.2" focused={focused} isIOS={isIOS} />
+          ),
         }}
       />
       <Tabs.Screen
-        name="you"
+        name="payments"
         options={{
-          title: t("tabs.you"),
-          tabBarIcon: ({ color }) =>
-            isIOS ? (
-              <SymbolView name="person" tintColor={color} size={22} />
-            ) : (
-              <Feather name="user" size={22} color={color} />
-            ),
+          title: t("tabs.payments"),
+          tabBarIcon: ({ focused }) => (
+            <TabIcon featherName="repeat" sfName="arrow.left.arrow.right" focused={focused} isIOS={isIOS} />
+          ),
         }}
       />
     </Tabs>
@@ -128,3 +146,20 @@ export default function TabLayout() {
   }
   return <ClassicTabLayout />;
 }
+
+const styles = StyleSheet.create({
+  iconPill: {
+    backgroundColor: "#ebf2ec",
+    paddingHorizontal: 16,
+    paddingVertical: 6,
+    borderRadius: 22,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  iconWrap: {
+    paddingHorizontal: 16,
+    paddingVertical: 6,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});

@@ -50,42 +50,25 @@
     "forgot": "Esqueceu o PIN?"
   },
   "home": {
-    "greeting": "Olá,",
-    "balance_label": "O seu saldo",
-    "send_to": "Enviar para",
-    "add_someone": "Adicionar alguém para manter perto",
-    "equiv_prefix": "≈",
-    "live_rates": "Taxas ao vivo",
-    "per_usd": "por $1 USD",
-    "promo_title": "Sem taxas hoje",
-    "promo_sub": "Transferência sem taxas no próximo envio para África Ocidental"
-  },
-  "activity": {
-    "title": "Atividade",
-    "empty": "Sem transações ainda",
-    "tx_today": "Hoje",
-    "tx_yesterday": "Ontem",
-    "tx_received": "Recebido"
-  },
-  "esim": {
-    "title": "eSIM",
-    "subtitle": "Mantenha-se ligado onde quer que esteja",
-    "coming_soon": "Em breve"
-  },
-  "you": {
-    "title": "Você",
-    "security": "Segurança",
-    "security_value": "PIN + Biometria",
-    "notifications": "Notificações",
-    "notifications_value": "Ativadas",
-    "sign_out": "Terminar sessão"
+    "total_balance": "Saldo total",
+    "earn_cta": "Ganhe $30",
+    "send": "Enviar",
+    "add_money": "Adicionar",
+    "request": "Solicitar",
+    "scan": "Digitalizar",
+    "your_card": "O seu cartão",
+    "main_account": "Conta principal",
+    "account_details": "Detalhes da conta",
+    "transactions": "Transações",
+    "see_all": "Ver tudo"
   },
   "tabs": {
     "home": "Início",
-    "activity": "Atividade",
-    "esim": "eSIM",
-    "you": "Você"
+    "cards": "Cartões",
+    "recipients": "Destinatários",
+    "payments": "Pagamentos"
   },
+  "coming_soon": "Em breve",
   "lang": {
     "en": "English",
     "fr": "Français",

@@ -50,42 +50,25 @@
     "forgot": "Forgot PIN?"
   },
   "home": {
-    "greeting": "Hello,",
-    "balance_label": "Your balance",
-    "send_to": "Send to",
-    "add_someone": "Add someone to stay close to",
-    "equiv_prefix": "≈",
-    "live_rates": "Live Rates",
-    "per_usd": "per $1 USD",
-    "promo_title": "No fees today",
-    "promo_sub": "Zero transfer fees on your next send to West Africa"
-  },
-  "activity": {
-    "title": "Activity",
-    "empty": "No transactions yet",
-    "tx_today": "Today",
-    "tx_yesterday": "Yesterday",
-    "tx_received": "Received"
-  },
-  "esim": {
-    "title": "eSIM",
-    "subtitle": "Stay connected wherever you are",
-    "coming_soon": "Coming soon"
-  },
-  "you": {
-    "title": "You",
-    "security": "Security",
-    "security_value": "PIN + Biometrics",
-    "notifications": "Notifications",
-    "notifications_value": "On",
-    "sign_out": "Sign out"
+    "total_balance": "Total balance",
+    "earn_cta": "Earn $30",
+    "send": "Send",
+    "add_money": "Add money",
+    "request": "Request",
+    "scan": "Scan",
+    "your_card": "Your card",
+    "main_account": "Main account",
+    "account_details": "Account details",
+    "transactions": "Transactions",
+    "see_all": "See all"
   },
   "tabs": {
     "home": "Home",
-    "activity": "Activity",
-    "esim": "eSIM",
-    "you": "You"
+    "cards": "Cards",
+    "recipients": "Recipients",
+    "payments": "Payments"
   },
+  "coming_soon": "Coming soon",
   "lang": {
     "en": "English",
     "fr": "Français",

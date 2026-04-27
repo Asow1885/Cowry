@@ -10,21 +10,21 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as Haptics from "expo-haptics";
 import { Feather } from "@expo/vector-icons";
-import { CowryCrest } from "@/components/CowryCrest";
 import { useApp } from "@/context/AppContext";
 import { useTranslation } from "@/hooks/useTranslation";
 
-const RECIPIENTS = [
-  { id: "1", name: "Mama", flag: "🇬🇳", lastSent: "$120" },
-  { id: "2", name: "Papa", flag: "🇸🇳", lastSent: "$85" },
-  { id: "3", name: "Awa", flag: "🇲🇱", lastSent: "$60" },
+const CURRENCIES = [
+  { flag: "🇺🇸", code: "USD", amount: "$1,240.00" },
+  { flag: "🇬🇳", code: "GNF", amount: "0 GNF" },
+  { flag: "🇪🇺", code: "EUR", amount: "€0.00" },
 ];
 
-const RATES = [
-  { flag: "🇬🇳", code: "GNF", rate: "8,152" },
-  { flag: "🇸🇳", code: "XOF", rate: "600" },
-  { flag: "🇳🇬", code: "NGN", rate: "1,580" },
-  { flag: "🇬🇭", code: "GHS", rate: "14.2" },
+const PAGE_DOTS = [true, false, false, false];
+
+const TRANSACTIONS = [
+  { dir: "up" as const, name: "Mama Sow", detail: "Sent · 2 days ago", amt: "50 USD", currency: "To GNF" },
+  { dir: "down" as const, name: "Chase Bank", detail: "Added · Thursday", amt: "+1,000 USD", currency: "" },
+  { dir: "up" as const, name: "Brother", detail: "Sent · 3 weeks ago", amt: "80 USD", currency: "To XOF" },
 ];
 
 export default function HomeScreen() {
@@ -34,7 +34,9 @@ export default function HomeScreen() {
   const [balanceVisible, setBalanceVisible] = useState(true);
 
   const topInset = Platform.OS === "web" ? 67 : insets.top;
-  const firstName = user?.name?.split(" ")[0] ?? "Ashley";
+  const initials = user?.name
+    ? user.name.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase()
+    : "AS";
 
   function toggleBalance() {
     Haptics.selectionAsync();
@@ -44,358 +46,450 @@ export default function HomeScreen() {
   return (
     <ScrollView
       style={styles.container}
-      contentContainerStyle={{ paddingBottom: 100 }}
+      contentContainerStyle={{ paddingBottom: 108 }}
       showsVerticalScrollIndicator={false}
     >
-      <View style={[styles.greenSection, { paddingTop: topInset + 20 }]}>
-        <View
-          style={[
-            styles.headerRow,
-            { flexDirection: isRTL ? "row-reverse" : "row" },
-          ]}
-        >
-          <View style={styles.logoRow}>
-            <CowryCrest size={20} color="#c9a04a" />
-            <Text style={styles.logoText}>COWRY</Text>
+      <View style={{ paddingHorizontal: 24, paddingTop: topInset }}>
+
+        {/* TOP BAR */}
+        <View style={[styles.topBar, isRTL && styles.rowReverse]}>
+          <View style={styles.avatar}>
+            <Text style={styles.avatarText}>{initials}</Text>
           </View>
-          <TouchableOpacity style={styles.notifBtn}>
-            <Feather name="bell" size={20} color="#c9a04a" />
-            <View style={styles.notifDot} />
+          <TouchableOpacity
+            style={styles.earnPill}
+            activeOpacity={0.85}
+            onPress={() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)}
+          >
+            <Text style={styles.earnPillText}>{t("home.earn_cta")}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.eyeBtn} onPress={toggleBalance} activeOpacity={0.7}>
+            <Feather name={balanceVisible ? "eye" : "eye-off"} size={18} color="#0a0907" />
           </TouchableOpacity>
         </View>
 
-        <View style={styles.greetingWrap}>
-          <Text style={[styles.greeting, { fontFamily: fonts.headline }, isRTL && styles.textRTL]}>
-            {t("home.greeting")} {firstName}.
-          </Text>
-        </View>
-
-        <View style={styles.balanceCard}>
-          <View
-            style={[
-              styles.balanceRow,
-              { flexDirection: isRTL ? "row-reverse" : "row" },
-            ]}
-          >
-            <Text style={styles.balanceLabel}>{t("home.balance_label")}</Text>
-            <TouchableOpacity onPress={toggleBalance}>
-              <Feather
-                name={balanceVisible ? "eye" : "eye-off"}
-                size={16}
-                color="rgba(245, 235, 214, 0.55)"
-              />
-            </TouchableOpacity>
-          </View>
+        {/* BALANCE */}
+        <Text style={[styles.balanceLabel, isRTL && styles.textRTL]}>{t("home.total_balance")}</Text>
+        <View style={[styles.balanceRow, isRTL && styles.rowReverse]}>
           {balanceVisible ? (
-            <Text style={styles.balanceAmount}>$2,481.50</Text>
+            <>
+              <Text style={[styles.balanceAmt, { fontFamily: fonts.headlineSemi }]}>$1,240.00</Text>
+              <Text style={[styles.balanceCurr, { fontFamily: fonts.headline }]}>USD</Text>
+            </>
           ) : (
-            <Text style={styles.balanceHidden}>••••••</Text>
+            <Text style={[styles.balanceAmt, { fontFamily: fonts.headlineSemi }]}>••••••</Text>
           )}
-          <Text style={styles.balanceEquiv}>
-            {t("home.equiv_prefix")} 20,228,232 GNF
-          </Text>
+          <View style={styles.chartIcon}>
+            <Feather name="bar-chart-2" size={13} color="#1a2e22" />
+          </View>
         </View>
 
-        <View style={styles.sendSection}>
-          <Text style={[styles.sendLabel, isRTL && styles.textRTL]}>
-            {t("home.send_to")}
-          </Text>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.recipientsRow}
-            style={{ marginHorizontal: -24 }}
-          >
-            <View style={{ width: 24 }} />
-            {RECIPIENTS.map((r) => (
-              <TouchableOpacity
-                key={r.id}
-                style={styles.recipientCard}
-                activeOpacity={0.85}
-                onPress={() =>
-                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
-                }
-              >
-                <View style={styles.recipientAvatar}>
-                  <Text style={styles.recipientFlag}>{r.flag}</Text>
-                </View>
-                <Text style={styles.recipientName} numberOfLines={1}>
-                  {r.name}
-                </Text>
-                <Text style={styles.recipientLast}>{r.lastSent}</Text>
-              </TouchableOpacity>
-            ))}
-            <TouchableOpacity style={styles.addRecipient} activeOpacity={0.8}>
-              <View style={styles.addRecipientIcon}>
-                <Feather name="plus" size={18} color="#c9a04a" />
-              </View>
-              <Text style={styles.addRecipientText} numberOfLines={2}>
-                {t("home.add_someone")}
-              </Text>
-            </TouchableOpacity>
-            <View style={{ width: 24 }} />
-          </ScrollView>
+        {/* ACTION CHIPS */}
+        <View style={[styles.actions, isRTL && styles.rowReverse]}>
+          <TouchableOpacity style={[styles.chip, styles.chipPrimary]} activeOpacity={0.85}
+            onPress={() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)}>
+            <Text style={[styles.chipTextPrimary, { fontFamily: fonts.bodyMed }]}>{t("home.send")}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.chip} activeOpacity={0.8}>
+            <Text style={[styles.chipText, { fontFamily: fonts.bodyMed }]}>{t("home.add_money")}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.chip} activeOpacity={0.8}>
+            <Text style={[styles.chipText, { fontFamily: fonts.bodyMed }]}>{t("home.request")}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.chip, styles.chipWithIcon]} activeOpacity={0.8}>
+            <Text style={[styles.chipText, { fontFamily: fonts.bodyMed }]}>{t("home.scan")}</Text>
+            <Feather name="maximize" size={11} color="#0a0907" style={{ opacity: 0.7 }} />
+          </TouchableOpacity>
         </View>
       </View>
 
-      <View style={styles.creamSection}>
-        <Text style={[styles.sectionTitle, { fontFamily: fonts.headline }, isRTL && styles.textRTL]}>
-          {t("home.live_rates")}
-        </Text>
-        <View style={styles.ratesGrid}>
-          {RATES.map((r) => (
-            <View key={r.code} style={styles.rateCard}>
-              <View style={styles.rateTop}>
-                <Text style={styles.rateFlag}>{r.flag}</Text>
-                <Text style={styles.rateCode}>{r.code}</Text>
-              </View>
-              <Text style={styles.rateAmount}>{r.rate}</Text>
-              <Text style={styles.rateLabel}>{t("home.per_usd")}</Text>
+      {/* CARD WIDGET */}
+      <View style={{ paddingHorizontal: 12, marginBottom: 0 }}>
+        <View style={styles.card}>
+          {/* Card tab */}
+          <View style={styles.cardTab}>
+            <View style={[styles.cardTabTitle, isRTL && styles.rowReverse]}>
+              <Text style={[styles.cardTabTitleText, { fontFamily: fonts.headline }]}>{t("home.your_card")}</Text>
+              <Text style={styles.cardTabArrow}>{isRTL ? "‹" : "›"}</Text>
             </View>
-          ))}
+            <Text style={styles.cardLogo}>COWRY</Text>
+          </View>
+          {/* Drip effect */}
+          <View style={styles.cardTabDrip} />
+
+          {/* Card body */}
+          <View style={styles.cardBody}>
+            <TouchableOpacity style={[styles.cardArrow, isRTL && { left: 24, right: undefined }]}>
+              <Text style={styles.cardArrowText}>{isRTL ? "‹" : "›"}</Text>
+            </TouchableOpacity>
+            <Text style={[styles.cardH, { fontFamily: fonts.headlineSemi }]}>{t("home.main_account")}</Text>
+            <Text style={styles.cardAmt}>$1,240.00</Text>
+
+            {CURRENCIES.map((c) => (
+              <View key={c.code} style={[styles.currencyRow, isRTL && styles.rowReverse]}>
+                <View style={[styles.currencyLeft, isRTL && styles.rowReverse]}>
+                  <View style={styles.flagCircle}>
+                    <Text style={styles.flagEmoji}>{c.flag}</Text>
+                  </View>
+                  <Text style={[styles.currencyAmt, { fontFamily: fonts.body }]}>{c.amount}</Text>
+                </View>
+                <Text style={styles.currencyArrow}>{isRTL ? "‹" : "›"}</Text>
+              </View>
+            ))}
+
+            <TouchableOpacity style={styles.accountDetailsBtn} activeOpacity={0.75}>
+              <Text style={styles.accountDetailsBtnText}>🏛</Text>
+              <Text style={[styles.accountDetailsBtnLabel, { fontFamily: fonts.bodyMed }]}>{t("home.account_details")}</Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
-        <View style={styles.promoBanner}>
-          <View style={styles.promoLeft}>
-            <CowryCrest size={28} color="#c9a04a" />
-          </View>
-          <View style={styles.promoRight}>
-            <Text style={styles.promoTitle}>{t("home.promo_title")}</Text>
-            <Text style={styles.promoSub}>{t("home.promo_sub")}</Text>
-          </View>
+        {/* Page dots */}
+        <View style={styles.pageDots}>
+          {PAGE_DOTS.map((active, i) => (
+            <View key={i} style={[styles.dot, active && styles.dotActive]} />
+          ))}
         </View>
+      </View>
+
+      {/* TRANSACTIONS */}
+      <View style={{ paddingHorizontal: 24 }}>
+        <View style={[styles.txHeader, isRTL && styles.rowReverse]}>
+          <Text style={[styles.txTitle, { fontFamily: fonts.headlineSemi }]}>{t("home.transactions")}</Text>
+          <Text style={[styles.txSeeAll, { fontFamily: fonts.bodyMed }]}>{t("home.see_all")}</Text>
+        </View>
+
+        {TRANSACTIONS.map((tx, i) => (
+          <View key={i} style={[styles.txRow, isRTL && styles.rowReverse]}>
+            <View style={styles.txIcon}>
+              <Feather name={tx.dir === "up" ? "arrow-up" : "arrow-down"} size={18} color="#0a0907" />
+            </View>
+            <View style={styles.txMeta}>
+              <Text style={[styles.txName, { fontFamily: fonts.bodyMed }]}>{tx.name}</Text>
+              <Text style={[styles.txDetail, { fontFamily: fonts.body }]}>{tx.detail}</Text>
+            </View>
+            <View style={[styles.txRight, isRTL && { alignItems: "flex-start" }]}>
+              <Text style={[styles.txAmt, { fontFamily: fonts.bodyMed }]}>{tx.amt}</Text>
+              {tx.currency ? (
+                <Text style={[styles.txCurrency, { fontFamily: fonts.body }]}>{tx.currency}</Text>
+              ) : null}
+            </View>
+          </View>
+        ))}
       </View>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#f5ebd6" },
-  greenSection: {
-    backgroundColor: "#1a2e22",
-    paddingHorizontal: 24,
-    paddingBottom: 28,
-    borderBottomLeftRadius: 24,
-    borderBottomRightRadius: 24,
-  },
-  headerRow: {
+  container: { flex: 1, backgroundColor: "white" },
+  rowReverse: { flexDirection: "row-reverse" },
+  textRTL: { textAlign: "right" },
+
+  topBar: {
+    flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 20,
+    paddingTop: 24,
+    paddingBottom: 32,
   },
-  logoRow: { flexDirection: "row", alignItems: "center", gap: 7 },
-  logoText: {
-    fontFamily: "Fraunces_600SemiBold",
-    fontSize: 13,
-    letterSpacing: 3,
-    color: "#f5ebd6",
-  },
-  notifBtn: {
-    position: "relative",
-    width: 36,
-    height: 36,
+  avatar: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: "#ebebe8",
     alignItems: "center",
     justifyContent: "center",
   },
-  notifDot: {
-    position: "absolute",
-    top: 7,
-    right: 7,
-    width: 7,
-    height: 7,
-    borderRadius: 3.5,
-    backgroundColor: "#c9a04a",
-    borderWidth: 1.5,
-    borderColor: "#1a2e22",
+  avatarText: {
+    fontFamily: "Geist_600SemiBold",
+    fontSize: 14,
+    color: "#0a0907",
   },
-  greetingWrap: { marginBottom: 16 },
-  greeting: {
-    fontFamily: "Fraunces_400Regular",
-    fontSize: 22,
-    color: "#f5ebd6",
-    letterSpacing: -0.5,
+  earnPill: {
+    backgroundColor: "#1a2e22",
+    borderRadius: 100,
+    paddingVertical: 12,
+    paddingHorizontal: 24,
   },
-  textRTL: { textAlign: "right", writingDirection: "rtl" },
-  balanceCard: { marginBottom: 24 },
-  balanceRow: {
-    justifyContent: "space-between",
+  earnPillText: {
+    fontFamily: "Geist_500Medium",
+    fontSize: 14,
+    color: "#e4c070",
+  },
+  eyeBtn: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: "white",
+    borderWidth: 1,
+    borderColor: "rgba(10,9,7,0.08)",
     alignItems: "center",
-    marginBottom: 4,
+    justifyContent: "center",
   },
+
   balanceLabel: {
     fontFamily: "Geist_400Regular",
-    fontSize: 11,
-    letterSpacing: 1.5,
-    color: "rgba(245, 235, 214, 0.55)",
-    textTransform: "uppercase",
+    fontSize: 16,
+    color: "#6b6b66",
+    marginBottom: 6,
   },
-  balanceAmount: {
-    fontFamily: "Fraunces_400Regular",
-    fontSize: 48,
-    letterSpacing: -2,
-    color: "#f5ebd6",
-    lineHeight: 56,
-  },
-  balanceHidden: {
-    fontFamily: "Geist_500Medium",
-    fontSize: 36,
-    color: "rgba(245, 235, 214, 0.5)",
-    lineHeight: 56,
-  },
-  balanceEquiv: {
-    fontFamily: "Fraunces_400Regular_Italic",
-    fontSize: 13,
-    color: "#c9a04a",
-    marginTop: 2,
-  },
-  sendSection: {},
-  sendLabel: {
-    fontFamily: "Geist_500Medium",
-    fontSize: 10,
-    letterSpacing: 1.5,
-    color: "rgba(245, 235, 214, 0.55)",
-    textTransform: "uppercase",
-    marginBottom: 12,
-  },
-  recipientsRow: {
+  balanceRow: {
     flexDirection: "row",
-    alignItems: "flex-start",
-    gap: 12,
-    paddingBottom: 4,
+    alignItems: "baseline",
+    gap: 10,
+    marginBottom: 24,
   },
-  recipientCard: {
-    backgroundColor: "rgba(245, 235, 214, 0.06)",
-    borderWidth: 1,
-    borderColor: "rgba(201, 160, 74, 0.2)",
-    borderRadius: 12,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
-    alignItems: "center",
-    width: 80,
-    gap: 5,
+  balanceAmt: {
+    fontFamily: "Fraunces_600SemiBold",
+    fontSize: 38,
+    lineHeight: 38,
+    letterSpacing: -0.76,
+    color: "#0a0907",
   },
-  recipientAvatar: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: "#0f1f17",
+  balanceCurr: {
+    fontFamily: "Fraunces_400Regular",
+    fontSize: 18,
+    color: "#6b6b66",
+  },
+  chartIcon: {
+    width: 26,
+    height: 26,
+    borderRadius: 13,
+    backgroundColor: "#ebf2ec",
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 2,
+    marginLeft: 4,
   },
-  recipientFlag: { fontSize: 20 },
-  recipientName: {
-    fontFamily: "Geist_500Medium",
-    fontSize: 11,
-    color: "#f5ebd6",
-    textAlign: "center",
-  },
-  recipientLast: {
-    fontFamily: "Geist_400Regular",
-    fontSize: 10,
-    color: "#c9a04a",
-    textAlign: "center",
-  },
-  addRecipient: {
-    width: 80,
-    alignItems: "center",
-    paddingHorizontal: 8,
-    paddingVertical: 12,
+
+  actions: {
+    flexDirection: "row",
     gap: 8,
+    marginBottom: 16,
   },
-  addRecipientIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    borderWidth: 1.5,
-    borderColor: "rgba(201, 160, 74, 0.3)",
-    borderStyle: "dashed",
+  chip: {
+    flex: 1,
+    paddingVertical: 12,
+    paddingHorizontal: 8,
+    backgroundColor: "#d8e8dc",
+    borderRadius: 100,
     alignItems: "center",
     justifyContent: "center",
   },
-  addRecipientText: {
-    fontFamily: "Geist_400Regular",
-    fontSize: 10,
-    color: "rgba(245, 235, 214, 0.45)",
-    textAlign: "center",
-    lineHeight: 14,
+  chipPrimary: {
+    backgroundColor: "#1a2e22",
   },
-  creamSection: { padding: 24, paddingTop: 28 },
-  sectionTitle: {
+  chipWithIcon: {
+    flexDirection: "row",
+    gap: 4,
+  },
+  chipText: {
+    fontFamily: "Geist_500Medium",
+    fontSize: 14,
+    color: "#0a0907",
+  },
+  chipTextPrimary: {
+    fontFamily: "Geist_500Medium",
+    fontSize: 14,
+    color: "#e4c070",
+  },
+
+  card: {
+    backgroundColor: "#f5f5f3",
+    borderRadius: 18,
+    overflow: "hidden",
+    marginBottom: 0,
+  },
+  cardTab: {
+    backgroundColor: "#d8e8dc",
+    paddingVertical: 16,
+    paddingHorizontal: 20,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    height: 76,
+    borderRadius: 18,
+  },
+  cardTabTitle: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+  },
+  cardTabTitleText: {
     fontFamily: "Fraunces_400Regular",
     fontSize: 18,
     color: "#0a0907",
-    letterSpacing: -0.4,
-    marginBottom: 14,
   },
-  ratesGrid: {
+  cardTabArrow: {
+    fontFamily: "Geist_400Regular",
+    fontSize: 18,
+    color: "rgba(10,9,7,0.5)",
+  },
+  cardLogo: {
+    fontFamily: "Fraunces_600SemiBold",
+    fontSize: 16,
+    color: "#1a2e22",
+    letterSpacing: 2,
+  },
+  cardTabDrip: {
+    height: 16,
+    width: 80,
+    backgroundColor: "#d8e8dc",
+    borderBottomLeftRadius: 24,
+    borderBottomRightRadius: 24,
+    alignSelf: "center",
+    marginTop: -1,
+    zIndex: 2,
+  },
+  cardBody: {
+    padding: 24,
+    paddingTop: 20,
+    backgroundColor: "#f5f5f3",
+    position: "relative",
+  },
+  cardArrow: {
+    position: "absolute",
+    top: 20,
+    right: 24,
+  },
+  cardArrowText: {
+    fontFamily: "Geist_400Regular",
+    fontSize: 18,
+    color: "#999994",
+  },
+  cardH: {
+    fontFamily: "Fraunces_600SemiBold",
+    fontSize: 30,
+    color: "#0a0907",
+    letterSpacing: -0.6,
+    marginBottom: 4,
+  },
+  cardAmt: {
+    fontFamily: "Geist_400Regular",
+    fontSize: 16,
+    color: "#6b6b66",
+    marginBottom: 22,
+  },
+  currencyRow: {
     flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 10,
-    marginBottom: 20,
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: 8,
   },
-  rateCard: {
-    backgroundColor: "white",
-    borderRadius: 12,
-    padding: 14,
-    width: "47%",
-    borderWidth: 1,
-    borderColor: "rgba(10, 9, 7, 0.07)",
+  currencyLeft: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
   },
-  rateTop: {
+  flagCircle: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: "#ebebe8",
+    alignItems: "center",
+    justifyContent: "center",
+    overflow: "hidden",
+  },
+  flagEmoji: { fontSize: 16, lineHeight: 20 },
+  currencyAmt: {
+    fontFamily: "Geist_400Regular",
+    fontSize: 16,
+    color: "#0a0907",
+  },
+  currencyArrow: {
+    fontFamily: "Geist_400Regular",
+    fontSize: 16,
+    color: "#999994",
+  },
+  accountDetailsBtn: {
+    marginTop: 16,
     flexDirection: "row",
     alignItems: "center",
     gap: 6,
-    marginBottom: 6,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    backgroundColor: "#ebebe8",
+    borderRadius: 100,
+    alignSelf: "flex-start",
   },
-  rateFlag: { fontSize: 16 },
-  rateCode: {
+  accountDetailsBtnText: { fontSize: 14 },
+  accountDetailsBtnLabel: {
     fontFamily: "Geist_500Medium",
-    fontSize: 11,
-    color: "#6b6b66",
-    letterSpacing: 0.5,
+    fontSize: 13,
+    color: "#0a0907",
   },
-  rateAmount: {
-    fontFamily: "Fraunces_400Regular",
-    fontSize: 22,
+
+  pageDots: {
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 6,
+    marginTop: 14,
+    marginBottom: 24,
+  },
+  dot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: "#d8d8d4",
+  },
+  dotActive: { backgroundColor: "#1a2e22" },
+
+  txHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "baseline",
+    marginBottom: 18,
+    marginTop: 8,
+  },
+  txTitle: {
+    fontFamily: "Fraunces_600SemiBold",
+    fontSize: 24,
     color: "#0a0907",
     letterSpacing: -0.5,
   },
-  rateLabel: {
-    fontFamily: "Geist_400Regular",
-    fontSize: 10,
-    color: "#6b6b66",
-    marginTop: 1,
+  txSeeAll: {
+    fontFamily: "Geist_500Medium",
+    fontSize: 14,
+    color: "#1a2e22",
+    textDecorationLine: "underline",
   },
-  promoBanner: {
-    backgroundColor: "#1a2e22",
-    borderRadius: 14,
-    padding: 18,
+  txRow: {
     flexDirection: "row",
     alignItems: "center",
     gap: 14,
+    paddingVertical: 12,
   },
-  promoLeft: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: "#25402f",
+  txIcon: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    borderWidth: 1.5,
+    borderColor: "#d8d8d4",
     alignItems: "center",
     justifyContent: "center",
     flexShrink: 0,
   },
-  promoRight: { flex: 1 },
-  promoTitle: {
-    fontFamily: "Fraunces_400Regular",
+  txMeta: { flex: 1, minWidth: 0 },
+  txName: {
+    fontFamily: "Geist_500Medium",
     fontSize: 16,
-    color: "#e4c070",
-    marginBottom: 3,
-    letterSpacing: -0.3,
+    color: "#999994",
+    marginBottom: 2,
   },
-  promoSub: {
+  txDetail: {
     fontFamily: "Geist_400Regular",
-    fontSize: 12,
-    color: "rgba(245, 235, 214, 0.55)",
-    lineHeight: 17,
+    fontSize: 13,
+    color: "#999994",
+  },
+  txRight: { alignItems: "flex-end" },
+  txAmt: {
+    fontFamily: "Geist_500Medium",
+    fontSize: 16,
+    color: "#999994",
+  },
+  txCurrency: {
+    fontFamily: "Geist_400Regular",
+    fontSize: 13,
+    color: "#999994",
   },
 });

@@ -166,8 +166,8 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   headline: {
-    fontSize: 56,
-    lineHeight: 54,
+    fontSize: 60,
+    lineHeight: 55,
     letterSpacing: -2.5,
     color: "#f5ebd6",
     marginBottom: 18,
