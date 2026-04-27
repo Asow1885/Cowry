@@ -69,7 +69,12 @@
     "tx_to": "Para",
     "tx_2d": "há 2 dias",
     "tx_thu": "quinta-feira",
-    "tx_3w": "há 3 semanas"
+    "tx_3w": "há 3 semanas",
+    "live_rates": "Taxas ao vivo",
+    "rates_updated": "Atualizado",
+    "rates_per_usd": "por USD",
+    "rates_unavailable": "Taxas indisponíveis",
+    "rates_retry": "Tentar novamente"
   },
   "tabs": {
     "home": "Início",

@@ -69,7 +69,12 @@
     "tx_to": "To",
     "tx_2d": "2 days ago",
     "tx_thu": "Thursday",
-    "tx_3w": "3 weeks ago"
+    "tx_3w": "3 weeks ago",
+    "live_rates": "Live rates",
+    "rates_updated": "Updated",
+    "rates_per_usd": "per USD",
+    "rates_unavailable": "Rates unavailable",
+    "rates_retry": "Retry"
   },
   "tabs": {
     "home": "Home",

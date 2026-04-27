@@ -12,6 +12,7 @@ import * as Haptics from "expo-haptics";
 import { Feather } from "@expo/vector-icons";
 import { useApp } from "@/context/AppContext";
 import { useTranslation } from "@/hooks/useTranslation";
+import { RatesWidget } from "@/components/RatesWidget";
 
 const CURRENCIES = [
   { flag: "🇺🇸", code: "USD", amount: "$1,240.00" },
@@ -243,6 +244,9 @@ export default function HomeScreen() {
           </View>
         ))}
       </View>
+
+      {/* LIVE EXCHANGE RATES */}
+      <RatesWidget />
     </ScrollView>
   );
 }

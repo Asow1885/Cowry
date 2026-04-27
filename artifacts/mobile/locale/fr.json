@@ -69,7 +69,12 @@
     "tx_to": "Vers",
     "tx_2d": "il y a 2 jours",
     "tx_thu": "Jeudi",
-    "tx_3w": "il y a 3 semaines"
+    "tx_3w": "il y a 3 semaines",
+    "live_rates": "Taux en direct",
+    "rates_updated": "Mis à jour",
+    "rates_per_usd": "par USD",
+    "rates_unavailable": "Taux indisponibles",
+    "rates_retry": "Réessayer"
   },
   "tabs": {
     "home": "Accueil",
