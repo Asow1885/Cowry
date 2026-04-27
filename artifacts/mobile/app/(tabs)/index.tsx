@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   Platform,
   ScrollView,
@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  useWindowDimensions,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as Haptics from "expo-haptics";
@@ -20,19 +21,26 @@ const CURRENCIES = [
   { flag: "🇪🇺", code: "EUR", amount: "€0.00" },
 ];
 
-const PAGE_DOTS = [true, false, false, false];
-
 const QUICK_RECIPIENTS = [
   { initial: "M", firstName: "Mama", fullName: "Mama Sow" },
   { initial: "O", firstName: "Ousmane", fullName: "Ousmane Diallo" },
   { initial: "F", firstName: "Fatou", fullName: "Fatou Barry" },
 ];
 
+const POUCHES = [
+  { emoji: "🏠", name: "Family home", saved: 420, goal: 2000 },
+  { emoji: "✈️", name: "Dakar trip", saved: 180, goal: 800 },
+  { emoji: "🎓", name: "Tuition", saved: 0, goal: 1500 },
+];
+
 export default function HomeScreen() {
   const { user } = useApp();
   const { t, isRTL, fonts } = useTranslation();
   const insets = useSafeAreaInsets();
+  const { width: screenW } = useWindowDimensions();
   const [balanceVisible, setBalanceVisible] = useState(true);
+  const [cardIndex, setCardIndex] = useState(0);
+  const cardScrollRef = useRef<ScrollView>(null);
 
   const topInset = Platform.OS === "web" ? 67 : insets.top;
   const initials = user?.name
@@ -66,6 +74,10 @@ export default function HomeScreen() {
   function toggleBalance() {
     Haptics.selectionAsync();
     setBalanceVisible((v) => !v);
+  }
+
+  function formatAmt(n: number): string {
+    return "$" + n.toLocaleString();
   }
 
   return (
@@ -170,53 +182,119 @@ export default function HomeScreen() {
         </TouchableOpacity>
       </ScrollView>
 
-      {/* CARD WIDGET */}
-      <View style={{ paddingHorizontal: 12, marginBottom: 0 }}>
-        <View style={styles.card}>
-          {/* Card tab */}
-          <View style={styles.cardTab}>
-            <View style={[styles.cardTabTitle, isRTL && styles.rowReverse]}>
-              <Text style={[styles.cardTabTitleText, { fontFamily: fonts.headline }]}>{t("home.your_card")}</Text>
-              <Text style={styles.cardTabArrow}>{isRTL ? "‹" : "›"}</Text>
-            </View>
-            <Text style={styles.cardLogo}>{t("brand.name")}</Text>
-          </View>
-          {/* Drip effect */}
-          <View style={styles.cardTabDrip} />
-
-          {/* Card body */}
-          <View style={styles.cardBody}>
-            <TouchableOpacity style={[styles.cardArrow, isRTL && { left: 24, right: undefined }]}>
-              <Text style={styles.cardArrowText}>{isRTL ? "‹" : "›"}</Text>
-            </TouchableOpacity>
-            <Text style={[styles.cardH, { fontFamily: fonts.headlineSemi }]}>{t("home.main_account")}</Text>
-            <Text style={styles.cardAmt}>$1,240.00</Text>
-
-            {CURRENCIES.map((c) => (
-              <View key={c.code} style={[styles.currencyRow, isRTL && styles.rowReverse]}>
-                <View style={[styles.currencyLeft, isRTL && styles.rowReverse]}>
-                  <View style={styles.flagCircle}>
-                    <Text style={styles.flagEmoji}>{c.flag}</Text>
-                  </View>
-                  <Text style={[styles.currencyAmt, { fontFamily: fonts.body }]}>{c.amount}</Text>
+      {/* ═══ SWIPEABLE CARD STACK ═══ */}
+      <View style={{ marginLeft: -24, marginRight: -24 }}>
+        <ScrollView
+          ref={cardScrollRef}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          scrollEventThrottle={16}
+          decelerationRate="fast"
+          onMomentumScrollEnd={(e) => {
+            const idx = Math.round(e.nativeEvent.contentOffset.x / screenW);
+            setCardIndex(idx);
+          }}
+        >
+          {/* ── Card 1: Main Account ── */}
+          <View style={{ width: screenW, paddingHorizontal: 12 }}>
+            <View style={styles.card}>
+              <View style={styles.cardTab}>
+                <View style={[styles.cardTabTitle, isRTL && styles.rowReverse]}>
+                  <Text style={[styles.cardTabTitleText, { fontFamily: fonts.headline }]}>{t("home.your_card")}</Text>
+                  <Text style={styles.cardTabArrow}>{isRTL ? "‹" : "›"}</Text>
                 </View>
-                <Text style={styles.currencyArrow}>{isRTL ? "‹" : "›"}</Text>
+                <Text style={styles.cardLogo}>{t("brand.name")}</Text>
               </View>
-            ))}
-
-            <TouchableOpacity style={styles.accountDetailsBtn} activeOpacity={0.75}>
-              <Text style={styles.accountDetailsBtnText}>🏛</Text>
-              <Text style={[styles.accountDetailsBtnLabel, { fontFamily: fonts.bodyMed }]}>{t("home.account_details")}</Text>
-            </TouchableOpacity>
+              <View style={styles.cardTabDrip} />
+              <View style={styles.cardBody}>
+                <TouchableOpacity style={[styles.cardArrow, isRTL && { left: 24, right: undefined }]}>
+                  <Text style={styles.cardArrowText}>{isRTL ? "‹" : "›"}</Text>
+                </TouchableOpacity>
+                <Text style={[styles.cardH, { fontFamily: fonts.headlineSemi }]}>{t("home.main_account")}</Text>
+                <Text style={styles.cardAmt}>$1,240.00</Text>
+                {CURRENCIES.map((c) => (
+                  <View key={c.code} style={[styles.currencyRow, isRTL && styles.rowReverse]}>
+                    <View style={[styles.currencyLeft, isRTL && styles.rowReverse]}>
+                      <View style={styles.flagCircle}>
+                        <Text style={styles.flagEmoji}>{c.flag}</Text>
+                      </View>
+                      <Text style={[styles.currencyAmt, { fontFamily: fonts.body }]}>{c.amount}</Text>
+                    </View>
+                    <Text style={styles.currencyArrow}>{isRTL ? "‹" : "›"}</Text>
+                  </View>
+                ))}
+                <TouchableOpacity style={styles.accountDetailsBtn} activeOpacity={0.75}>
+                  <Text style={styles.accountDetailsBtnText}>🏛</Text>
+                  <Text style={[styles.accountDetailsBtnLabel, { fontFamily: fonts.bodyMed }]}>{t("home.account_details")}</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
           </View>
-        </View>
 
-        {/* Page dots */}
-        <View style={styles.pageDots}>
-          {PAGE_DOTS.map((active, i) => (
-            <View key={i} style={[styles.dot, active && styles.dotActive]} />
-          ))}
-        </View>
+          {/* ── Card 2: Pouches ── */}
+          <View style={{ width: screenW, paddingHorizontal: 12 }}>
+            <View style={styles.card}>
+              <View style={[styles.cardTab, styles.pouchTab]}>
+                <View style={[styles.cardTabTitle, isRTL && styles.rowReverse]}>
+                  <Text style={[styles.cardTabTitleText, { fontFamily: fonts.headline }]}>{t("home.pouches")}</Text>
+                  <Text style={styles.cardTabArrow}>{isRTL ? "‹" : "›"}</Text>
+                </View>
+                <Text style={[styles.cardLogo, styles.pouchLogo]}>{t("brand.name")}</Text>
+              </View>
+              <View style={[styles.cardTabDrip, styles.pouchDrip]} />
+              <View style={styles.cardBody}>
+                {POUCHES.length === 0 ? (
+                  <View style={styles.pouchEmpty}>
+                    <Text style={styles.pouchEmptyEmoji}>🐚</Text>
+                    <Text style={[styles.pouchEmptyTitle, { fontFamily: fonts.headline }]}>{t("home.pouch_empty_title")}</Text>
+                    <Text style={[styles.pouchEmptySub, { fontFamily: fonts.body }]}>{t("home.pouch_empty_sub")}</Text>
+                  </View>
+                ) : (
+                  POUCHES.map((p, i) => {
+                    const pct = p.goal > 0 ? Math.min(p.saved / p.goal, 1) : 0;
+                    return (
+                      <TouchableOpacity
+                        key={i}
+                        style={[styles.pouchRow, i === POUCHES.length - 1 && { borderBottomWidth: 0 }]}
+                        activeOpacity={0.75}
+                        onPress={() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)}
+                      >
+                        <View style={styles.pouchEmoji}>
+                          <Text style={styles.pouchEmojiText}>{p.emoji}</Text>
+                        </View>
+                        <View style={styles.pouchInfo}>
+                          <Text style={[styles.pouchName, { fontFamily: fonts.headline }]}>{p.name}</Text>
+                          <View style={styles.pouchProgressTrack}>
+                            <View style={[styles.pouchProgressFill, { width: `${pct * 100}%` }]} />
+                          </View>
+                          <View style={[styles.pouchNumbers, isRTL && styles.rowReverse]}>
+                            <Text style={[styles.pouchSaved, { fontFamily: fonts.bodyMed }]}>{formatAmt(p.saved)}</Text>
+                            <Text style={[styles.pouchOf, { fontFamily: fonts.body }]}>{t("home.pouch_of")}</Text>
+                            <Text style={[styles.pouchGoal, { fontFamily: fonts.body }]}>{formatAmt(p.goal)}</Text>
+                          </View>
+                        </View>
+                        <Text style={styles.currencyArrow}>{isRTL ? "‹" : "›"}</Text>
+                      </TouchableOpacity>
+                    );
+                  })
+                )}
+                <TouchableOpacity style={[styles.accountDetailsBtn, styles.pouchCreateBtn]} activeOpacity={0.75}
+                  onPress={() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)}>
+                  <Feather name="plus" size={14} color="#8a6b2a" />
+                  <Text style={[styles.pouchCreateLabel, { fontFamily: fonts.bodyMed }]}>{t("home.pouch_create")}</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </ScrollView>
+      </View>
+
+      {/* Page dots */}
+      <View style={styles.pageDots}>
+        {[0, 1].map((i) => (
+          <View key={i} style={[styles.dot, cardIndex === i && styles.dotActive]} />
+        ))}
       </View>
 
       {/* TRANSACTIONS */}
@@ -346,13 +424,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  chipPrimary: {
-    backgroundColor: "#1a2e22",
-  },
-  chipWithIcon: {
-    flexDirection: "row",
-    gap: 4,
-  },
+  chipPrimary: { backgroundColor: "#1a2e22" },
+  chipWithIcon: { flexDirection: "row", gap: 4 },
   chipText: {
     fontFamily: "Geist_500Medium",
     fontSize: 14,
@@ -399,11 +472,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 
+  /* ── Shared card shell ── */
   card: {
     backgroundColor: "#f5f5f3",
     borderRadius: 18,
     overflow: "hidden",
-    marginBottom: 0,
   },
   cardTab: {
     backgroundColor: "#d8e8dc",
@@ -415,6 +488,7 @@ const styles = StyleSheet.create({
     height: 76,
     borderRadius: 18,
   },
+  pouchTab: { backgroundColor: "#f4ead0" },
   cardTabTitle: {
     flexDirection: "row",
     alignItems: "center",
@@ -436,6 +510,7 @@ const styles = StyleSheet.create({
     color: "#1a2e22",
     letterSpacing: 2,
   },
+  pouchLogo: { color: "#8a6b2a" },
   cardTabDrip: {
     height: 16,
     width: 80,
@@ -446,6 +521,7 @@ const styles = StyleSheet.create({
     marginTop: -1,
     zIndex: 2,
   },
+  pouchDrip: { backgroundColor: "#f4ead0" },
   cardBody: {
     padding: 24,
     paddingTop: 20,
@@ -522,6 +598,95 @@ const styles = StyleSheet.create({
     fontFamily: "Geist_500Medium",
     fontSize: 13,
     color: "#0a0907",
+  },
+
+  /* ── Pouch card ── */
+  pouchRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: "rgba(10,9,7,0.07)",
+  },
+  pouchEmoji: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "#fff",
+    borderWidth: 1,
+    borderColor: "rgba(10,9,7,0.08)",
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: 0,
+  },
+  pouchEmojiText: { fontSize: 20, lineHeight: 24 },
+  pouchInfo: { flex: 1, minWidth: 0, gap: 5 },
+  pouchName: {
+    fontFamily: "Fraunces_400Regular",
+    fontSize: 16,
+    color: "#0a0907",
+  },
+  pouchProgressTrack: {
+    height: 5,
+    backgroundColor: "#ebebe8",
+    borderRadius: 100,
+    overflow: "hidden",
+  },
+  pouchProgressFill: {
+    height: "100%",
+    backgroundColor: "#c9a04a",
+    borderRadius: 100,
+  },
+  pouchNumbers: {
+    flexDirection: "row",
+    alignItems: "baseline",
+    gap: 3,
+  },
+  pouchSaved: {
+    fontFamily: "Geist_500Medium",
+    fontSize: 12,
+    color: "#0a0907",
+  },
+  pouchOf: {
+    fontFamily: "Geist_400Regular",
+    fontSize: 12,
+    color: "#999994",
+  },
+  pouchGoal: {
+    fontFamily: "Geist_400Regular",
+    fontSize: 12,
+    color: "#999994",
+  },
+  pouchEmpty: {
+    alignItems: "center",
+    padding: 24,
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: "#d8d8d4",
+    borderStyle: "dashed",
+    marginBottom: 8,
+  },
+  pouchEmptyEmoji: { fontSize: 32, marginBottom: 12 },
+  pouchEmptyTitle: {
+    fontFamily: "Fraunces_400Regular",
+    fontSize: 16,
+    color: "#0a0907",
+    marginBottom: 6,
+  },
+  pouchEmptySub: {
+    fontFamily: "Geist_400Regular",
+    fontSize: 12,
+    color: "#6b6b66",
+    textAlign: "center",
+    lineHeight: 18,
+  },
+  pouchCreateBtn: { backgroundColor: "#f4ead0" },
+  pouchCreateLabel: {
+    fontFamily: "Geist_500Medium",
+    fontSize: 13,
+    color: "#8a6b2a",
   },
 
   pageDots: {

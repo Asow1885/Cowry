@@ -1,0 +1,561 @@
+/* ════════════════════════════════════════════════════════════
+   HomeScreen.css · v2
+   Cowry · Home Screen with swipeable Main + Pouches cards
+   ══════════════════════════════════════════════════════════ */
+
+:root {
+  --cowry-green: #1a2e22;
+  --cowry-green-deep: #0f1f17;
+  --cowry-green-tint: #d8e8dc;
+  --cowry-green-pale: #ebf2ec;
+  --cowry-gold: #c9a04a;
+  --cowry-gold-light: #e4c070;
+  --cowry-gold-deep: #8a6b2a;
+  --cowry-gold-pale: #f4ead0;
+  --cowry-ink: #0a0907;
+  --cowry-gray-50: #f5f5f3;
+  --cowry-gray-100: #ebebe8;
+  --cowry-gray-200: #d8d8d4;
+  --cowry-gray-400: #999994;
+  --cowry-gray-500: #6b6b66;
+  --cowry-line: rgba(10, 9, 7, 0.08);
+}
+
+/* CONTAINER */
+.cowry-home {
+  background: white;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  position: relative;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: var(--cowry-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+.cowry-scroll {
+  padding: 24px 24px 112px;
+  overflow-y: auto;
+  height: 100%;
+}
+
+* { box-sizing: border-box; }
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+  padding: 0;
+}
+
+/* TOP BAR */
+.cowry-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0 28px;
+}
+.cowry-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--cowry-gray-100);
+  color: var(--cowry-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+}
+.cowry-earn-pill {
+  padding: 12px 24px;
+  background: var(--cowry-green);
+  color: var(--cowry-gold-light);
+  border-radius: 100px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: transform 0.15s ease;
+}
+.cowry-earn-pill:active { transform: scale(0.97); }
+.cowry-eye-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: white;
+  border: 1px solid var(--cowry-line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+/* BALANCE */
+.cowry-balance-label {
+  font-size: 16px;
+  color: var(--cowry-gray-500);
+  margin-bottom: 6px;
+}
+.cowry-balance-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.cowry-balance-amt {
+  font-family: 'Fraunces', Georgia, serif;
+  font-variation-settings: 'opsz' 144, 'wght' 500;
+  font-size: 38px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--cowry-ink);
+}
+.cowry-balance-curr {
+  font-family: 'Fraunces', Georgia, serif;
+  font-variation-settings: 'opsz' 72, 'wght' 400;
+  font-size: 18px;
+  color: var(--cowry-gray-500);
+}
+.cowry-chart-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--cowry-green-pale);
+  color: var(--cowry-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+}
+
+/* ACTION CHIPS */
+.cowry-actions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+.cowry-chip {
+  flex: 1;
+  padding: 12px 8px;
+  background: var(--cowry-green-tint);
+  border-radius: 100px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--cowry-ink);
+  font-weight: 500;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+.cowry-chip:active { transform: scale(0.97); opacity: 0.8; }
+.cowry-chip-primary {
+  background: var(--cowry-green);
+  color: var(--cowry-gold-light);
+}
+.cowry-chip-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.cowry-chip-icon-glyph {
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+/* ═══════ SWIPEABLE CARD STACK ═══════ */
+.cowry-card-wrap {
+  margin-bottom: 12px;
+  /* allow cards to extend slightly outside scroll padding */
+  margin-left: -24px;
+  margin-right: -24px;
+}
+
+.cowry-card-track {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 0 24px;
+  -webkit-overflow-scrolling: touch;
+}
+.cowry-card-track::-webkit-scrollbar { display: none; }
+
+.cowry-card-slide {
+  flex: 0 0 100%;
+  scroll-snap-align: center;
+}
+
+.cowry-card {
+  background: var(--cowry-gray-50);
+  border-radius: 18px;
+  overflow: hidden;
+  position: relative;
+  min-height: 380px;
+}
+
+/* Green tab on top */
+.cowry-card-tab {
+  background: var(--cowry-green-tint);
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 18px 18px 0 0;
+  height: 76px;
+  position: relative;
+}
+.cowry-card-tab::after {
+  content: '';
+  position: absolute;
+  bottom: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 16px;
+  background: var(--cowry-green-tint);
+  border-radius: 0 0 24px 24px;
+}
+
+/* Pouch tab gets a subtle gold tint */
+.cowry-pouch-tab {
+  background: var(--cowry-gold-pale);
+}
+.cowry-pouch-tab::after {
+  background: var(--cowry-gold-pale);
+}
+
+.cowry-card-tab-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Fraunces', Georgia, serif;
+  font-variation-settings: 'opsz' 36, 'wght' 500;
+  font-size: 18px;
+  color: var(--cowry-ink);
+}
+.cowry-card-tab-arrow {
+  color: var(--cowry-ink);
+  opacity: 0.7;
+  font-size: 14px;
+}
+
+.cowry-card-logo {
+  font-family: 'Fraunces', Georgia, serif;
+  font-variation-settings: 'opsz' 36, 'wght' 600;
+  font-size: 16px;
+  color: var(--cowry-green);
+  letter-spacing: 0.06em;
+}
+.cowry-pouch-tab .cowry-card-logo {
+  color: var(--cowry-gold-deep);
+}
+
+.cowry-card-body {
+  padding: 30px 24px 24px;
+  background: var(--cowry-gray-50);
+  position: relative;
+}
+.cowry-card-h {
+  font-family: 'Fraunces', Georgia, serif;
+  font-variation-settings: 'opsz' 144, 'wght' 500;
+  font-size: 30px;
+  margin: 0 0 4px 0;
+  color: var(--cowry-ink);
+  letter-spacing: -0.02em;
+  font-weight: 500;
+}
+.cowry-card-amt {
+  font-size: 16px;
+  color: var(--cowry-gray-500);
+  margin-bottom: 22px;
+}
+.cowry-card-arrow {
+  position: absolute;
+  top: 30px;
+  right: 24px;
+  color: var(--cowry-gray-400);
+  font-size: 16px;
+}
+
+/* Currency rows (Main account card) */
+.cowry-currency-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+}
+.cowry-currency-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+  color: var(--cowry-ink);
+}
+.cowry-flag-circle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  background: var(--cowry-gray-100);
+  line-height: 1;
+}
+.cowry-currency-arrow {
+  color: var(--cowry-gray-400);
+  font-size: 14px;
+}
+
+.cowry-account-details-btn {
+  margin-top: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  background: var(--cowry-gray-100);
+  border-radius: 100px;
+  font-size: 13px;
+  color: var(--cowry-ink);
+  font-weight: 500;
+}
+
+/* ═══════ POUCH ROWS ═══════ */
+.cowry-pouch-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--cowry-line);
+  text-align: left;
+}
+.cowry-pouch-row:last-of-type { border-bottom: none; }
+.cowry-pouch-row:active { opacity: 0.7; }
+
+.cowry-pouch-emoji {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+  border: 1px solid var(--cowry-line);
+}
+
+.cowry-pouch-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cowry-pouch-name {
+  font-family: 'Fraunces', Georgia, serif;
+  font-variation-settings: 'opsz' 36, 'wght' 500;
+  font-size: 16px;
+  color: var(--cowry-ink);
+  font-weight: 500;
+}
+
+/* Progress bar */
+.cowry-pouch-progress-track {
+  height: 5px;
+  background: var(--cowry-gray-100);
+  border-radius: 100px;
+  overflow: hidden;
+}
+.cowry-pouch-progress-fill {
+  height: 100%;
+  background: var(--cowry-gold);
+  border-radius: 100px;
+  transition: width 0.4s ease;
+}
+
+.cowry-pouch-numbers {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  font-size: 12px;
+}
+.cowry-pouch-saved {
+  color: var(--cowry-ink);
+  font-weight: 500;
+}
+.cowry-pouch-goal {
+  color: var(--cowry-gray-400);
+}
+
+/* Empty state for pouches */
+.cowry-pouch-empty {
+  text-align: center;
+  padding: 24px 16px;
+  background: white;
+  border-radius: 12px;
+  border: 1px dashed var(--cowry-gray-200);
+  margin-bottom: 8px;
+}
+.cowry-pouch-empty-emoji {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+.cowry-pouch-empty-title {
+  font-family: 'Fraunces', Georgia, serif;
+  font-variation-settings: 'opsz' 72, 'wght' 500;
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+.cowry-pouch-empty-sub {
+  font-size: 12px;
+  color: var(--cowry-gray-500);
+  line-height: 1.5;
+  max-width: 28ch;
+  margin: 0 auto;
+}
+
+/* PAGE DOTS */
+.cowry-page-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin: 14px 0 24px;
+}
+.cowry-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cowry-gray-200);
+  transition: background 0.2s ease;
+}
+.cowry-dot-active {
+  background: var(--cowry-green);
+}
+
+/* TRANSACTIONS */
+.cowry-tx-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 8px 0 18px;
+}
+.cowry-tx-title {
+  font-family: 'Fraunces', Georgia, serif;
+  font-variation-settings: 'opsz' 144, 'wght' 500;
+  font-size: 24px;
+  color: var(--cowry-ink);
+  letter-spacing: -0.02em;
+  margin: 0;
+  font-weight: 500;
+}
+.cowry-tx-see-all {
+  font-size: 14px;
+  color: var(--cowry-green);
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.cowry-tx-list {
+  display: flex;
+  flex-direction: column;
+}
+.cowry-tx-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0;
+}
+.cowry-tx-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid var(--cowry-gray-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: var(--cowry-ink);
+  flex-shrink: 0;
+}
+.cowry-tx-meta {
+  flex: 1;
+  min-width: 0;
+}
+.cowry-tx-name {
+  font-size: 16px;
+  color: var(--cowry-ink);
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+.cowry-tx-detail {
+  font-size: 13px;
+  color: var(--cowry-gray-400);
+}
+.cowry-tx-right {
+  text-align: right;
+}
+.cowry-tx-amt {
+  font-size: 16px;
+  color: var(--cowry-ink);
+  font-weight: 500;
+  line-height: 1.3;
+}
+.cowry-tx-sub {
+  font-size: 13px;
+  color: var(--cowry-gray-400);
+}
+
+/* BOTTOM TAB BAR */
+.cowry-tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 88px;
+  background: white;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  padding-top: 12px;
+  padding-bottom: env(safe-area-inset-bottom, 16px);
+  border-top: 1px solid var(--cowry-line);
+  z-index: 100;
+}
+.cowry-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: var(--cowry-ink);
+  font-size: 11px;
+  flex: 1;
+  background: none;
+  border: none;
+}
+.cowry-tab-icon-wrap {
+  padding: 4px 12px;
+  border-radius: 22px;
+  transition: background 0.2s ease;
+}
+.cowry-tab.active .cowry-tab-icon-wrap {
+  background: var(--cowry-green-pale);
+  padding: 6px 16px;
+}
+.cowry-tab-icon {
+  font-size: 20px;
+  display: block;
+}
+.cowry-tab.active .cowry-tab-icon {
+  color: var(--cowry-green);
+}
+.cowry-tab-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--cowry-ink);
+  margin-top: 2px;
+}
