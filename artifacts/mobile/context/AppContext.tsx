@@ -28,8 +28,8 @@ const AppContext = createContext<AppState | null>(null);
 
 const STORAGE_KEYS = {
   LANGUAGE: "@cowry/language",
-  USER: "@cowry/user",
-  ONBOARDED: "@cowry/onboarded",
+  USER: "@cowry/v2/user",
+  ONBOARDED: "@cowry/v2/onboarded",
 };
 
 function detectDeviceLanguage(): Language {

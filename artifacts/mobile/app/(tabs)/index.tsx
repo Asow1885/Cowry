@@ -29,13 +29,7 @@ const QUICK_RECIPIENTS = [
   { initial: "F", firstName: "Fatou", fullName: "Fatou Barry" },
 ];
 
-const INITIAL_POUCHES: Pouch[] = [
-  { emoji: "🏠", name: "Family home", saved: 420, goal: 2000, category: "home",   currency: "USD" },
-  { emoji: "✈️", name: "Dakar trip",  saved: 180, goal: 800,  category: "travel", currency: "USD" },
-  { emoji: "🎓", name: "Tuition",     saved: 0,   goal: 1500, category: "school", currency: "USD" },
-];
-
-const STORAGE_KEY = "cowry:pouches";
+const STORAGE_KEY = "cowry:pouches:v2";
 
 export default function HomeScreen() {
   const { user } = useApp();
@@ -44,7 +38,7 @@ export default function HomeScreen() {
   const { width: screenW } = useWindowDimensions();
   const [balanceVisible, setBalanceVisible] = useState(true);
   const [cardIndex, setCardIndex] = useState(0);
-  const [pouches, setPouches] = useState<Pouch[]>(INITIAL_POUCHES);
+  const [pouches, setPouches] = useState<Pouch[]>([]);
   const [showCreatePouch, setShowCreatePouch] = useState(false);
   const cardScrollRef = useRef<ScrollView>(null);
 
