@@ -66,6 +66,7 @@ export default function RootLayout() {
     NotoNaskhArabic_400Regular,
     NotoNaskhArabic_700Bold,
   });
+  const [timedOut, setTimedOut] = React.useState(false);
 
   useEffect(() => {
     if (fontsLoaded || fontError) {
@@ -73,7 +74,15 @@ export default function RootLayout() {
     }
   }, [fontsLoaded, fontError]);
 
-  if (!fontsLoaded && !fontError) return null;
+  useEffect(() => {
+    const t = setTimeout(() => {
+      setTimedOut(true);
+      SplashScreen.hideAsync();
+    }, 4000);
+    return () => clearTimeout(t);
+  }, []);
+
+  if (!fontsLoaded && !fontError && !timedOut) return null;
 
   return (
     <SafeAreaProvider>
