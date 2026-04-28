@@ -79,7 +79,8 @@
     "rates_updated": "Updated",
     "rates_per_usd": "per USD",
     "rates_unavailable": "Rates unavailable",
-    "rates_retry": "Retry"
+    "rates_retry": "Retry",
+    "no_transactions": "Your transfers will appear here."
   },
   "tabs": {
     "home": "Home",

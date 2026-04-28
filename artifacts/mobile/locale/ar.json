@@ -79,7 +79,8 @@
     "rates_updated": "محدّث",
     "rates_per_usd": "لكل دولار",
     "rates_unavailable": "الأسعار غير متوفرة",
-    "rates_retry": "إعادة المحاولة"
+    "rates_retry": "إعادة المحاولة",
+    "no_transactions": "ستظهر تحويلاتك هنا."
   },
   "tabs": {
     "home": "الرئيسية",

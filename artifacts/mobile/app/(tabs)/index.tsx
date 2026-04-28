@@ -18,16 +18,12 @@ import { RatesWidget } from "@/components/RatesWidget";
 import CreatePouchFlow, { type Pouch } from "@/components/CreatePouchFlow";
 
 const CURRENCIES = [
-  { flag: "🇺🇸", code: "USD", amount: "$1,240.00" },
+  { flag: "🇺🇸", code: "USD", amount: "$0.00" },
   { flag: "🇬🇳", code: "GNF", amount: "0 GNF" },
   { flag: "🇪🇺", code: "EUR", amount: "€0.00" },
 ];
 
-const QUICK_RECIPIENTS = [
-  { initial: "M", firstName: "Mama", fullName: "Mama Sow" },
-  { initial: "O", firstName: "Ousmane", fullName: "Ousmane Diallo" },
-  { initial: "F", firstName: "Fatou", fullName: "Fatou Barry" },
-];
+const QUICK_RECIPIENTS: { initial: string; firstName: string; fullName: string }[] = [];
 
 const STORAGE_KEY = "cowry:pouches:v2";
 
@@ -61,29 +57,7 @@ export default function HomeScreen() {
     ? user.name.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase()
     : "AS";
 
-  const transactions = [
-    {
-      dir: "up" as const,
-      name: "Mama Sow",
-      detail: `${t("home.tx_sent")} · ${t("home.tx_2d")}`,
-      amt: "50 USD",
-      currency: `${t("home.tx_to")} GNF`,
-    },
-    {
-      dir: "down" as const,
-      name: "Chase Bank",
-      detail: `${t("home.tx_added")} · ${t("home.tx_thu")}`,
-      amt: "+1,000 USD",
-      currency: "",
-    },
-    {
-      dir: "up" as const,
-      name: "Brother",
-      detail: `${t("home.tx_sent")} · ${t("home.tx_3w")}`,
-      amt: "80 USD",
-      currency: `${t("home.tx_to")} XOF`,
-    },
-  ];
+  const transactions: { dir: "up" | "down"; name: string; detail: string; amt: string; currency: string }[] = [];
 
   function toggleBalance() {
     Haptics.selectionAsync();
@@ -125,7 +99,7 @@ export default function HomeScreen() {
         <View style={[styles.balanceRow, isRTL && styles.rowReverse]}>
           {balanceVisible ? (
             <>
-              <Text style={[styles.balanceAmt, { fontFamily: fonts.headlineSemi }]}>$1,240.00</Text>
+              <Text style={[styles.balanceAmt, { fontFamily: fonts.headlineSemi }]}>$0.00</Text>
               <Text style={[styles.balanceCurr, { fontFamily: fonts.headline }]}>USD</Text>
             </>
           ) : (
@@ -227,7 +201,7 @@ export default function HomeScreen() {
                   <Text style={styles.cardArrowText}>{isRTL ? "‹" : "›"}</Text>
                 </TouchableOpacity>
                 <Text style={[styles.cardH, { fontFamily: fonts.headlineSemi }]}>{t("home.main_account")}</Text>
-                <Text style={styles.cardAmt}>$1,240.00</Text>
+                <Text style={styles.cardAmt}>$0.00</Text>
                 {CURRENCIES.map((c) => (
                   <View key={c.code} style={[styles.currencyRow, isRTL && styles.rowReverse]}>
                     <View style={[styles.currencyLeft, isRTL && styles.rowReverse]}>
@@ -319,7 +293,11 @@ export default function HomeScreen() {
           <Text style={[styles.txSeeAll, { fontFamily: fonts.bodyMed }]}>{t("home.see_all")}</Text>
         </View>
 
-        {transactions.map((tx, i) => (
+        {transactions.length === 0 ? (
+          <View style={styles.txEmpty}>
+            <Text style={[styles.txEmptyText, { fontFamily: fonts.body }]}>{t("home.no_transactions")}</Text>
+          </View>
+        ) : transactions.map((tx, i) => (
           <View key={i} style={[styles.txRow, isRTL && styles.rowReverse]}>
             <View style={styles.txIcon}>
               <Feather name={tx.dir === "up" ? "arrow-up" : "arrow-down"} size={18} color="#0a0907" />
@@ -745,6 +723,15 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#1a2e22",
     textDecorationLine: "underline",
+  },
+  txEmpty: {
+    paddingVertical: 28,
+    alignItems: "center",
+  },
+  txEmptyText: {
+    fontSize: 14,
+    color: "rgba(10,9,7,0.45)",
+    textAlign: "center",
   },
   txRow: {
     flexDirection: "row",
