@@ -82,13 +82,6 @@ export default function HomeScreen() {
           <View style={styles.avatar}>
             <Text style={styles.avatarText}>{initials}</Text>
           </View>
-          <TouchableOpacity
-            style={styles.earnPill}
-            activeOpacity={0.85}
-            onPress={() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)}
-          >
-            <Text style={styles.earnPillText}>{t("home.earn_cta")}</Text>
-          </TouchableOpacity>
           <TouchableOpacity style={styles.eyeBtn} onPress={toggleBalance} activeOpacity={0.7}>
             <Feather name={balanceVisible ? "eye" : "eye-off"} size={18} color="#0a0907" />
           </TouchableOpacity>
@@ -354,17 +347,6 @@ const styles = StyleSheet.create({
     fontFamily: "Geist_600SemiBold",
     fontSize: 14,
     color: "#0a0907",
-  },
-  earnPill: {
-    backgroundColor: "#1a2e22",
-    borderRadius: 100,
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-  },
-  earnPillText: {
-    fontFamily: "Geist_500Medium",
-    fontSize: 14,
-    color: "#e4c070",
   },
   eyeBtn: {
     width: 44,
