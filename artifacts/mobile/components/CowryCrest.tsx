@@ -8,32 +8,27 @@ interface CowryCrestProps {
 
 function Shell({ color, sw }: { color: string; sw: number }) {
   const ribs: [number, number, number, number][] = [
-    [-2.2, -8.8,  2.2, -8.8],
-    [-3.8, -6.8,  3.8, -6.8],
-    [-5.0, -4.8,  5.0, -4.8],
-    [-5.6, -2.8,  5.6, -2.8],
-    [-5.8, -0.8,  5.8, -0.8],
-    [-5.8,  1.2,  5.8,  1.2],
-    [-5.6,  3.2,  5.6,  3.2],
-    [-5.0,  5.2,  5.0,  5.2],
-    [-3.8,  7.2,  3.8,  7.2],
-    [-2.2,  8.8,  2.2,  8.8],
+    [-2.2, -6.6,  2.2, -6.6],
+    [-4.4, -3.8,  4.4, -3.8],
+    [-5.5, -0.5,  5.5, -0.5],
+    [-4.4,  2.8,  4.4,  2.8],
+    [-2.2,  6.0,  2.2,  6.0],
   ];
 
   return (
     <G>
       <Path
-        d="M 0,-11 C 4.5,-10.5 7,-5 7,0 C 7,5 4.5,10.5 0,11 C -4.5,10.5 -7,5 -7,0 C -7,-5 -4.5,-10.5 0,-11 Z"
+        d="M 0,-9 C 3,-8.5 5.5,-4.5 5.5,0 C 5.5,4.5 3,8.5 0,9 C -3,8.5 -5.5,4.5 -5.5,0 C -5.5,-4.5 -3,-8.5 0,-9 Z"
         fill="none"
         stroke={color}
-        strokeWidth={sw * 1.5}
+        strokeWidth={sw * 1.6}
         strokeLinejoin="round"
       />
       <Line
-        x1="0" y1="-9"
-        x2="0" y2="9"
+        x1="0" y1="-7.5"
+        x2="0" y2="7.5"
         stroke={color}
-        strokeWidth={sw * 1.0}
+        strokeWidth={sw * 1.3}
         strokeLinecap="round"
       />
       {ribs.map(([x1, y1, x2, y2], i) => (
@@ -42,7 +37,7 @@ function Shell({ color, sw }: { color: string; sw: number }) {
           x1={x1} y1={y1}
           x2={x2} y2={y2}
           stroke={color}
-          strokeWidth={sw * 0.85}
+          strokeWidth={sw * 1.0}
           strokeLinecap="round"
         />
       ))}
