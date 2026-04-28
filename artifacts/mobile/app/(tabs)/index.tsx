@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Platform,
   ScrollView,
@@ -9,11 +9,13 @@ import {
   useWindowDimensions,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Haptics from "expo-haptics";
 import { Feather } from "@expo/vector-icons";
 import { useApp } from "@/context/AppContext";
 import { useTranslation } from "@/hooks/useTranslation";
 import { RatesWidget } from "@/components/RatesWidget";
+import CreatePouchFlow, { type Pouch } from "@/components/CreatePouchFlow";
 
 const CURRENCIES = [
   { flag: "🇺🇸", code: "USD", amount: "$1,240.00" },
@@ -27,11 +29,13 @@ const QUICK_RECIPIENTS = [
   { initial: "F", firstName: "Fatou", fullName: "Fatou Barry" },
 ];
 
-const POUCHES = [
-  { emoji: "🏠", name: "Family home", saved: 420, goal: 2000 },
-  { emoji: "✈️", name: "Dakar trip", saved: 180, goal: 800 },
-  { emoji: "🎓", name: "Tuition", saved: 0, goal: 1500 },
+const INITIAL_POUCHES: Pouch[] = [
+  { emoji: "🏠", name: "Family home", saved: 420, goal: 2000, category: "home",   currency: "USD" },
+  { emoji: "✈️", name: "Dakar trip",  saved: 180, goal: 800,  category: "travel", currency: "USD" },
+  { emoji: "🎓", name: "Tuition",     saved: 0,   goal: 1500, category: "school", currency: "USD" },
 ];
+
+const STORAGE_KEY = "cowry:pouches";
 
 export default function HomeScreen() {
   const { user } = useApp();
@@ -40,7 +44,23 @@ export default function HomeScreen() {
   const { width: screenW } = useWindowDimensions();
   const [balanceVisible, setBalanceVisible] = useState(true);
   const [cardIndex, setCardIndex] = useState(0);
+  const [pouches, setPouches] = useState<Pouch[]>(INITIAL_POUCHES);
+  const [showCreatePouch, setShowCreatePouch] = useState(false);
   const cardScrollRef = useRef<ScrollView>(null);
+
+  useEffect(() => {
+    AsyncStorage.getItem(STORAGE_KEY).then((raw) => {
+      if (raw) {
+        try { setPouches(JSON.parse(raw)); } catch { /* ignore */ }
+      }
+    });
+  }, []);
+
+  async function addPouch(p: Pouch) {
+    const next = [...pouches, p];
+    setPouches(next);
+    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+  }
 
   const topInset = Platform.OS === "web" ? 67 : insets.top;
   const initials = user?.name
@@ -81,6 +101,7 @@ export default function HomeScreen() {
   }
 
   return (
+    <>
     <ScrollView
       style={styles.container}
       contentContainerStyle={{ paddingBottom: 108 }}
@@ -244,19 +265,19 @@ export default function HomeScreen() {
               </View>
               <View style={[styles.cardTabDrip, styles.pouchDrip]} />
               <View style={styles.cardBody}>
-                {POUCHES.length === 0 ? (
+                {pouches.length === 0 ? (
                   <View style={styles.pouchEmpty}>
                     <Text style={styles.pouchEmptyEmoji}>🐚</Text>
                     <Text style={[styles.pouchEmptyTitle, { fontFamily: fonts.headline }]}>{t("home.pouch_empty_title")}</Text>
                     <Text style={[styles.pouchEmptySub, { fontFamily: fonts.body }]}>{t("home.pouch_empty_sub")}</Text>
                   </View>
                 ) : (
-                  POUCHES.map((p, i) => {
-                    const pct = p.goal > 0 ? Math.min(p.saved / p.goal, 1) : 0;
+                  pouches.map((p, i) => {
+                    const pct = p.goal != null && p.goal > 0 ? Math.min(p.saved / p.goal, 1) : 0;
                     return (
                       <TouchableOpacity
                         key={i}
-                        style={[styles.pouchRow, i === POUCHES.length - 1 && { borderBottomWidth: 0 }]}
+                        style={[styles.pouchRow, i === pouches.length - 1 && { borderBottomWidth: 0 }]}
                         activeOpacity={0.75}
                         onPress={() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)}
                       >
@@ -271,7 +292,7 @@ export default function HomeScreen() {
                           <View style={[styles.pouchNumbers, isRTL && styles.rowReverse]}>
                             <Text style={[styles.pouchSaved, { fontFamily: fonts.bodyMed }]}>{formatAmt(p.saved)}</Text>
                             <Text style={[styles.pouchOf, { fontFamily: fonts.body }]}>{t("home.pouch_of")}</Text>
-                            <Text style={[styles.pouchGoal, { fontFamily: fonts.body }]}>{formatAmt(p.goal)}</Text>
+                            <Text style={[styles.pouchGoal, { fontFamily: fonts.body }]}>{p.goal != null ? formatAmt(p.goal) : "—"}</Text>
                           </View>
                         </View>
                         <Text style={styles.currencyArrow}>{isRTL ? "‹" : "›"}</Text>
@@ -280,7 +301,7 @@ export default function HomeScreen() {
                   })
                 )}
                 <TouchableOpacity style={[styles.accountDetailsBtn, styles.pouchCreateBtn]} activeOpacity={0.75}
-                  onPress={() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)}>
+                  onPress={() => { Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); setShowCreatePouch(true); }}>
                   <Feather name="plus" size={14} color="#8a6b2a" />
                   <Text style={[styles.pouchCreateLabel, { fontFamily: fonts.bodyMed }]}>{t("home.pouch_create")}</Text>
                 </TouchableOpacity>
@@ -326,6 +347,14 @@ export default function HomeScreen() {
       {/* LIVE EXCHANGE RATES */}
       <RatesWidget />
     </ScrollView>
+
+    {showCreatePouch && (
+      <CreatePouchFlow
+        onComplete={(p) => { addPouch(p); setShowCreatePouch(false); }}
+        onCancel={() => setShowCreatePouch(false)}
+      />
+    )}
+    </>
   );
 }
 

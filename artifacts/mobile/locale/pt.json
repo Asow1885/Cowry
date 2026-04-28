@@ -98,6 +98,27 @@
   "brand": {
     "name": "COWRY"
   },
+  "pouch_flow": {
+    "splash_sub": "Reserve dinheiro para os momentos que importam.",
+    "get_started": "Começar",
+    "icon_sub": "Escolha um ícone — pode renomear depois.",
+    "continue": "Continuar",
+    "name_sub": "Torne-a pessoal — para quem, para quê.",
+    "name_placeholder": "Para que é esta bolsa?",
+    "your_selection": "SUA SELEÇÃO",
+    "name_field_label": "NOME DA BOLSA",
+    "suggestions": "SUGESTÕES",
+    "goal_sub": "Opcional — mas objetivos ajudam a chegar mais rápido.",
+    "add_goal": "Adicionar objetivo",
+    "add_goal_sub": "Acompanhe o progresso enquanto poupa",
+    "goal_field_label": "VALOR DO OBJETIVO",
+    "goal_of": "de",
+    "open_pouch": "Abrir minha bolsa",
+    "skip_goal": "Pular — abrir sem objetivo",
+    "success_sub": "está pronta para o primeiro depósito.",
+    "add_money": "Adicionar dinheiro",
+    "done": "Concluído — voltar ao início"
+  },
   "not_found": {
     "title": "Página não encontrada",
     "back": "Voltar ao início"

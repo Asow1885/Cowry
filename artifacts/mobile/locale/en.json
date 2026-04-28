@@ -98,6 +98,27 @@
   "brand": {
     "name": "COWRY"
   },
+  "pouch_flow": {
+    "splash_sub": "Set money aside for the moments that matter.",
+    "get_started": "Get started",
+    "icon_sub": "Pick an icon — you can rename it next.",
+    "continue": "Continue",
+    "name_sub": "Make it personal — for who, for what.",
+    "name_placeholder": "What's this pouch for?",
+    "your_selection": "YOUR SELECTION",
+    "name_field_label": "POUCH NAME",
+    "suggestions": "SUGGESTIONS",
+    "goal_sub": "Optional — but goals help you get there faster.",
+    "add_goal": "Add a goal",
+    "add_goal_sub": "Track progress as you save",
+    "goal_field_label": "GOAL AMOUNT",
+    "goal_of": "of",
+    "open_pouch": "Open my pouch",
+    "skip_goal": "Skip — open without a goal",
+    "success_sub": "is ready for your first save.",
+    "add_money": "Add money to it",
+    "done": "Done — back to home"
+  },
   "not_found": {
     "title": "Page not found",
     "back": "Go back home"

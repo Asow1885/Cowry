@@ -1,0 +1,525 @@
+/* ════════════════════════════════════════════════════════════
+   CreatePouchFlow.css
+   Cowry · "Open a pouch" creation flow styles
+   ══════════════════════════════════════════════════════════ */
+
+:root {
+  --cp-green: #1a2e22;
+  --cp-green-deep: #0f1f17;
+  --cp-green-pale: #ebf2ec;
+  --cp-gold: #c9a04a;
+  --cp-gold-light: #e4c070;
+  --cp-gold-deep: #8a6b2a;
+  --cp-gold-pale: #f4ead0;
+  --cp-cream: #faf5ec;
+  --cp-ink: #0a0907;
+  --cp-gray-100: #ebebe8;
+  --cp-gray-200: #d8d8d4;
+  --cp-gray-400: #999994;
+  --cp-gray-500: #6b6b66;
+  --cp-line: rgba(10, 9, 7, 0.08);
+}
+
+/* Full-screen overlay */
+.cp-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: var(--cp-cream);
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--cp-ink);
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+  flex-direction: column;
+}
+
+.cp-screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+  padding: env(safe-area-inset-top, 12px) 0 env(safe-area-inset-bottom, 24px);
+}
+
+/* HEADER (back, progress, step) */
+.cp-header {
+  display: flex;
+  align-items: center;
+  padding: 14px 22px 18px;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+.cp-back-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--cp-gray-100);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: var(--cp-ink);
+  cursor: pointer;
+  flex-shrink: 0;
+  font-family: inherit;
+}
+
+.cp-progress-line {
+  flex: 1;
+  height: 3px;
+  background: var(--cp-gray-100);
+  border-radius: 100px;
+  overflow: hidden;
+}
+.cp-progress-fill {
+  height: 100%;
+  background: var(--cp-gold);
+  border-radius: 100px;
+  transition: width 0.35s ease;
+}
+.cp-step-num {
+  font-family: 'Geist Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--cp-gold-deep);
+  flex-shrink: 0;
+}
+
+/* BODY */
+.cp-body {
+  flex: 1;
+  padding: 8px 22px 24px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+/* Buttons */
+.cp-btn-primary {
+  margin-top: auto;
+  padding: 14px;
+  background: var(--cp-green);
+  color: var(--cp-gold-light);
+  border: none;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+.cp-btn-primary:active:not(:disabled) {
+  transform: scale(0.98);
+}
+.cp-btn-primary:disabled {
+  cursor: not-allowed;
+}
+
+.cp-btn-bottom {
+  margin-top: auto;
+}
+
+.cp-btn-skip {
+  margin-top: 8px;
+  padding: 12px;
+  background: none;
+  border: none;
+  text-align: center;
+  font-size: 12px;
+  color: var(--cp-gold-deep);
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 500;
+}
+
+/* ─── STEP 1 & 5: SPLASH ─── */
+.cp-splash {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+}
+.cp-splash-icon {
+  margin: auto auto 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: cp-fade-in 0.5s ease-out;
+}
+@keyframes cp-fade-in {
+  from { opacity: 0; transform: scale(0.85); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.cp-splash-h {
+  font-family: 'Fraunces', Georgia, serif;
+  font-variation-settings: 'opsz' 144, 'wght' 380;
+  font-size: 32px;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 10px;
+  text-align: center;
+  color: var(--cp-ink);
+}
+.cp-splash-h em {
+  font-style: italic;
+  color: var(--cp-gold-deep);
+}
+.cp-splash-sub {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--cp-gray-500);
+  max-width: 28ch;
+  margin: 0 auto 32px;
+  text-align: center;
+}
+
+/* SUCCESS variant — dark green background */
+.cp-success {
+  background: var(--cp-green);
+  margin: -8px -22px -24px;
+  padding: 24px 22px;
+  position: relative;
+  overflow: hidden;
+}
+.cp-confetti {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  animation: cp-fade-in 0.7s ease-out 0.2s backwards;
+}
+.cp-splash-h-success {
+  color: var(--cp-cream);
+}
+.cp-splash-h-success em {
+  color: var(--cp-gold-light);
+}
+.cp-splash-sub-success {
+  color: rgba(245, 235, 214, 0.7);
+}
+
+/* Success preview card */
+.cp-success-card {
+  background: rgba(245, 235, 214, 0.08);
+  border: 1px solid rgba(201, 160, 74, 0.3);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  width: 100%;
+  max-width: 320px;
+}
+.cp-success-card-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.cp-success-card-emoji {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--cp-gold-pale);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+.cp-success-card-name {
+  font-family: 'Fraunces', Georgia, serif;
+  font-variation-settings: 'opsz' 36, 'wght' 500;
+  font-size: 15px;
+  color: var(--cp-cream);
+}
+.cp-success-bar {
+  height: 5px;
+  background: rgba(245, 235, 214, 0.15);
+  border-radius: 100px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+.cp-success-bar-fill {
+  height: 100%;
+  background: var(--cp-gold);
+}
+.cp-success-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+}
+.cp-success-saved {
+  color: var(--cp-gold-light);
+  font-weight: 500;
+}
+.cp-success-target {
+  color: rgba(245, 235, 214, 0.5);
+}
+
+.cp-btn-success {
+  background: var(--cp-gold);
+  color: var(--cp-green-deep);
+  width: 100%;
+  max-width: 320px;
+}
+.cp-btn-skip-success {
+  color: var(--cp-gold-light);
+}
+
+/* ─── QUESTION SCREENS (steps 2-4) ─── */
+.cp-q-h {
+  font-family: 'Fraunces', Georgia, serif;
+  font-variation-settings: 'opsz' 144, 'wght' 380;
+  font-size: 28px;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+  color: var(--cp-ink);
+}
+.cp-q-h em {
+  font-style: italic;
+  color: var(--cp-gold-deep);
+}
+.cp-q-sub {
+  font-size: 13px;
+  color: var(--cp-gray-500);
+  margin-bottom: 22px;
+  line-height: 1.5;
+}
+
+/* ─── STEP 2: ICON GRID ─── */
+.cp-icon-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 24px;
+}
+.cp-icon-tile {
+  aspect-ratio: 1;
+  background: white;
+  border: 1.5px solid var(--cp-line);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s ease;
+}
+.cp-icon-tile:active {
+  transform: scale(0.96);
+}
+.cp-icon-tile.selected {
+  border-color: var(--cp-gold);
+  background: var(--cp-gold-pale);
+  border-width: 2px;
+}
+.cp-icon-tile-emoji {
+  font-size: 24px;
+  line-height: 1;
+}
+.cp-icon-tile-label {
+  font-size: 11px;
+  color: var(--cp-ink);
+  font-weight: 500;
+  text-align: center;
+}
+
+/* ─── STEP 3: NAME IT ─── */
+.cp-selection-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.cp-selection-emoji {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--cp-gold-pale);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+.cp-selection-label {
+  font-family: 'Geist Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--cp-gold-deep);
+  text-transform: uppercase;
+}
+
+.cp-field {
+  margin-bottom: 16px;
+}
+.cp-field-label {
+  font-family: 'Geist Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  color: var(--cp-gold-deep);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.cp-field-input {
+  width: 100%;
+  padding: 13px 15px;
+  background: white;
+  border: 1.5px solid var(--cp-gold);
+  border-radius: 10px;
+  font-size: 15px;
+  color: var(--cp-ink);
+  font-family: inherit;
+  outline: none;
+}
+.cp-field-input:focus {
+  border-color: var(--cp-gold-deep);
+}
+
+.cp-suggestions-label {
+  font-family: 'Geist Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  color: var(--cp-gray-500);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.cp-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 24px;
+}
+.cp-suggestion-chip {
+  padding: 8px 14px;
+  background: var(--cp-green-pale);
+  border: none;
+  border-radius: 100px;
+  font-size: 12px;
+  color: var(--cp-ink);
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform 0.15s ease;
+}
+.cp-suggestion-chip:active {
+  transform: scale(0.96);
+}
+
+/* ─── STEP 4: GOAL TOGGLE ─── */
+.cp-toggle-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 16px;
+  background: white;
+  border: 1.5px solid var(--cp-line);
+  border-radius: 12px;
+  margin-bottom: 16px;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+}
+.cp-toggle-text {
+  flex: 1;
+}
+.cp-toggle-label {
+  font-family: 'Fraunces', Georgia, serif;
+  font-variation-settings: 'opsz' 36, 'wght' 500;
+  font-size: 15px;
+  color: var(--cp-ink);
+  margin-bottom: 2px;
+}
+.cp-toggle-sub {
+  font-size: 11px;
+  color: var(--cp-gray-500);
+}
+.cp-toggle {
+  width: 38px;
+  height: 22px;
+  background: var(--cp-gray-200);
+  border-radius: 100px;
+  position: relative;
+  flex-shrink: 0;
+  transition: background 0.2s ease;
+}
+.cp-toggle.on {
+  background: var(--cp-gold);
+}
+.cp-toggle-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.cp-toggle.on .cp-toggle-knob {
+  transform: translateX(16px);
+}
+
+/* Goal preview card */
+.cp-goal-preview {
+  padding: 14px 16px 16px;
+  background: var(--cp-gold-pale);
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+.cp-goal-preview-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.cp-goal-preview-emoji {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  border: 1px solid var(--cp-line);
+}
+.cp-goal-preview-name {
+  font-family: 'Fraunces', Georgia, serif;
+  font-variation-settings: 'opsz' 36, 'wght' 500;
+  font-size: 15px;
+}
+.cp-goal-bar {
+  height: 6px;
+  background: white;
+  border-radius: 100px;
+  overflow: hidden;
+  margin: 8px 0 6px;
+}
+.cp-goal-bar-fill {
+  height: 100%;
+  background: var(--cp-gold);
+}
+.cp-goal-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+}
+.cp-goal-saved {
+  color: var(--cp-ink);
+  font-weight: 500;
+}
+.cp-goal-target {
+  color: var(--cp-gray-500);
+}

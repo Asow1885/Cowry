@@ -98,6 +98,27 @@
   "brand": {
     "name": "COWRY"
   },
+  "pouch_flow": {
+    "splash_sub": "Mettez de l'argent de côté pour les moments qui comptent.",
+    "get_started": "Commencer",
+    "icon_sub": "Choisissez une icône — vous pourrez la renommer.",
+    "continue": "Continuer",
+    "name_sub": "Rendez-la personnelle — pour qui, pour quoi.",
+    "name_placeholder": "À quoi sert cette bourse ?",
+    "your_selection": "VOTRE SÉLECTION",
+    "name_field_label": "NOM DE LA BOURSE",
+    "suggestions": "SUGGESTIONS",
+    "goal_sub": "Facultatif — mais les objectifs aident à y arriver.",
+    "add_goal": "Ajouter un objectif",
+    "add_goal_sub": "Suivez vos progrès en épargnant",
+    "goal_field_label": "MONTANT CIBLE",
+    "goal_of": "sur",
+    "open_pouch": "Ouvrir ma bourse",
+    "skip_goal": "Ignorer — ouvrir sans objectif",
+    "success_sub": "est prête pour votre premier dépôt.",
+    "add_money": "Ajouter de l'argent",
+    "done": "Terminer — retour à l'accueil"
+  },
   "not_found": {
     "title": "Page introuvable",
     "back": "Retour à l'accueil"
