@@ -169,7 +169,7 @@ export default function SplashScreen() {
             style={[styles.tagline, { opacity: taglineOpacity }]}
             numberOfLines={1}
             adjustsFontSizeToFit
-            minimumFontScale={0.7}
+            minimumFontScale={0.4}
           >
             ANCIENT WEALTH · MODERN ACCESS
           </Animated.Text>
