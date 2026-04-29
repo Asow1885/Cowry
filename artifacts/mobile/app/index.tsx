@@ -25,7 +25,9 @@ export default function SplashScreen() {
   const hasNavigated = useRef(false);
 
   const glowOpacity    = useRef(new Animated.Value(0)).current;
-  const shellY         = useRef(new Animated.Value(-320)).current;
+  const shellY         = useRef(new Animated.Value(-340)).current;
+  const shellX         = useRef(new Animated.Value(28)).current;  // lateral arc
+  const shellDepth     = useRef(new Animated.Value(0.78)).current; // depth scale
   const shellRotate    = useRef(new Animated.Value(0)).current;
   const shellBounceY   = useRef(new Animated.Value(0)).current;
   const shellOpacity   = useRef(new Animated.Value(0)).current;
@@ -69,21 +71,35 @@ export default function SplashScreen() {
           Animated.parallel([
             Animated.timing(shellOpacity, {
               toValue: 1,
-              duration: 220,
+              duration: 260,
               useNativeDriver: true,
             }),
-            // Smooth deceleration — coin catches air and slows on landing
+            // Y: falls in on a gravity arc — fast entry, soft landing
             Animated.timing(shellY, {
               toValue: 0,
-              duration: 1050,
-              easing: Easing.bezier(0.16, 1.0, 0.3, 1.0),
+              duration: 1180,
+              easing: Easing.bezier(0.22, 0.0, 0.18, 1.0),
               useNativeDriver: true,
             }),
-            // Rotation settles naturally with slight elastic overshoot
+            // X: lateral drift — coin arcs inward from a slight angle
+            Animated.timing(shellX, {
+              toValue: 0,
+              duration: 1300,
+              easing: Easing.bezier(0.34, 1.12, 0.64, 1.0), // gentle overshoot
+              useNativeDriver: true,
+            }),
+            // Depth: scale up from 0.78 — coin coming from further away
+            Animated.timing(shellDepth, {
+              toValue: 1,
+              duration: 1180,
+              easing: Easing.bezier(0.22, 0.0, 0.18, 1.0),
+              useNativeDriver: true,
+            }),
+            // Rotation: tumbles and settles with trailing lag
             Animated.timing(shellRotate, {
               toValue: 1,
-              duration: 1150,
-              easing: Easing.bezier(0.16, 1.0, 0.3, 1.0),
+              duration: 1320,
+              easing: Easing.bezier(0.14, 0.8, 0.28, 1.0),
               useNativeDriver: true,
             }),
           ]),
@@ -135,7 +151,7 @@ export default function SplashScreen() {
         // Blur → sharp: ghost copies fade out as text comes into focus
         Animated.timing(cowryBlur, {
           toValue: 0,
-          duration: 950,
+          duration: 2450,
           easing: Easing.out(Easing.cubic),
           useNativeDriver: true,
         }),
@@ -237,6 +253,8 @@ export default function SplashScreen() {
             transform: [
               { translateY: shellY },
               { translateY: shellBounceY },
+              { translateX: shellX },
+              { scale: shellDepth },
               { rotate: rotateStr },
             ],
           },
