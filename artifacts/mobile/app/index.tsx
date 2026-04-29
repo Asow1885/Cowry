@@ -10,23 +10,28 @@ import { router } from "expo-router";
 import { useApp } from "@/context/AppContext";
 import ShellCluster from "@/components/ShellCluster";
 
-const GREEN   = "#1a2e22";
-const GOLD    = "#c9a04a";
-const CREAM   = "#f0e8d0";
+const GREEN = "#1a2e22";
+const GOLD  = "#c9a04a";
+const CREAM = "#f0e8d0";
+
+// Blur-simulation offsets: 8 ghost copies spread around the text
+const BLUR_OFFSETS: [number, number][] = [
+  [-5, 0], [5, 0], [0, -2], [0, 2],
+  [-4, -2], [4, -2], [-4, 2], [4, 2],
+];
 
 export default function SplashScreen() {
   const { isOnboarded, isLoading } = useApp();
-
   const hasNavigated = useRef(false);
-  const readyRef     = useRef(false);
 
   const glowOpacity    = useRef(new Animated.Value(0)).current;
-  const shellY         = useRef(new Animated.Value(-260)).current;
+  const shellY         = useRef(new Animated.Value(-320)).current;
   const shellRotate    = useRef(new Animated.Value(0)).current;
   const shellBounceY   = useRef(new Animated.Value(0)).current;
   const shellOpacity   = useRef(new Animated.Value(0)).current;
-  const cowryScale     = useRef(new Animated.Value(1.7)).current;
   const cowryOpacity   = useRef(new Animated.Value(0)).current;
+  const cowryScale     = useRef(new Animated.Value(1.55)).current;
+  const cowryBlur      = useRef(new Animated.Value(1)).current;
   const dividerScale   = useRef(new Animated.Value(0)).current;
   const taglineOpacity = useRef(new Animated.Value(0)).current;
   const screenOpacity  = useRef(new Animated.Value(1)).current;
@@ -34,136 +39,142 @@ export default function SplashScreen() {
   function doNavigate() {
     if (hasNavigated.current) return;
     hasNavigated.current = true;
+
+    // Navigate immediately so next screen loads underneath the splash
+    router.replace(isOnboarded ? "/(auth)/returning" : "/(auth)/welcome");
+
+    // Then dissolve the splash away — no flash, cross-dissolve feel
     Animated.timing(screenOpacity, {
       toValue: 0,
-      duration: 500,
-      easing: Easing.out(Easing.ease),
+      duration: 900,
+      easing: Easing.inOut(Easing.ease),
       useNativeDriver: true,
-    }).start(() => {
-      router.replace(isOnboarded ? "/(auth)/returning" : "/(auth)/welcome");
-    });
+    }).start();
   }
 
   useEffect(() => {
-    if (!isLoading) {
-      readyRef.current = true;
-    }
-  }, [isLoading]);
-
-  useEffect(() => {
     Animated.sequence([
-      Animated.delay(80),
+      Animated.delay(100),
 
-      // Glow fades in + shell coin-toss entrance
+      // ── Glow + coin toss entrance ──────────────────────────────
       Animated.parallel([
         Animated.timing(glowOpacity, {
           toValue: 1,
-          duration: 1000,
+          duration: 1100,
           easing: Easing.out(Easing.quad),
           useNativeDriver: true,
         }),
         Animated.sequence([
-          Animated.delay(160),
+          Animated.delay(140),
           Animated.parallel([
-            // Fade in shell quickly as it arrives
             Animated.timing(shellOpacity, {
               toValue: 1,
-              duration: 180,
+              duration: 220,
               useNativeDriver: true,
             }),
-            // Shell decelerates smoothly as it lands (like catching a tossed coin)
+            // Smooth deceleration — coin catches air and slows on landing
             Animated.timing(shellY, {
               toValue: 0,
-              duration: 820,
-              easing: Easing.out(Easing.cubic),
+              duration: 1050,
+              easing: Easing.bezier(0.16, 1.0, 0.3, 1.0),
               useNativeDriver: true,
             }),
-            // Rotation settles smoothly — slight overshoot feel
+            // Rotation settles naturally with slight elastic overshoot
             Animated.timing(shellRotate, {
               toValue: 1,
-              duration: 900,
-              easing: Easing.bezier(0.22, 1.0, 0.36, 1.0),
+              duration: 1150,
+              easing: Easing.bezier(0.16, 1.0, 0.3, 1.0),
               useNativeDriver: true,
             }),
           ]),
         ]),
       ]),
 
-      // Gentle landing bounce — subtle, coin settling on a surface
+      // ── Damped landing bounce ─────────────────────────────────
       Animated.sequence([
         Animated.timing(shellBounceY, {
-          toValue: -10,
-          duration: 160,
+          toValue: -11,
+          duration: 145,
           easing: Easing.out(Easing.quad),
           useNativeDriver: true,
         }),
         Animated.timing(shellBounceY, {
-          toValue: 3,
-          duration: 180,
+          toValue: 4,
+          duration: 175,
           easing: Easing.inOut(Easing.quad),
           useNativeDriver: true,
         }),
         Animated.timing(shellBounceY, {
-          toValue: -4,
-          duration: 130,
+          toValue: -3,
+          duration: 120,
           easing: Easing.out(Easing.quad),
           useNativeDriver: true,
         }),
         Animated.timing(shellBounceY, {
           toValue: 0,
-          duration: 200,
+          duration: 165,
           easing: Easing.inOut(Easing.quad),
           useNativeDriver: true,
         }),
       ]),
 
-      // COWRY wordmark + tagline reveal
+      // ── COWRY blur-to-focus + wordmark scale ─────────────────
       Animated.parallel([
         Animated.timing(cowryOpacity, {
           toValue: 1,
-          duration: 680,
+          duration: 720,
           easing: Easing.out(Easing.quad),
           useNativeDriver: true,
         }),
         Animated.timing(cowryScale, {
           toValue: 1,
-          duration: 740,
+          duration: 850,
+          easing: Easing.out(Easing.cubic),
+          useNativeDriver: true,
+        }),
+        // Blur → sharp: ghost copies fade out as text comes into focus
+        Animated.timing(cowryBlur, {
+          toValue: 0,
+          duration: 950,
           easing: Easing.out(Easing.cubic),
           useNativeDriver: true,
         }),
         Animated.sequence([
-          Animated.delay(260),
+          Animated.delay(300),
           Animated.timing(dividerScale, {
             toValue: 1,
-            duration: 460,
+            duration: 500,
             easing: Easing.out(Easing.quad),
             useNativeDriver: true,
           }),
         ]),
         Animated.sequence([
-          Animated.delay(500),
+          Animated.delay(540),
           Animated.timing(taglineOpacity, {
             toValue: 1,
-            duration: 560,
+            duration: 620,
             easing: Easing.out(Easing.ease),
             useNativeDriver: true,
           }),
         ]),
       ]),
 
-      // Hold for 3 extra seconds (total ~3.9s hold before navigate)
       Animated.delay(3900),
-    ]).start(() => {
-      doNavigate();
-    });
+    ]).start(() => doNavigate());
 
-    const safety = setTimeout(() => doNavigate(), 10000);
+    const safety = setTimeout(() => doNavigate(), 11000);
     return () => clearTimeout(safety);
   }, []);
 
   const rotateStr = shellRotate.interpolate({
     inputRange: [0, 1],
-    outputRange: ["-25deg", "8deg"],
+    outputRange: ["-35deg", "8deg"],
+  });
+
+  // Ghost-copy opacity: present when blurry (cowryBlur=1), gone when sharp (cowryBlur=0)
+  const blurGhostOpacity = cowryBlur.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 0.9],
   });
 
   return (
@@ -175,11 +186,35 @@ export default function SplashScreen() {
 
       <View style={styles.stage}>
         <View style={styles.brand}>
+
+          {/* ── COWRY with blur-to-focus ─────────────────────── */}
           <Animated.View style={{
             transform: [{ scale: cowryScale }],
             opacity: cowryOpacity,
           }}>
-            <Text style={styles.wordmark}>COWRY</Text>
+            <View>
+              {/* Sharp base layer — always present */}
+              <Text style={styles.wordmark}>COWRY</Text>
+
+              {/* Ghost blur layer — fades out as sharp comes in */}
+              <Animated.View style={[
+                StyleSheet.absoluteFillObject,
+                { opacity: blurGhostOpacity },
+              ]}>
+                {BLUR_OFFSETS.map(([tx, ty], i) => (
+                  <Text
+                    key={i}
+                    style={[styles.wordmark, {
+                      position: "absolute",
+                      opacity: 0.18,
+                      transform: [{ translateX: tx }, { translateY: ty }],
+                    }]}
+                  >
+                    COWRY
+                  </Text>
+                ))}
+              </Animated.View>
+            </View>
           </Animated.View>
 
           <Animated.View style={[styles.divider, { transform: [{ scaleX: dividerScale }] }]} />
@@ -194,6 +229,7 @@ export default function SplashScreen() {
           </Animated.Text>
         </View>
 
+        {/* ── Shell coin toss ─────────────────────────────────── */}
         <Animated.View style={[
           styles.shellWrap,
           {
