@@ -6,13 +6,21 @@ interface CowryCrestProps {
   color?: string;
 }
 
+// Shell outline: ellipse approx a=5.5 (horiz), b=9 (vert)
+// Each rib x-extent = 5.5 * sqrt(1 - (y/9)²) - margin
+// 10 ribs evenly distributed across the shell interior
 function Shell({ color, sw }: { color: string; sw: number }) {
   const ribs: [number, number, number, number][] = [
-    [-2.2, -6.6,  2.2, -6.6],
-    [-4.4, -3.8,  4.4, -3.8],
-    [-5.5, -0.5,  5.5, -0.5],
-    [-4.4,  2.8,  4.4,  2.8],
-    [-2.2,  6.0,  2.2,  6.0],
+    [-3.25, -7.0,  3.25, -7.0],
+    [-4.1,  -5.5,  4.1,  -5.5],
+    [-4.65, -4.0,  4.65, -4.0],
+    [-5.0,  -2.5,  5.0,  -2.5],
+    [-5.15, -1.0,  5.15, -1.0],
+    [-5.2,   0.5,  5.2,   0.5],
+    [-5.05,  2.0,  5.05,  2.0],
+    [-4.8,   3.5,  4.8,   3.5],
+    [-4.3,   5.0,  4.3,   5.0],
+    [-3.55,  6.5,  3.55,  6.5],
   ];
 
   return (
@@ -21,14 +29,14 @@ function Shell({ color, sw }: { color: string; sw: number }) {
         d="M 0,-9 C 3,-8.5 5.5,-4.5 5.5,0 C 5.5,4.5 3,8.5 0,9 C -3,8.5 -5.5,4.5 -5.5,0 C -5.5,-4.5 -3,-8.5 0,-9 Z"
         fill="none"
         stroke={color}
-        strokeWidth={sw * 1.6}
+        strokeWidth={sw * 1.5}
         strokeLinejoin="round"
       />
       <Line
         x1="0" y1="-7.5"
         x2="0" y2="7.5"
         stroke={color}
-        strokeWidth={sw * 1.3}
+        strokeWidth={sw * 1.0}
         strokeLinecap="round"
       />
       {ribs.map(([x1, y1, x2, y2], i) => (
@@ -37,7 +45,7 @@ function Shell({ color, sw }: { color: string; sw: number }) {
           x1={x1} y1={y1}
           x2={x2} y2={y2}
           stroke={color}
-          strokeWidth={sw * 1.0}
+          strokeWidth={sw * 0.7}
           strokeLinecap="round"
         />
       ))}
