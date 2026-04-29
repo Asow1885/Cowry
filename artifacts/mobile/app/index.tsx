@@ -54,62 +54,80 @@ export default function SplashScreen() {
     Animated.sequence([
       Animated.delay(80),
 
+      // Glow fades in + shell coin-toss entrance
       Animated.parallel([
         Animated.timing(glowOpacity, {
           toValue: 1,
-          duration: 900,
+          duration: 1000,
           easing: Easing.out(Easing.quad),
           useNativeDriver: true,
         }),
         Animated.sequence([
-          Animated.delay(180),
+          Animated.delay(160),
           Animated.parallel([
+            // Fade in shell quickly as it arrives
             Animated.timing(shellOpacity, {
               toValue: 1,
-              duration: 120,
+              duration: 180,
               useNativeDriver: true,
             }),
+            // Shell decelerates smoothly as it lands (like catching a tossed coin)
             Animated.timing(shellY, {
               toValue: 0,
-              duration: 540,
-              easing: Easing.in(Easing.quad),
+              duration: 820,
+              easing: Easing.out(Easing.cubic),
               useNativeDriver: true,
             }),
+            // Rotation settles smoothly — slight overshoot feel
             Animated.timing(shellRotate, {
               toValue: 1,
-              duration: 540,
-              easing: Easing.out(Easing.quad),
+              duration: 900,
+              easing: Easing.bezier(0.22, 1.0, 0.36, 1.0),
               useNativeDriver: true,
             }),
           ]),
         ]),
       ]),
 
+      // Gentle landing bounce — subtle, coin settling on a surface
       Animated.sequence([
-        Animated.spring(shellBounceY, {
-          toValue: -18,
-          speed: 28,
-          bounciness: 0,
+        Animated.timing(shellBounceY, {
+          toValue: -10,
+          duration: 160,
+          easing: Easing.out(Easing.quad),
           useNativeDriver: true,
         }),
-        Animated.spring(shellBounceY, {
+        Animated.timing(shellBounceY, {
+          toValue: 3,
+          duration: 180,
+          easing: Easing.inOut(Easing.quad),
+          useNativeDriver: true,
+        }),
+        Animated.timing(shellBounceY, {
+          toValue: -4,
+          duration: 130,
+          easing: Easing.out(Easing.quad),
+          useNativeDriver: true,
+        }),
+        Animated.timing(shellBounceY, {
           toValue: 0,
-          speed: 14,
-          bounciness: 8,
+          duration: 200,
+          easing: Easing.inOut(Easing.quad),
           useNativeDriver: true,
         }),
       ]),
 
+      // COWRY wordmark + tagline reveal
       Animated.parallel([
         Animated.timing(cowryOpacity, {
           toValue: 1,
-          duration: 620,
+          duration: 680,
           easing: Easing.out(Easing.quad),
           useNativeDriver: true,
         }),
         Animated.timing(cowryScale, {
           toValue: 1,
-          duration: 680,
+          duration: 740,
           easing: Easing.out(Easing.cubic),
           useNativeDriver: true,
         }),
@@ -117,34 +135,35 @@ export default function SplashScreen() {
           Animated.delay(260),
           Animated.timing(dividerScale, {
             toValue: 1,
-            duration: 420,
+            duration: 460,
             easing: Easing.out(Easing.quad),
             useNativeDriver: true,
           }),
         ]),
         Animated.sequence([
-          Animated.delay(480),
+          Animated.delay(500),
           Animated.timing(taglineOpacity, {
             toValue: 1,
-            duration: 500,
+            duration: 560,
             easing: Easing.out(Easing.ease),
             useNativeDriver: true,
           }),
         ]),
       ]),
 
-      Animated.delay(900),
+      // Hold for 3 extra seconds (total ~3.9s hold before navigate)
+      Animated.delay(3900),
     ]).start(() => {
       doNavigate();
     });
 
-    const safety = setTimeout(() => doNavigate(), 6000);
+    const safety = setTimeout(() => doNavigate(), 10000);
     return () => clearTimeout(safety);
   }, []);
 
   const rotateStr = shellRotate.interpolate({
     inputRange: [0, 1],
-    outputRange: ["-30deg", "10deg"],
+    outputRange: ["-25deg", "8deg"],
   });
 
   return (
