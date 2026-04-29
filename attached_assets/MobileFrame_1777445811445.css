@@ -1,0 +1,83 @@
+/* ════════════════════════════════════════════════════════════
+   MobileFrame.css
+   Phone-sized wrapper for desktop/Replit preview
+   Goes edge-to-edge on actual mobile devices.
+   ══════════════════════════════════════════════════════════ */
+
+/* ─── DESKTOP / REPLIT PREVIEW ─── */
+.cowry-mobile-frame-bg {
+  position: fixed;
+  inset: 0;
+  background: #ede5d3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow: auto;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.cowry-mobile-frame {
+  width: 390px;
+  height: 844px;
+  max-height: calc(100vh - 40px);
+  background: white;
+  border-radius: 36px;
+  overflow: hidden;
+  box-shadow:
+    0 30px 80px -20px rgba(10, 9, 7, 0.3),
+    0 0 0 8px #1a1a1a,
+    0 0 0 9px #2a2a2a;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.cowry-mobile-frame-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  background: white;
+}
+
+/* Make all child screens fill the frame correctly */
+.cowry-mobile-frame-inner > * {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* ─── ACTUAL MOBILE — go edge-to-edge ─── */
+@media (max-width: 480px) {
+  .cowry-mobile-frame-bg {
+    padding: 0;
+    background: white;
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+  }
+  .cowry-mobile-frame {
+    width: 100%;
+    height: 100%;
+    max-height: 100vh;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
+/* ─── GLOBAL RESETS to fix stacking issues ─── */
+* {
+  box-sizing: border-box;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+#root {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
