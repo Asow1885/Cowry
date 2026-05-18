@@ -279,10 +279,19 @@ export default function HomeScreen() {
         </ScrollView>
       </View>
 
-      {/* Page dots */}
+      {/* Page dots — tappable to switch cards */}
       <View style={styles.pageDots}>
         {[0, 1].map((i) => (
-          <View key={i} style={[styles.dot, cardIndex === i && styles.dotActive]} />
+          <TouchableOpacity
+            key={i}
+            hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
+            onPress={() => {
+              cardScrollRef.current?.scrollTo({ x: i * screenW, animated: true });
+              setCardIndex(i);
+            }}
+          >
+            <View style={[styles.dot, cardIndex === i && styles.dotActive]} />
+          </TouchableOpacity>
         ))}
       </View>
 
@@ -317,7 +326,9 @@ export default function HomeScreen() {
       </View>
 
       {/* LIVE EXCHANGE RATES */}
-      <RatesWidget />
+      <View style={{ paddingHorizontal: 24 }}>
+        <RatesWidget />
+      </View>
     </ScrollView>
 
     {showCreatePouch && (
