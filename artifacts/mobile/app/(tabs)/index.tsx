@@ -103,12 +103,19 @@ export default function HomeScreen() {
           </View>
         </View>
 
-        {/* ACTION CHIPS */}
+        {/* SEND — full-width primary */}
+        <TouchableOpacity
+          style={[styles.sendBtn, isRTL && styles.rowReverse]}
+          activeOpacity={0.85}
+          onPress={() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)}
+        >
+          <Feather name="send" size={17} color="#0f1f17" />
+          <Text style={[styles.sendBtnText, { fontFamily: fonts.bodySemi }]}>{t("home.send")}</Text>
+          <Feather name={isRTL ? "arrow-left" : "arrow-right"} size={17} color="#0f1f17" />
+        </TouchableOpacity>
+
+        {/* SECONDARY ACTIONS */}
         <View style={[styles.actions, isRTL && styles.rowReverse]}>
-          <TouchableOpacity style={[styles.chip, styles.chipPrimary]} activeOpacity={0.85}
-            onPress={() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)}>
-            <Text style={[styles.chipTextPrimary, { fontFamily: fonts.bodyMed }]}>{t("home.send")}</Text>
-          </TouchableOpacity>
           <TouchableOpacity style={styles.chip} activeOpacity={0.8}>
             <Text style={[styles.chipText, { fontFamily: fonts.bodyMed }]}>{t("home.add_money")}</Text>
           </TouchableOpacity>
@@ -361,27 +368,29 @@ const styles = StyleSheet.create({
 
   balanceLabel: {
     fontFamily: "Geist_400Regular",
-    fontSize: 16,
+    fontSize: 13,
     color: "#6b6b66",
-    marginBottom: 6,
+    marginBottom: 4,
+    letterSpacing: 0.3,
   },
   balanceRow: {
     flexDirection: "row",
     alignItems: "baseline",
     gap: 10,
-    marginBottom: 24,
+    marginBottom: 28,
   },
   balanceAmt: {
     fontFamily: "Fraunces_600SemiBold",
-    fontSize: 38,
-    lineHeight: 38,
-    letterSpacing: -0.76,
+    fontSize: 58,
+    lineHeight: 58,
+    letterSpacing: -1.5,
     color: "#0a0907",
   },
   balanceCurr: {
     fontFamily: "Fraunces_400Regular",
-    fontSize: 18,
+    fontSize: 22,
     color: "#6b6b66",
+    letterSpacing: -0.3,
   },
   chartIcon: {
     width: 26,
@@ -391,6 +400,23 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginLeft: 4,
+  },
+
+  sendBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: "#c9a04a",
+    borderRadius: 14,
+    paddingVertical: 17,
+    paddingHorizontal: 22,
+    marginBottom: 10,
+  },
+  sendBtnText: {
+    fontFamily: "Geist_600SemiBold",
+    fontSize: 17,
+    color: "#0f1f17",
+    letterSpacing: 0.1,
   },
 
   actions: {
@@ -407,17 +433,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  chipPrimary: { backgroundColor: "#1a2e22" },
   chipWithIcon: { flexDirection: "row", gap: 4 },
   chipText: {
     fontFamily: "Geist_500Medium",
     fontSize: 14,
     color: "#0a0907",
-  },
-  chipTextPrimary: {
-    fontFamily: "Geist_500Medium",
-    fontSize: 14,
-    color: "#e4c070",
   },
 
   sectionTitle: {
