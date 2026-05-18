@@ -172,7 +172,7 @@ export default function HomeScreen() {
       </ScrollView>
 
       {/* ═══ SWIPEABLE CARD STACK ═══ */}
-      <View style={{ marginLeft: -24, marginRight: -24 }}>
+      <View>
         <ScrollView
           ref={cardScrollRef}
           horizontal
