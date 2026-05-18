@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 
-const RATES_URL = "https://open.er-api.com/v6/latest/USD";
-const STALE_MS = 60 * 60 * 1000;
+const WISE_BASE = "https://wise.com/rates/live";
+const SOURCE    = "USD";
+const TARGETS   = ["GNF", "XOF", "NGN", "MAD", "KES", "EUR"];
+const STALE_MS  = 30 * 60 * 1000;
 
 type Rates = Record<string, number>;
 
@@ -16,14 +18,24 @@ export interface ExchangeRatesState {
 let cachedRates: Rates | null = null;
 let cachedAt: number | null = null;
 
+async function fetchOnePair(target: string): Promise<[string, number]> {
+  const res = await fetch(
+    `${WISE_BASE}?source=${SOURCE}&target=${target}`,
+    { signal: AbortSignal.timeout(8000) }
+  );
+  if (!res.ok) throw new Error(`HTTP ${res.status} for ${target}`);
+  const data = await res.json() as { value: number };
+  return [target, data.value];
+}
+
 export function useExchangeRates(): ExchangeRatesState {
-  const [rates, setRates] = useState<Rates | null>(cachedRates);
+  const [rates, setRates]       = useState<Rates | null>(cachedRates);
   const [updatedAt, setUpdatedAt] = useState<Date | null>(
     cachedAt ? new Date(cachedAt) : null
   );
-  const [loading, setLoading] = useState(!cachedRates);
-  const [error, setError] = useState(false);
-  const cancelRef = useRef(false);
+  const [loading, setLoading]   = useState(!cachedRates);
+  const [error, setError]       = useState(false);
+  const cancelRef               = useRef(false);
 
   async function fetchRates() {
     const now = Date.now();
@@ -39,12 +51,15 @@ export function useExchangeRates(): ExchangeRatesState {
     setError(false);
 
     try {
-      const res = await fetch(RATES_URL, { signal: AbortSignal.timeout(8000) });
-      if (!res.ok) throw new Error("HTTP " + res.status);
-      const data = await res.json();
+      // Fan out all pairs in parallel — Wise pricefeed is one call per pair
+      const results = await Promise.all(TARGETS.map(fetchOnePair));
       if (cancelRef.current) return;
-      cachedRates = data.rates as Rates;
-      cachedAt = Date.now();
+
+      const built: Rates = {};
+      for (const [code, value] of results) built[code] = value;
+
+      cachedRates = built;
+      cachedAt    = Date.now();
       setRates(cachedRates);
       setUpdatedAt(new Date(cachedAt));
       setLoading(false);
@@ -57,9 +72,7 @@ export function useExchangeRates(): ExchangeRatesState {
 
   useEffect(() => {
     fetchRates();
-    return () => {
-      cancelRef.current = true;
-    };
+    return () => { cancelRef.current = true; };
   }, []);
 
   return { rates, updatedAt, loading, error, refetch: fetchRates };
