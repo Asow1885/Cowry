@@ -206,10 +206,16 @@ export default function ProfileScreen() {
   const { t, isRTL, language, fonts } = useTranslation();
   const insets = useSafeAreaInsets();
   const [name, setName] = useState("");
+  const [tag, setTag] = useState("");
+  const [tagEdited, setTagEdited] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
   const [showAll, setShowAll] = useState(false);
   const [langPickerVisible, setLangPickerVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+
+  function toSuggestedTag(n: string): string {
+    return n.toLowerCase().replace(/[^a-z0-9._]/g, "").slice(0, 24);
+  }
 
   const topInset = Platform.OS === "web" ? 67 : insets.top;
   const bottomInset = Platform.OS === "web" ? 34 : insets.bottom;
@@ -236,6 +242,7 @@ export default function ProfileScreen() {
       countryCode: selectedCountry!,
       country: country?.name ?? "",
       countryFlag: country?.flag ?? "",
+      tag: tag.trim() || toSuggestedTag(name.trim()),
     });
     await completeOnboarding();
     router.replace("/(tabs)");
@@ -312,13 +319,43 @@ export default function ProfileScreen() {
               <TextInput
                 style={[styles.textInput, isRTL && { textAlign: "right" }]}
                 value={name}
-                onChangeText={setName}
+                onChangeText={(v) => {
+                  setName(v);
+                  if (!tagEdited) setTag(toSuggestedTag(v));
+                }}
                 placeholder={t("profile.name_placeholder")}
                 placeholderTextColor="rgba(245, 235, 214, 0.3)"
-                returnKeyType="done"
+                returnKeyType="next"
                 autoCapitalize="words"
               />
             </View>
+          </View>
+
+          {/* COWRY TAG */}
+          <View style={styles.fieldWrap}>
+            <Text style={[styles.fieldLabel, isRTL && styles.textRTL]}>
+              {t("profile.tag_label")}
+            </Text>
+            <View style={[styles.inputWrap, styles.tagInputWrap]}>
+              <Text style={styles.tagAt}>@</Text>
+              <TextInput
+                style={[styles.textInput, styles.tagInput]}
+                value={tag}
+                onChangeText={(v) => {
+                  const clean = v.toLowerCase().replace(/[^a-z0-9._]/g, "").slice(0, 24);
+                  setTag(clean);
+                  setTagEdited(true);
+                }}
+                placeholder={t("profile.tag_placeholder")}
+                placeholderTextColor="rgba(245, 235, 214, 0.3)"
+                returnKeyType="done"
+                autoCapitalize="none"
+                autoCorrect={false}
+              />
+            </View>
+            <Text style={[styles.tagHint, isRTL && styles.textRTL]}>
+              {t("profile.tag_hint")}
+            </Text>
           </View>
 
           <View style={styles.fieldWrap}>
@@ -545,5 +582,30 @@ const styles = StyleSheet.create({
     fontFamily: "Geist_600SemiBold",
     fontSize: 15,
     color: "#0f1f17",
+  },
+
+  tagInputWrap: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 2,
+    paddingHorizontal: 14,
+    paddingVertical: 0,
+  },
+  tagAt: {
+    fontFamily: "Geist_600SemiBold",
+    fontSize: 15,
+    color: "#c9a04a",
+    paddingVertical: 13,
+  },
+  tagInput: {
+    flex: 1,
+    paddingVertical: 13,
+  },
+  tagHint: {
+    fontFamily: "Geist_400Regular",
+    fontSize: 11,
+    color: "rgba(201, 160, 74, 0.55)",
+    marginTop: 6,
+    letterSpacing: 0.1,
   },
 });

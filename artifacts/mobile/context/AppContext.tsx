@@ -11,6 +11,7 @@ export interface UserProfile {
   countryCode: string;
   country: string;
   countryFlag: string;
+  tag: string;
 }
 
 interface AppState {

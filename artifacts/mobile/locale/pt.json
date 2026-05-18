@@ -37,7 +37,10 @@
     "country_label": "De onde é?",
     "search_placeholder": "Pesquisar países...",
     "see_more": "+ ver todos os 195 países",
-    "cta": "Concluir configuração"
+    "cta": "Concluir configuração",
+    "tag_label": "TAG COWRY",
+    "tag_placeholder": "seunome",
+    "tag_hint": "As pessoas podem enviar para @você — sem número de conta"
   },
   "returning": {
     "welcome_pre": "Bem-vindo de volta,",

@@ -37,7 +37,10 @@
     "country_label": "Where are you from?",
     "search_placeholder": "Search countries...",
     "see_more": "+ see all 195 countries",
-    "cta": "Finish setup"
+    "cta": "Finish setup",
+    "tag_label": "COWRY TAG",
+    "tag_placeholder": "yourname",
+    "tag_hint": "People can send to @you — no account number needed"
   },
   "returning": {
     "welcome_pre": "Welcome back,",

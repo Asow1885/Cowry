@@ -103,6 +103,13 @@ export default function HomeScreen() {
           </View>
         </View>
 
+        {/* COWRY TAG */}
+        {user?.tag ? (
+          <View style={[styles.tagPill, isRTL && styles.rowReverse]}>
+            <Text style={[styles.tagPillText, { fontFamily: fonts.bodyMed }]}>@{user.tag}</Text>
+          </View>
+        ) : null}
+
         {/* SEND — full-width primary */}
         <TouchableOpacity
           style={[styles.sendBtn, isRTL && styles.rowReverse]}
@@ -411,6 +418,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginLeft: 4,
+  },
+
+  tagPill: {
+    flexDirection: "row",
+    alignItems: "center",
+    alignSelf: "flex-start",
+    backgroundColor: "rgba(26,46,34,0.1)",
+    borderRadius: 100,
+    paddingHorizontal: 12,
+    paddingVertical: 5,
+    marginBottom: 22,
+    marginTop: -10,
+  },
+  tagPillText: {
+    fontFamily: "Geist_500Medium",
+    fontSize: 13,
+    color: "#1a2e22",
+    letterSpacing: 0.1,
   },
 
   sendBtn: {
